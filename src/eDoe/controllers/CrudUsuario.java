@@ -5,10 +5,9 @@ import java.util.Map;
 
 import eDoe.utils.Validador;
 
-public class CrudDoadores {
+public class CrudUsuario {
 
-	private Validador v = new Validador();
-	private Map<?,? > mapa = new HashMap();
+	private Map<Doador , String > mapa = new HashMap();
 	
 	public String adicionarDoador(String id, String nome, String email, String celular, String classe) {
 		return null;		
@@ -53,6 +52,21 @@ public class CrudDoadores {
 	public void removeItemParaDoacao(String idItem, String idDoador) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public String listaDescritorDeItensParaDoacao() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String listaItensParaDoacao() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

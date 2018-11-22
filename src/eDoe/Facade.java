@@ -1,10 +1,10 @@
 package eDoe;
 
-import eDoe.controllers.CrudDoadores;
+import eDoe.controllers.CrudUsuario;
 
 public class Facade {
 	
-	private CrudDoadores cd = new CrudDoadores();
+	private CrudUsuario cd = new CrudUsuario();
 	
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Usuario ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	
@@ -38,7 +38,7 @@ public class Facade {
 		this.cd.adicionarDescritor();
 		}
 	
-	public void adicionaItem(String descricao, Double quantidade, String tags) {
+	public void adicionaItem(String idDoador, String descricao, Double quantidade, String tags) {
 		this.cd.adicionaItem();
 	}
 	
@@ -55,15 +55,15 @@ public class Facade {
 	}
 
 	public String listaDescritorDeItensParaDoacao() {
-		return null;
+		return this.cd.listaDescritorDeItensParaDoacao();
 	}
 	
 	public String listaItensParaDoacao() {
-		return null;
+		return this.cd.listaItensParaDoacao();
 	}
 	
 	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
-		return null;
+		return this.cd.pesquisaItemParaDoacaoPorDescricao(descricao);
 	} 
 	
 }
