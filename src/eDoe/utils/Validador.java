@@ -15,8 +15,6 @@ public class Validador {
 	}
 
 	public static void validadorClasse(String classe) {
-		// Array[] classesUsuarios = new
-		// Array["PESSOA_FISICA","IGREJA","ORGAO_PUBLICO_MUNICIPAL","ORGAO_PUBLICO_ESTADUAL","ORGAO_PUBLICO_FEDERAL","ONG","ASSOCIACAO","SOCIEDADE"];
 		switch (classe) {
 		case "PESSOA_FISICA":
 			return;
@@ -91,5 +89,16 @@ public class Validador {
 		validadorParametro(descricao, "Entrada invalida: descricao nao pode ser vazia ou nula.");
 		if (descritores.contains(descricao))
 			throw new IllegalArgumentException("Usuario ja existente: " + descricao + ".");
+	}
+
+	public static void validadorAdicionaItem(String idDoador, String descricao, int quantidade, String tags,
+			Set<String> descritores) {
+		if (!descritores.contains(descricao))
+			throw new IllegalArgumentException("Entrada invalida: saiu no validador adiciona Item");
+		if (quantidade <= 0)
+			throw new IllegalArgumentException("Entrada invalida: quantidade");
+		validadorParametro(idDoador, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		validadorParametro(descricao, "Entrada invalida: descricao nao pode ser vazio ou nulo.");
+		validadorParametro(tags, "Entrada invalida: tags nao podem ser vazia ou nula.");
 	}
 }

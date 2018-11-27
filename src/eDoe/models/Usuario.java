@@ -1,5 +1,8 @@
 package eDoe.models;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class Usuario implements Usuario_eDoe{
 
 	protected String documento;
@@ -7,7 +10,8 @@ public abstract class Usuario implements Usuario_eDoe{
 	protected String email;
 	protected String celular;
 	protected String classe;
-
+	private Map<String, Item> itens = new HashMap<>();
+	
 	public Usuario(String documento, String nome, String email, String celular, String classe) {
 		this.documento = documento;
 		this.nome = nome;
@@ -16,6 +20,10 @@ public abstract class Usuario implements Usuario_eDoe{
 		this.classe = classe;
 	}
 
+	public void adicionaItem(String descricao, int quantidade, String tags) {
+		this.itens.put(descricao, new Item(descricao,quantidade,tags));
+	}
+	
 	public String getNome() {
 		return nome;
 	}

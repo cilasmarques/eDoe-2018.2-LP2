@@ -70,7 +70,9 @@ public class CrudUsuario {
 		this.descritores.add(descricao);
 	}
 
-	public void adicionaItem(String idDoador, String descricao, Double quantidade, String tags) {
+	public void adicionaItem(String idDoador, String descricao, int quantidade, String tags) {
+		Validador.validadorAdicionaItem(idDoador, descricao, quantidade, tags, this.descritores);
+		this.usuarios.get(idDoador).adicionaItem(descricao, quantidade, tags);
 	}
 
 	public String exibeItem(String idItem, String idDoador) {
