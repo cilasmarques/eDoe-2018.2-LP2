@@ -37,20 +37,20 @@ public class Facade {
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Item ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	public void adicionarDescritor(String descricao) {
+	public void adicionaDescritor(String descricao) {
 		this.cd.adicionarDescritor(descricao);
 	}
 
-	public void adicionaItem(String idDoador, String descricao, Double quantidade, String tags) {
-		this.cd.adicionaItem(idDoador, descricao, quantidade, tags);
+	public String adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags) {
+		return this.cd.adicionaItemParaDoacao(idDoador, descricao, quantidade, tags);
 	}
 
 	public String exibeItem(String idItem, String idDoador) {
 		return this.cd.exibeItem(idItem, idDoador);
 	}
 
-	public void atualizaItemParaDoacao(String idItem, String idDoador, Double quantidade, String tags) {
-		this.cd.atualizaItemParaDoacao(idItem, idDoador, quantidade, tags);
+	public String atualizaItemParaDoacao(String idItem, String idDoador, int quantidade, String tags) {
+		return this.cd.atualizaItemParaDoacao(idItem, idDoador, quantidade, tags);
 	}
 
 	public void removeItemParaDoacao(String idItem, String idDoador) {
@@ -71,7 +71,7 @@ public class Facade {
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EASYACCEPT
 	public static void main(String[] args) {
-		args = new String[] { "eDoe.Facade", "arquivos_sistema/use_case_1.txt"};
+		args = new String[] { "eDoe.Facade", "arquivos_sistema/use_case_1.txt" ,"arquivos_sistema/use_case_2.txt"};
 		EasyAccept.main(args);
 	}
 	

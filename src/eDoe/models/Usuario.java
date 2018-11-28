@@ -20,8 +20,22 @@ public abstract class Usuario implements Usuario_eDoe{
 		this.classe = classe;
 	}
 
-	public void adicionaItem(String descricao, int quantidade, String tags) {
-		this.itens.put(descricao, new Item(descricao,quantidade,tags));
+	public String adicionaItemParaDoacao(String descricao, int quantidade, String tags, boolean ehNecessario) {
+		this.itens.put(descricao, new Item(descricao,quantidade,tags,ehNecessario));
+		return descricao;
+	}
+
+	public String exibeItem(String idItem) {
+		if (!this.itens.containsKey(idItem))
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem +".");
+		return idItem + " - " + this.itens.get(idItem).toString();
+	}
+
+	public String atualizaItemParaDoacao(String idItem, int quantidade, String tags) {
+		Item i = this.itens.get(idItem);
+		i.setQuantidade(quantidade);
+		i.setTags(tags);
+		return idItem + " - " + i.toString();
 	}
 	
 	public String getNome() {

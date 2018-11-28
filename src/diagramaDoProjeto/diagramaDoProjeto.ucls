@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="eDoe.Facade" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/Facade.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="303" x="33" y="12"/>    
+    <position height="51" width="136" x="38" y="8"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="eDoe.controllers.CrudUsuario" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/controllers/CrudUsuario.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="303" x="35" y="130"/>    
+    <position height="51" width="218" x="-6" y="132"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="eDoe.models.Doador" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/models/Doador.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="702" y="323"/>    
+    <position height="-1" width="-1" x="502" y="315"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,7 +30,7 @@
   </class>  
   <interface id="4" language="java" name="eDoe.models.Usuario_eDoe" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/models/Usuario_eDoe.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="139" x="471" y="19"/>    
+    <position height="51" width="139" x="284" y="17"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </interface>  
   <class id="5" language="java" name="eDoe.models.Receptor" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/models/Receptor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="406" y="324"/>    
+    <position height="-1" width="-1" x="209" y="316"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="eDoe.models.Usuario" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/models/Usuario.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="223" x="433" y="129"/>    
+    <position height="51" width="192" x="257" y="131"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -57,49 +57,79 @@
   </class>  
   <class id="7" language="java" name="eDoe.utils.Validador" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/utils/Validador.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="327" x="651" y="44"/>    
+    <position height="51" width="327" x="188" y="449"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <generalization id="8">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="6"/>  
-  </generalization>  
-  <association id="9">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="10" name="cd">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="11" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="12">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="6"/>  
-  </generalization>  
-  <association id="13">    
+  <interface id="8" language="java" name="eDoe.models.Item_eDoe" project="eDoe-2018.2-LP2" 
+    file="/eDoe-2018.2-LP2/src/eDoe/models/Item_eDoe.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="101" x="530" y="17"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="9" language="java" name="eDoe.models.Item" project="eDoe-2018.2-LP2" 
+    file="/eDoe-2018.2-LP2/src/eDoe/models/Item.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="51" width="128" x="519" y="126"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="10">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="14" name="usuarios">        
-        <position height="0" width="0" x="6" y="9"/>      
+      <attribute id="11" name="usuarios">        
+        <position height="0" width="0" x="-170" y="11"/>      
       </attribute>      
-      <multiplicity id="15" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="6" y="9"/>      
+      <multiplicity id="12" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-170" y="11"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="16">    
+  <realization id="13">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="8"/>  
+  </realization>  
+  <association id="14">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="15" name="cd">        
+        <position height="0" width="0" x="-41" y="2"/>      
+      </attribute>      
+      <multiplicity id="16" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-41" y="2"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="17">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <realization id="18">    
     <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="4"/>  
   </realization>  
+  <generalization id="19">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <association id="20">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="21" name="itens"/>      
+      <multiplicity id="22" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

@@ -18,6 +18,8 @@ public class CrudUsuario {
 	private Map<String, Usuario> usuarios = new HashMap<>();
 	private Set<String> descritores = new HashSet<>();
 
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Usuario ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 	public void lerReceptores(String caminho) throws IOException {
 		Scanner sc = new Scanner(new File(caminho));
 		while (sc.hasNextLine()) {
@@ -65,24 +67,32 @@ public class CrudUsuario {
 		this.usuarios.remove(id);
 	}
 
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Item ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 	public void adicionarDescritor(String descricao) {
 		Validador.validadorAdicionaDescritor(descricao, this.descritores);
-		this.descritores.add(descricao);
+		this.descritores.add(descricao.toLowerCase());
 	}
 
-	public void adicionaItem(String idDoador, String descricao, int quantidade, String tags) {
-		Validador.validadorAdicionaItem(idDoador, descricao, quantidade, tags, this.descritores);
-		this.usuarios.get(idDoador).adicionaItem(descricao, quantidade, tags);
+	public String adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags) {
+		Validador.validadorAdicionaItem(idDoador, descricao, quantidade, this.descritores, this.usuarios);
+		Usuario u = this.usuarios.get(idDoador);
+		String idItem = null;
+		if (u.getStatus().equals("doador"))
+			idItem = u.adicionaItemParaDoacao(descricao, quantidade, tags, false);
+		else if (u.getStatus().equals("receptor"))
+			idItem = u.adicionaItemParaDoacao(descricao, quantidade, tags, true);
+		return idItem;
 	}
 
 	public String exibeItem(String idItem, String idDoador) {
-		// TODO Auto-generated method stub
-		return null;
+		Validador.validadorExibeItem(idItem, idDoador, this.descritores, this.usuarios);
+		return this.usuarios.get(idDoador).exibeItem(idItem);
 	}
 
-	public void atualizaItemParaDoacao(String idItem, String idDoador, Double quantidade, String tags) {
-		// TODO Auto-generated method stub
-
+	public String atualizaItemParaDoacao(String idItem, String idDoador, int quantidade, String tags) {
+		Validador.verificaAtualizaItemParaDocao(idItem, idDoador, quantidade);
+		return this.usuarios.get(idDoador).atualizaItemParaDoacao(idItem, quantidade, tags);
 	}
 
 	public void removeItemParaDoacao(String idItem, String idDoador) {
@@ -104,4 +114,5 @@ public class CrudUsuario {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

@@ -37,11 +37,13 @@ public class Validador {
 		}
 	}
 
-	public static void validadorAdicionaDoador(String id, String nome, String email, String celular, String classe,
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Usuario ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	public static void validadorAdicionaDoador(String idUser, String nome, String email, String celular, String classe,
 			Map<String, Usuario> usuarios) {
-		if (usuarios.containsKey(id))
-			throw new IllegalArgumentException("Usuario ja existente: " + id + ".");
-		validadorParametro(id, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		if (usuarios.containsKey(idUser))
+			throw new IllegalArgumentException("Usuario ja existente: " + idUser + ".");
+		validadorParametro(idUser, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		validadorParametro(nome, "Entrada invalida: nome nao pode ser vazio ou nulo.");
 		validadorParametro(email, "Entrada invalida: email nao pode ser vazio ou nulo.");
 		validadorParametro(celular, "Entrada invalida: celular nao pode ser vazio ou nulo.");
@@ -49,10 +51,10 @@ public class Validador {
 		validadorClasse(classe);
 	}
 
-	public static void validadorPesquisaUsuarioPorId(String id, Map<String, Usuario> usuarios) {
-		validadorParametro(id, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
-		if (!usuarios.containsKey(id))
-			throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");
+	public static void validadorPesquisaUsuarioPorId(String idUser, Map<String, Usuario> usuarios) {
+		validadorParametro(idUser, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		if (!usuarios.containsKey(idUser))
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idUser + ".");
 
 	}
 
@@ -65,40 +67,54 @@ public class Validador {
 		throw new IllegalArgumentException("Usuario nao encontrado: " + nome + ".");
 	}
 
-	public static void validadorAtualizaUsuario(String id, String nome, String email, String celular,
+	public static void validadorAtualizaUsuario(String idUser, String nome, String email, String celular,
 			Map<String, Usuario> usuarios) {
-		validadorParametro(id, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		validadorParametro(idUser, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		validadorParametro(nome, "Entrada invalida: nome nao pode ser vazio ou nulo.");
 		validadorParametro(email, "Entrada invalida: email nao pode ser vazio ou nulo.");
 		validadorParametro(celular, "Entrada invalida: celular nao pode ser vazio ou nulo.");
-		if (!usuarios.containsKey(id))
-			throw new IllegalArgumentException("Usuario nao existente: " + id + ".");
-
+		if (!usuarios.containsKey(idUser))
+			throw new IllegalArgumentException("Usuario nao existente: " + idUser + ".");
 	}
 
-	public static void validadorRemoveUsuario(String id, Map<String, Usuario> usuarios) {
-		if (usuarios.containsKey(id)) {
-			usuarios.remove(id);
+	public static void validadorRemoveUsuario(String idUser, Map<String, Usuario> usuarios) {
+		if (usuarios.containsKey(idUser)) {
+			usuarios.remove(idUser);
 			return;
 		}
-		throw new IllegalArgumentException("Usuario nao existente: " + id + ".");
-
+		throw new IllegalArgumentException("Usuario nao existente: " + idUser + ".");
 	}
 
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Item ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
 	public static void validadorAdicionaDescritor(String descricao, Set<String> descritores) {
 		validadorParametro(descricao, "Entrada invalida: descricao nao pode ser vazia ou nula.");
-		if (descritores.contains(descricao))
-			throw new IllegalArgumentException("Usuario ja existente: " + descricao + ".");
+		String descricaoMin = descricao.toLowerCase();
+		if (descritores.contains(descricaoMin))
+			throw new IllegalArgumentException("Descritor de Item ja existente: " + descricaoMin + ".");
 	}
 
-	public static void validadorAdicionaItem(String idDoador, String descricao, int quantidade, String tags,
-			Set<String> descritores) {
-		if (!descritores.contains(descricao))
-			throw new IllegalArgumentException("Entrada invalida: saiu no validador adiciona Item");
+	public static void validadorAdicionaItem(String idUser, String descricao, int quantidade, Set<String> descritores, Map<String, Usuario> usuarios) {
+		validadorParametro(idUser, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		validadorParametro(descricao, "Entrada invalida: descricao nao pode ser vazia ou nula.");
+		if (!usuarios.containsKey(idUser))
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idUser + ".");
 		if (quantidade <= 0)
-			throw new IllegalArgumentException("Entrada invalida: quantidade");
-		validadorParametro(idDoador, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
-		validadorParametro(descricao, "Entrada invalida: descricao nao pode ser vazio ou nulo.");
-		validadorParametro(tags, "Entrada invalida: tags nao podem ser vazia ou nula.");
+			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
+	}
+
+	public static void validadorExibeItem(String idItem, String idUser, Set<String> descritores, Map<String, Usuario> usuarios) {
+		validadorParametro(idUser, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		validadorParametro(idItem, "Entrada invalida: item nao pode ser vazio ou nulo.");
+		if (!usuarios.containsKey(idUser))
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idUser + ".");
+	}
+
+	public static void verificaAtualizaItemParaDocao(String idItem, String idUser, int quantidade) {
+		validadorParametro(idUser, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		validadorParametro(idItem, "Entrada invalida: item nao pode ser vazio ou nulo.");
+		if (quantidade < 0)
+			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior ou igual a zero.");
+			
 	}
 }
