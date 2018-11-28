@@ -74,30 +74,30 @@ public class CrudUsuario {
 		this.descritores.add(descricao.toLowerCase());
 	}
 
-	public String adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags) {
+	public int adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags) {
 		Validador.validadorAdicionaItem(idDoador, descricao, quantidade, this.descritores, this.usuarios);
 		Usuario u = this.usuarios.get(idDoador);
-		String idItem = null;
 		if (u.getStatus().equals("doador"))
-			idItem = u.adicionaItemParaDoacao(descricao, quantidade, tags, false);
+			return u.adicionaItemParaDoacao(descricao, quantidade, tags, false);
 		else if (u.getStatus().equals("receptor"))
-			idItem = u.adicionaItemParaDoacao(descricao, quantidade, tags, true);
-		return idItem;
+			return u.adicionaItemParaDoacao(descricao, quantidade, tags, true);
+		return -1;
 	}
 
-	public String exibeItem(String idItem, String idDoador) {
+	public String exibeItem(int idItem, String idDoador) {
 		Validador.validadorExibeItem(idItem, idDoador, this.descritores, this.usuarios);
 		return this.usuarios.get(idDoador).exibeItem(idItem);
 	}
 
-	public String atualizaItemParaDoacao(String idItem, String idDoador, int quantidade, String tags) {
-		Validador.verificaAtualizaItemParaDocao(idItem, idDoador, quantidade);
+	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
+		Validador.verificadorAtualizaItemParaDocao(idItem, idDoador, quantidade, this.usuarios);
 		return this.usuarios.get(idDoador).atualizaItemParaDoacao(idItem, quantidade, tags);
 	}
 
-	public void removeItemParaDoacao(String idItem, String idDoador) {
-		// TODO Auto-generated method stub
-
+	public void removeItemParaDoacao(int idItem, String idDoador) {
+		Validador.verificadorRemoveItemParaDoacao(idItem, idDoador, this.usuarios);
+		this.usuarios.get(idDoador).removeItemParaDoacao(idItem);
+			
 	}
 
 	public String listaDescritorDeItensParaDoacao() {

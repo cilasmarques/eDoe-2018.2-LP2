@@ -41,19 +41,19 @@ public class Facade {
 		this.cd.adicionarDescritor(descricao);
 	}
 
-	public String adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags) {
+	public int adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags) {
 		return this.cd.adicionaItemParaDoacao(idDoador, descricao, quantidade, tags);
 	}
 
-	public String exibeItem(String idItem, String idDoador) {
+	public String exibeItem(int idItem, String idDoador) {
 		return this.cd.exibeItem(idItem, idDoador);
 	}
 
-	public String atualizaItemParaDoacao(String idItem, String idDoador, int quantidade, String tags) {
+	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
 		return this.cd.atualizaItemParaDoacao(idItem, idDoador, quantidade, tags);
 	}
 
-	public void removeItemParaDoacao(String idItem, String idDoador) {
+	public void removeItemParaDoacao(int idItem, String idDoador) {
 		this.cd.removeItemParaDoacao(idItem, idDoador);
 	}
 

@@ -8,35 +8,7 @@ import eDoe.models.Usuario;
 public class Validador {
 
 	public static final String ln = System.lineSeparator();
-
-	public static void validadorParametro(String parametro, String saida) {
-		if (parametro == null || parametro.trim().equals(""))
-			throw new IllegalArgumentException(saida);
-	}
-
-	public static void validadorClasse(String classe) {
-		switch (classe) {
-		case "PESSOA_FISICA":
-			return;
-		case "IGREJA":
-			return;
-		case "ORGAO_PUBLICO_MUNICIPAL":
-			return;
-		case "ORGAO_PUBLICO_ESTADUAL":
-			return;
-		case "ORGAO_PUBLICO_FEDERAL":
-			return;
-		case "ONG":
-			return;
-		case "ASSOCIACAO":
-			return;
-		case "SOCIEDADE":
-			return;
-		default:
-			throw new IllegalArgumentException("Entrada invalida: opcao de classe invalida.");
-		}
-	}
-
+	
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Usuario ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	
 	public static void validadorAdicionaDoador(String idUser, String nome, String email, String celular, String classe,
@@ -103,18 +75,69 @@ public class Validador {
 			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
 	}
 
-	public static void validadorExibeItem(String idItem, String idUser, Set<String> descritores, Map<String, Usuario> usuarios) {
+	public static void validadorExibeItem(int idItem, String idUser, Set<String> descritores, Map<String, Usuario> usuarios) {
 		validadorParametro(idUser, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
-		validadorParametro(idItem, "Entrada invalida: item nao pode ser vazio ou nulo.");
 		if (!usuarios.containsKey(idUser))
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idUser + ".");
+		if (!usuarios.get(idUser).getItens().containsKey(idItem)) {
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
+		}
 	}
 
-	public static void verificaAtualizaItemParaDocao(String idItem, String idUser, int quantidade) {
+	public static void verificadorAtualizaItemParaDocao(int idItem, String idUser, int quantidade, Map<String, Usuario> usuarios) {
 		validadorParametro(idUser, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
-		validadorParametro(idItem, "Entrada invalida: item nao pode ser vazio ou nulo.");
+		if (!usuarios.containsKey(idUser))
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idUser + ".");
+		if (idItem < 0)
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		if (!usuarios.get(idUser).getItens().containsKey(idItem))
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		if (quantidade < 0)
 			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior ou igual a zero.");
-			
 	}
+
+	public static void verificadorRemoveItemParaDoacao(int idItem, String idUser, Map<String, Usuario> usuarios) {
+		validadorParametro(idUser, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		if (idItem < 0)
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		if (!usuarios.containsKey(idUser))
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idUser + ".");
+		if (usuarios.get(idUser).getItens().size() == 0)
+			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados." );
+		if (!usuarios.get(idUser).getItens().containsKey(idItem))
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
+	}
+	
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Verificadores ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	public static void validadorParametro(String parametro, String saida) {
+		if (parametro == null || parametro.trim().equals(""))
+			throw new IllegalArgumentException(saida);
+	}
+
+	public static void validadorClasse(String classe) {
+		switch (classe) {
+		case "PESSOA_FISICA":
+			return;
+		case "IGREJA":
+			return;
+		case "ORGAO_PUBLICO_MUNICIPAL":
+			return;
+		case "ORGAO_PUBLICO_ESTADUAL":
+			return;
+		case "ORGAO_PUBLICO_FEDERAL":
+			return;
+		case "ONG":
+			return;
+		case "ASSOCIACAO":
+			return;
+		case "SOCIEDADE":
+			return;
+		default:
+			throw new IllegalArgumentException("Entrada invalida: opcao de classe invalida.");
+		}
+	}
+
+	
+	
 }

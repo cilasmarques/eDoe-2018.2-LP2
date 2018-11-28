@@ -2,16 +2,18 @@ package eDoe.models;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
-public abstract class Usuario implements Usuario_eDoe{
+public abstract class Usuario implements Usuario_eDoe {
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Usuario ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	protected String documento;
 	protected String nome;
 	protected String email;
 	protected String celular;
 	protected String classe;
-	private Map<String, Item> itens = new HashMap<>();
-	
+
 	public Usuario(String documento, String nome, String email, String celular, String classe) {
 		this.documento = documento;
 		this.nome = nome;
@@ -20,24 +22,6 @@ public abstract class Usuario implements Usuario_eDoe{
 		this.classe = classe;
 	}
 
-	public String adicionaItemParaDoacao(String descricao, int quantidade, String tags, boolean ehNecessario) {
-		this.itens.put(descricao, new Item(descricao,quantidade,tags,ehNecessario));
-		return descricao;
-	}
-
-	public String exibeItem(String idItem) {
-		if (!this.itens.containsKey(idItem))
-			throw new IllegalArgumentException("Item nao encontrado: " + idItem +".");
-		return idItem + " - " + this.itens.get(idItem).toString();
-	}
-
-	public String atualizaItemParaDoacao(String idItem, int quantidade, String tags) {
-		Item i = this.itens.get(idItem);
-		i.setQuantidade(quantidade);
-		i.setTags(tags);
-		return idItem + " - " + i.toString();
-	}
-	
 	public String getNome() {
 		return nome;
 	}
@@ -64,6 +48,62 @@ public abstract class Usuario implements Usuario_eDoe{
 
 	public String getClasse() {
 		return classe;
+	}
+
+	public Map<Integer, Item> getItens() {
+		return this.itens;
+	}
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Itens ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	private Map<Integer, Item> itens = new HashMap<>();
+
+	public int adicionaItemParaDoacao(String descricao, int quantidade, String tags, boolean ehNecessario) {
+		if (itemJaExiste(descricao)) {
+			Item item = getItemPorDescricao(descricao);
+			item.setQuantidade(quantidade);
+			return item.getId();
+		}
+		Item i = new Item(descricao, quantidade, tags, ehNecessario);
+		geradorId(i);
+		this.itens.put(i.getId(), i);
+		return i.getId();
+	}
+
+	public String exibeItem(int idItem) {
+		return this.itens.get(idItem).toString();
+	}
+
+	public String atualizaItemParaDoacao(int idItem, int quantidade, String tags) {
+		Item i = this.itens.get(idItem);
+		i.setQuantidade(quantidade);
+		i.setTags(tags);
+		return i.toString();
+	}
+
+	public void removeItemParaDoacao(int idItem) {
+		this.itens.remove(idItem);
+	}
+
+	public Item getItemPorDescricao(String descricao) {
+		for (Item item : this.itens.values()) {
+			if (item.getDescricao().equals(descricao))
+				return item;
+		}
+		return null;
+	}
+
+	private void geradorId(Item i) {
+		int id = new Random().nextInt(1000);
+		i.setId(id);
+	}
+
+	private boolean itemJaExiste(String descricao) {
+		for (Item item : this.itens.values()) {
+			if (item.getDescricao().equals(descricao))
+				return true;
+		}
+		return false;
 	}
 
 }
