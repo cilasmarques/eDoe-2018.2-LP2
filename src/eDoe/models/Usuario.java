@@ -93,7 +93,33 @@ public abstract class Usuario implements Usuario_eDoe {
 	public Map<Item, String> listaItens() {
 		return makeListaItens();
 	}
+	
+	public int adicionaItemNecessario(String descricao, int quantidade, String tags, boolean ehNecessario) {
+		Item i = new Item(descricao, quantidade, tags, ehNecessario);
+		if (this.itens.values().contains(i)) {
+			Item iExistente = getItemPorDescricao(descricao);
+			iExistente.setQuantidade(quantidade);
+			return iExistente.getId();
+		}
+		geradorIdUnico(i);
+		this.itens.put(i.getId(), i);
+		return i.getId();
+	}
 
+
+	public String atualizaItemNecessario(int idItem, int novaQuantidade, String novasTags) {
+		Item i = this.itens.get(idItem);
+		if (novaQuantidade > 0)
+			i.setQuantidade(novaQuantidade);
+		i.setTags(novasTags);
+		return i.toString();
+	}
+
+	public void removeItemNecessario(int idItem) {
+		this.itens.remove(idItem);
+	}
+	
+	
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis Itens ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	public Item getItemPorId(int idItem) {
@@ -124,14 +150,4 @@ public abstract class Usuario implements Usuario_eDoe {
 		}
 		return listaItens;
 	}
-
-	private ArrayList<String> arrayPutInfosItens(ArrayList<Item> arrayDescritores) {
-		ArrayList<String> arrayDeInfos = new ArrayList<>();
-		for (Item i : arrayDescritores) {
-			if (i != null)
-				arrayDeInfos.add(i.toString() + ", doador: " + this.nome + "/" + this.documento);
-		}
-		return arrayDeInfos;
-	}
-
 }

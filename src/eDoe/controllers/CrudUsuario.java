@@ -103,9 +103,9 @@ public class CrudUsuario {
 		return g.exibeItem(u, idItem);
 	}
 
-	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
+	public String atualizaItemParaDoacao(int idItem, String idDoador, int novaQuantidade, String novasTags) {
 		Usuario u = getUsuarioValido(idDoador, "doador");
-		return g.atualizaItemParaDoacao(u, idItem, quantidade, tags);
+		return g.atualizaItemParaDoacao(u, idItem, novaQuantidade, novasTags);
 	}
 
 	public void removeItemParaDoacao(int idItem, String idDoador) {
@@ -126,6 +126,27 @@ public class CrudUsuario {
 		return g.pesquisaItemParaDoacaoPorDescricao(descricao, this.usuarios);
 	}
 
+	public int adicionaItemNecessario(String idReceptor, String descricao, int quantidade, String tags) {
+		Usuario u = getUsuarioValido(idReceptor, "receptor");
+		return g.adicionaItemNecessario(u, descricao, quantidade, tags);
+	}
+
+	public String atualizaItemNecessario(String idReceptor, int idItem, int novaQuantidade, String novasTags) {
+		Usuario u = getUsuarioValido(idReceptor, "receptor");
+		return g.atualizaNecessario(u, idItem, novaQuantidade, novasTags);
+	}
+	
+	public String listaItensNecessarios() {
+		return g.listaItensNecessarios(this.usuarios);
+	}
+
+	public void removeItemNecessario(String idReceptor, int idItem) {
+		Usuario u = getUsuarioValido(idReceptor, "receptor");
+		g.removeItemNecessario(u, idItem);
+	}
+	
+	
+	
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	private Usuario getUsuarioValido(String idUsuario, String status) {

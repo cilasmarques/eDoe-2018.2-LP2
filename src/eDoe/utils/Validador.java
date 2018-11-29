@@ -61,7 +61,7 @@ public class Validador {
 			throw new IllegalArgumentException("Descritor de Item ja existente: " + descricaoMin + ".");
 	}
 
-	public static void validadorAdicionaItemDoacao(String descricao, int quantidade) {
+	public static void validadorAdicionaItem(String descricao, int quantidade) {
 		validadorParametro(descricao, "Entrada invalida: descricao nao pode ser vazia ou nula.");
 		if (quantidade <= 0)
 			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
@@ -81,8 +81,15 @@ public class Validador {
 		if (quantidade < 0)
 			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior ou igual a zero.");
 	}
+	
+	public static void verificadorAtualizaItemNecessario(Usuario user, int idItem) {
+		if (idItem < 0)
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		if (!user.getItens().containsKey(idItem))
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
+	}
 
-	public static void verificadorRemoveItemParaDoacao(Usuario user, int idItem) {
+	public static void verificadorRemoveItem(Usuario user, int idItem) {
 		if (idItem < 0)
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		if (user.getItens().size() == 0)

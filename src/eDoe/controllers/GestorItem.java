@@ -1,6 +1,5 @@
 package eDoe.controllers;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,7 +25,7 @@ public class GestorItem {
 	}
 
 	public int adicionaItemParaDoacao(Usuario doador, String descricao, int quantidade, String tags) {
-		Validador.validadorAdicionaItemDoacao(descricao, quantidade);
+		Validador.validadorAdicionaItem(descricao, quantidade);
 		String descrMin = descricao.toLowerCase().trim();
 		this.descritores.put(descrMin, quantidade);
 		return doador.adicionaItemParaDoacao(descricao, quantidade, tags, false);
@@ -45,7 +44,7 @@ public class GestorItem {
 	}
 
 	public void removeItemParaDoacao(Usuario user, int idItem) {
-		Validador.verificadorRemoveItemParaDoacao(user, idItem);
+		Validador.verificadorRemoveItem(user, idItem);
 		atualizaDescritores(user, idItem, "removeItem");
 		user.removeItemParaDoacao(idItem);
 	}
@@ -72,6 +71,31 @@ public class GestorItem {
 		return listaItens(itensComDescricao, arrayItensRequeridos);
 	}
 
+	public int adicionaItemNecessario(Usuario receptor, String descricao, int quantidade, String tags) {
+		Validador.validadorAdicionaItem(descricao, quantidade);
+		String descrMin = descricao.toLowerCase().trim();
+		//this.descritores.put(descrMin, quantidade);
+		return receptor.adicionaItemNecessario(descrMin, quantidade, tags, true);
+	}
+
+	public String atualizaNecessario(Usuario user, int idItem, int novaQuantidade, String novasTags) {
+		Validador.verificadorAtualizaItemNecessario(user, idItem);
+		String saida = user.atualizaItemNecessario(idItem, novaQuantidade, novasTags);
+		atualizaDescritores(user, idItem, "atualizaItem");
+		return saida;
+	}
+	
+	public String listaItensNecessarios(Map<String, Usuario> usuarios) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void removeItemNecessario(Usuario user, int idItem) {
+		Validador.verificadorRemoveItem(user, idItem);
+		//atualizaDescritores(user, idItem, "removeItem");
+		user.removeItemNecessario(idItem);
+	}
+	
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	private String listaItens(Map<?, String> listaItens, ArrayList<?> arrayItensRequeridos) {
@@ -129,6 +153,5 @@ public class GestorItem {
 		}
 		return arrayDeInfos;
 	}
-
 
 }
