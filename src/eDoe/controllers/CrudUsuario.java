@@ -122,6 +122,7 @@ public class CrudUsuario {
 	}
 
 	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
+		Validador.validadorParametro(descricao, "Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
 		return g.pesquisaItemParaDoacaoPorDescricao(descricao, this.usuarios);
 	}
 
