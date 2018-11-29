@@ -71,8 +71,9 @@ public class Facade {
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EASYACCEPT
 	public static void main(String[] args) {
-		args = new String[] { "eDoe.Facade", "arquivos_sistema/use_case_1.txt" ,"arquivos_sistema/use_case_2.txt"};
+		args = new String[] { "eDoe.Facade", "arquivos_sistema/use_case_1.txt", "arquivos_sistema/use_case_2.txt",
+				"arquivos_sistema/use_case_3.txt" };
 		EasyAccept.main(args);
 	}
-	
+
 }

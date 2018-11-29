@@ -1,6 +1,6 @@
 package eDoe.models;
 
-public class Doador extends Usuario{
+public class Doador extends Usuario {
 
 	private String status;
 
@@ -9,12 +9,12 @@ public class Doador extends Usuario{
 		this.status = status;
 	}
 
+	public String getStatus() {
+		return this.status;
+	}
+
 	public String toString() {
 		return this.nome + "/" + this.documento + ", " + this.email + ", " + this.celular + ", status: " + this.status;
 	}
 
-	public String getStatus() {
-		return this.status;
-	}
-	
 }

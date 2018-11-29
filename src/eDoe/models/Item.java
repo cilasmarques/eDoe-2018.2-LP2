@@ -2,8 +2,7 @@ package eDoe.models;
 
 import java.util.ArrayList;
 
-
-public class Item implements Item_eDoe {
+public class Item implements Item_eDoe, Comparable<Item> {
 
 	private ArrayList<String> tags;
 	private String descricao;
@@ -18,26 +17,20 @@ public class Item implements Item_eDoe {
 		this.tags = stringToArray(tags);
 	}
 
-	public int getId() {
-		return id;
-	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
 	
-	@Override
-	public String toString() {
-		return this.id + " - " +this.descricao + ", tags: " + this.tags + ", quantidade: " + this.quantidade;
+	public int getId() {
+		return id;
 	}
 
-	public String getDescritorDeInsercao() {
-		return this.descricao.toLowerCase().trim();
+	public String getDescricao() {
+		return this.descricao;
 	}
 
-	@Override
-	public boolean ehNecessario() {
-		return this.necessidade;
+	public int getQuantidade() {
+		return this.quantidade;
 	}
 
 	public void setQuantidade(int quantidade) {
@@ -58,8 +51,21 @@ public class Item implements Item_eDoe {
 		return array;
 	}
 
-	public String getDescricao() {
-		return this.descricao;
+	@Override
+	public String toString() {
+		return this.id + " - " + this.descricao + ", tags: " + this.tags + ", quantidade: " + this.quantidade;
+	}
+
+	@Override
+	public int compareTo(Item o) {
+		Integer item1 = new Integer(this.quantidade);
+	    Integer item2 = new Integer(o.quantidade);
+	    return  item2.compareTo(item1);
+	}
+	
+	@Override
+	public boolean ehNecessario() {
+		return this.necessidade;
 	}
 
 	@Override
@@ -91,10 +97,6 @@ public class Item implements Item_eDoe {
 		} else if (!tags.equals(other.tags))
 			return false;
 		return true;
-	}
-
-	public int getQuantidade() {
-		return this.quantidade;
 	}
 
 }

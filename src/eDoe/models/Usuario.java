@@ -1,6 +1,8 @@
 package eDoe.models;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -22,24 +24,20 @@ public abstract class Usuario implements Usuario_eDoe {
 		this.classe = classe;
 	}
 
+	public String getId() {
+		return this.documento;
+	}
+
 	public String getNome() {
-		return nome;
+		return this.nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getCelular() {
-		return celular;
 	}
 
 	public void setCelular(String celular) {
@@ -47,7 +45,7 @@ public abstract class Usuario implements Usuario_eDoe {
 	}
 
 	public String getClasse() {
-		return classe;
+		return this.classe;
 	}
 
 	public Map<Integer, Item> getItens() {
@@ -56,15 +54,15 @@ public abstract class Usuario implements Usuario_eDoe {
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Itens ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	private Map<Integer, Item> itens = new HashMap<>();
+	private Map<Integer, Item> itens = new LinkedHashMap<Integer, Item>();
 
 	public int adicionaItemParaDoacao(String descricao, int quantidade, String tags, boolean ehNecessario) {
-		if (itemJaExiste(descricao)) {
-			Item item = getItemPorDescricao(descricao);
-			item.setQuantidade(quantidade);
-			return item.getId();
-		}
 		Item i = new Item(descricao, quantidade, tags, ehNecessario);
+		if (this.itens.values().contains(i)) {
+			Item iExistente = getItemPorDescricao(descricao);
+			iExistente.setQuantidade(quantidade);
+			return iExistente.getId();
+		}
 		geradorId(i);
 		this.itens.put(i.getId(), i);
 		return i.getId();
@@ -85,7 +83,13 @@ public abstract class Usuario implements Usuario_eDoe {
 		this.itens.remove(idItem);
 	}
 
-	public Item getItemPorDescricao(String descricao) {
+	public ArrayList<Item> listaItens() {
+		return makeListaItens();
+	}
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis Itens ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	private Item getItemPorDescricao(String descricao) {
 		for (Item item : this.itens.values()) {
 			if (item.getDescricao().equals(descricao))
 				return item;
@@ -98,12 +102,22 @@ public abstract class Usuario implements Usuario_eDoe {
 		i.setId(id);
 	}
 
-	private boolean itemJaExiste(String descricao) {
-		for (Item item : this.itens.values()) {
-			if (item.getDescricao().equals(descricao))
-				return true;
+	private ArrayList<Item> makeListaItens() {
+		ArrayList<Item> array = new ArrayList<>();
+		for (Item i : this.itens.values()) {
+			array.add(i);
 		}
-		return false;
+		Collections.sort(array);
+		return array;
+	}
+
+	private ArrayList<String> arrayPutInfosItens(ArrayList<Item> arrayDescritores) {
+		ArrayList<String> arrayDeInfos = new ArrayList<>();
+		for (Item i : arrayDescritores) {
+			if (i != null)
+				arrayDeInfos.add(i.toString() + ", doador: " + this.nome + "/" + this.documento);
+		}
+		return arrayDeInfos;
 	}
 
 }
