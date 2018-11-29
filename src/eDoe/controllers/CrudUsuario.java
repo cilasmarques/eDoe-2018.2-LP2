@@ -2,11 +2,10 @@ package eDoe.controllers;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 import eDoe.models.Doador;
 import eDoe.models.Receptor;
@@ -15,16 +14,23 @@ import eDoe.utils.Validador;
 
 public class CrudUsuario {
 
-	private Map<String, Usuario> usuarios = new HashMap<>();
-	private Set<String> descritores = new HashSet<>();
+	private Map<String, Usuario> usuarios = new LinkedHashMap<String, Usuario>();
+	private GestorItem g = new GestorItem();
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Usuario ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	public void lerReceptores(String caminho) throws IOException {
 		Scanner sc = new Scanner(new File(caminho));
 		while (sc.hasNextLine()) {
 			String[] dados = sc.nextLine().split(",");
-			if (this.usuarios.containsKey(dados[0])) {
+			if (!this.usuarios.containsKey(dados[0])) {
 				Usuario u = new Receptor(dados[0], dados[1], dados[2], dados[3], dados[4], "receptor");
 				this.usuarios.put(dados[0], u);
+			} else {
+				this.usuarios.get(dados[0]).setNome(dados[1]);
+				this.usuarios.get(dados[0]).setEmail(dados[2]);
+				this.usuarios.get(dados[0]).setCelular(dados[3]);
+				this.usuarios.get(dados[0]).setClasse(dados[4]);
 			}
 		}
 		sc.close();
@@ -44,62 +50,91 @@ public class CrudUsuario {
 
 	public String pesquisaUsuarioPorNome(String nome) {
 		Validador.validadorPesquisaUsuarioPorNome(nome, this.usuarios);
+		ArrayList<String> suporte = new ArrayList<>();
 		String saida = "";
 		for (Usuario u : this.usuarios.values()) {
 			if (u.getNome().equals(nome))
-				saida = u.toString();
+				suporte.add(u.toString());
 		}
+		for (int i = 0; i < suporte.size() - 1; i++) {
+			saida += suporte.get(i) + " | ";
+		}
+		saida += suporte.get(suporte.size() - 1);
+
 		return saida;
 	}
 
-	public void atualizaUsuario(String id, String nome, String email, String celular) {
-		Validador.validadorAtualizaUsuario(id, nome, email, celular, this.usuarios);
+	public String atualizaUsuario(String id, String nome, String email, String celular) {
+		Validador.validadorParametro(id, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		Validador.validadorAtualizaUsuario(id, this.usuarios);
 		Usuario u = this.usuarios.get(id);
-		u.setNome(nome);
-		u.setEmail(email);
-		u.setCelular(celular);
+		if (nome != null && !nome.trim().equals("")) {
+			u.setNome(nome);
+		}
+		if (email != null && !email.trim().equals("")) {
+			u.setEmail(email);
+		}
+		if (celular != null && !celular.trim().equals("")) {
+			u.setCelular(celular);
+		}
+		return u.toString();
 	}
 
 	public void removeUsuario(String id) {
+		Validador.validadorParametro(id, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		Validador.validadorRemoveUsuario(id, this.usuarios);
 		this.usuarios.remove(id);
 	}
 
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Item ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 	public void adicionarDescritor(String descricao) {
-		Validador.validadorAdicionaDescritor(descricao, this.descritores);
-		this.descritores.add(descricao);
+		g.adicionarDescritor(descricao);
 	}
 
-	public void adicionaItem(String idDoador, String descricao, Double quantidade, String tags) {
+	public int adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags) {
+		Usuario u = getUsuarioValido(idDoador, "doador");
+		return g.adicionaItemParaDoacao(u, descricao, quantidade, tags);
 	}
 
-	public String exibeItem(String idItem, String idDoador) {
-		// TODO Auto-generated method stub
-		return null;
+	public String exibeItem(int idItem, String idDoador) {
+		Usuario u = getUsuarioValido(idDoador, "doador");
+		return g.exibeItem(u, idItem);
 	}
 
-	public void atualizaItemParaDoacao(String idItem, String idDoador, Double quantidade, String tags) {
-		// TODO Auto-generated method stub
-
+	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
+		Usuario u = getUsuarioValido(idDoador, "doador");
+		return g.atualizaItemParaDoacao(u, idItem, quantidade, tags);
 	}
 
-	public void removeItemParaDoacao(String idItem, String idDoador) {
-		// TODO Auto-generated method stub
-
+	public void removeItemParaDoacao(int idItem, String idDoador) {
+		Usuario u = getUsuarioValido(idDoador, "doador");
+		g.removeItemParaDoacao(u, idItem);
 	}
 
 	public String listaDescritorDeItensParaDoacao() {
-		// TODO Auto-generated method stub
-		return null;
+		return g.listaDescritorDeItensParaDoacao();
 	}
 
 	public String listaItensParaDoacao() {
-		// TODO Auto-generated method stub
-		return null;
+		return g.listaTodosOsItensExistentes(this.usuarios);
 	}
 
 	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
-		// TODO Auto-generated method stub
-		return null;
+		Validador.validadorParametro(descricao, "Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
+		return g.pesquisaItemParaDoacaoPorDescricao(descricao, this.usuarios);
 	}
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	private Usuario getUsuarioValido(String idUsuario, String status) {
+		Validador.validadorParametro(idUsuario, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		if (!this.usuarios.containsKey(idUsuario))
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idUsuario + ".");
+		if (!usuarios.get(idUsuario).getStatus().equals(status))
+			throw new IllegalArgumentException("Usuario nao eh um " + status + ": " + idUsuario + ".");
+		return this.usuarios.get(idUsuario);
+	}
+
 }
