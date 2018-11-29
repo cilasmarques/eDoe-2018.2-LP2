@@ -27,8 +27,8 @@ public class Facade {
 		return this.cd.pesquisaUsuarioPorNome(nome);
 	}
 
-	public void atualizaUsuario(String nome, String email, String celular) {
-		this.cd.atualizaUsuario(nome, email, celular, celular);
+	public String atualizaUsuario(String id, String nome, String email, String celular) {
+		return this.cd.atualizaUsuario(id, nome, email, celular);
 	}
 
 	public void removeUsuario(String id) {

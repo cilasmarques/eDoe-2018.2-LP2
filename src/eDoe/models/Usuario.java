@@ -53,6 +53,12 @@ public abstract class Usuario implements Usuario_eDoe {
 		return this.itens;
 	}
 
+	@Override
+	public void setClasse(String classe) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Itens ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	private Map<Integer, Item> itens = new LinkedHashMap<Integer, Item>();

@@ -23,9 +23,14 @@ public class CrudUsuario {
 		Scanner sc = new Scanner(new File(caminho));
 		while (sc.hasNextLine()) {
 			String[] dados = sc.nextLine().split(",");
-			if (this.usuarios.containsKey(dados[0])) {
+			if (!this.usuarios.containsKey(dados[0])) {
 				Usuario u = new Receptor(dados[0], dados[1], dados[2], dados[3], dados[4], "receptor");
 				this.usuarios.put(dados[0], u);
+			} else {
+				this.usuarios.get(dados[0]).setNome(dados[1]);
+				this.usuarios.get(dados[0]).setEmail(dados[2]);
+				this.usuarios.get(dados[0]).setCelular(dados[3]);
+				this.usuarios.get(dados[0]).setClasse(dados[4]);
 			}
 		}
 		sc.close();
@@ -54,22 +59,33 @@ public class CrudUsuario {
 		for (int i = 0; i < suporte.size() - 1; i++) {
 			saida += suporte.get(i) + " | ";
 		}
+		saida += suporte.get(suporte.size() - 1);
 
 		return saida;
 	}
 
-	public void atualizaUsuario(String id, String nome, String email, String celular) {
-		Validador.validadorAtualizaUsuario(id, nome, email, celular, this.usuarios);
+	public String atualizaUsuario(String id, String nome, String email, String celular) {
+		Validador.validadorParametro(id, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		Validador.validadorAtualizaUsuario(id, this.usuarios);
 		Usuario u = this.usuarios.get(id);
-		u.setNome(nome);
-		u.setEmail(email);
-		u.setCelular(celular);
+		if (nome != null && !nome.trim().equals("")) {
+			u.setNome(nome);
+		}
+		if (email != null && !email.trim().equals("")) {
+			u.setEmail(email);
+		}
+		if (celular != null && !celular.trim().equals("")) {
+			u.setCelular(celular);
+		}
+		return u.toString();
 	}
 
 	public void removeUsuario(String id) {
+		Validador.validadorParametro(id, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		Validador.validadorRemoveUsuario(id, this.usuarios);
 		this.usuarios.remove(id);
 	}
+
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Item ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
