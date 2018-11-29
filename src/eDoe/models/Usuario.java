@@ -2,6 +2,7 @@ package eDoe.models;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
@@ -63,7 +64,7 @@ public abstract class Usuario implements Usuario_eDoe {
 			iExistente.setQuantidade(quantidade);
 			return iExistente.getId();
 		}
-		geradorId(i);
+		geradorIdUnico(i);
 		this.itens.put(i.getId(), i);
 		return i.getId();
 	}
@@ -83,13 +84,19 @@ public abstract class Usuario implements Usuario_eDoe {
 		this.itens.remove(idItem);
 	}
 
-	public ArrayList<Item> listaItens() {
+	public Map<Item, String> listaItens() {
 		return makeListaItens();
 	}
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis Itens ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	private Item getItemPorDescricao(String descricao) {
+	public Item getItemPorId(int idItem) {
+		if (itens.containsKey(idItem))
+			return this.itens.get(idItem);
+		return null;
+	}
+	
+	public Item getItemPorDescricao(String descricao) {
 		for (Item item : this.itens.values()) {
 			if (item.getDescricao().equals(descricao))
 				return item;
@@ -97,18 +104,19 @@ public abstract class Usuario implements Usuario_eDoe {
 		return null;
 	}
 
-	private void geradorId(Item i) {
-		int id = new Random().nextInt(1000);
-		i.setId(id);
+	private void geradorIdUnico(Item i) {
+		int id = new Random().nextInt(89999999) + 10000000;
+		if (!this.itens.containsKey(id))
+			i.setId(id);
 	}
 
-	private ArrayList<Item> makeListaItens() {
-		ArrayList<Item> array = new ArrayList<>();
+	private Map<Item, String> makeListaItens() {
+		Map<Item, String> listaItens= new HashMap<>();
 		for (Item i : this.itens.values()) {
-			array.add(i);
+			String infosItem = (i.toString() + ", doador: " + this.nome + "/" + this.documento);
+			listaItens.put(i, infosItem);
 		}
-		Collections.sort(array);
-		return array;
+		return listaItens;
 	}
 
 	private ArrayList<String> arrayPutInfosItens(ArrayList<Item> arrayDescritores) {

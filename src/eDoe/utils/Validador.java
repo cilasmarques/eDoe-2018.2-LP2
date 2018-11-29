@@ -62,47 +62,33 @@ public class Validador {
 			throw new IllegalArgumentException("Descritor de Item ja existente: " + descricaoMin + ".");
 	}
 
-	public static void validadorAdicionaItem(String idUser, String descricao, int quantidade,
-			Map<String, Usuario> usuarios) {
-		validadorParametro(idUser, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+	public static void validadorAdicionaItemDoacao(String descricao, int quantidade) {
 		validadorParametro(descricao, "Entrada invalida: descricao nao pode ser vazia ou nula.");
-		if (!usuarios.containsKey(idUser))
-			throw new IllegalArgumentException("Usuario nao encontrado: " + idUser + ".");
 		if (quantidade <= 0)
 			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
 	}
 
-	public static void validadorExibeItem(int idItem, String idUser, Map<String, Usuario> usuarios) {
-		validadorParametro(idUser, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
-		if (!usuarios.containsKey(idUser))
-			throw new IllegalArgumentException("Usuario nao encontrado: " + idUser + ".");
-		if (!usuarios.get(idUser).getItens().containsKey(idItem)) {
+	public static void validadorExibeItem(Usuario user, int idItem) {
+		if (!user.getItens().containsKey(idItem)) {
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		}
 	}
 
-	public static void verificadorAtualizaItemParaDocao(int idItem, String idUser, int quantidade,
-			Map<String, Usuario> usuarios) {
-		validadorParametro(idUser, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
-		if (!usuarios.containsKey(idUser))
-			throw new IllegalArgumentException("Usuario nao encontrado: " + idUser + ".");
+	public static void verificadorAtualizaItemParaDocao(Usuario user, int idItem, int quantidade) {
 		if (idItem < 0)
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
-		if (!usuarios.get(idUser).getItens().containsKey(idItem))
+		if (!user.getItens().containsKey(idItem))
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		if (quantidade < 0)
 			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior ou igual a zero.");
 	}
 
-	public static void verificadorRemoveItemParaDoacao(int idItem, String idUser, Map<String, Usuario> usuarios) {
-		validadorParametro(idUser, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+	public static void verificadorRemoveItemParaDoacao(Usuario user, int idItem) {
 		if (idItem < 0)
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
-		if (!usuarios.containsKey(idUser))
-			throw new IllegalArgumentException("Usuario nao encontrado: " + idUser + ".");
-		if (usuarios.get(idUser).getItens().size() == 0)
+		if (user.getItens().size() == 0)
 			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
-		if (!usuarios.get(idUser).getItens().containsKey(idItem))
+		if (!user.getItens().containsKey(idItem))
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 	}
 

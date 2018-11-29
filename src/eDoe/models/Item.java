@@ -2,7 +2,7 @@ package eDoe.models;
 
 import java.util.ArrayList;
 
-public class Item implements Item_eDoe, Comparable<Item> {
+public class Item implements Item_eDoe { //, Comparable<Item> {
 
 	private ArrayList<String> tags;
 	private String descricao;
@@ -56,18 +56,23 @@ public class Item implements Item_eDoe, Comparable<Item> {
 		return this.id + " - " + this.descricao + ", tags: " + this.tags + ", quantidade: " + this.quantidade;
 	}
 
+	/*
 	@Override
 	public int compareTo(Item o) {
-		Integer item1 = new Integer(this.quantidade);
-	    Integer item2 = new Integer(o.quantidade);
-	    return  item2.compareTo(item1);
-	}
+		Integer quantItem1 = new Integer(this.quantidade);
+	    Integer quantItem2 = new Integer(o.quantidade);
+	    String descrItem1 = this.descricao;
+	    String descrItem2 = o.descricao;
+ 	    if (quantItem1.equals(quantItem2)) {
+ 	    	return descrItem1.compareTo(descrItem2);}
+	    return  quantItem2.compareTo(quantItem1);
+	}*/
 	
 	@Override
 	public boolean ehNecessario() {
 		return this.necessidade;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
