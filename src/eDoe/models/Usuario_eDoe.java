@@ -12,6 +12,4 @@ public interface Usuario_eDoe {
 	
 	public String toString();
 
-	public void setClasse(String classe);
-	
 }

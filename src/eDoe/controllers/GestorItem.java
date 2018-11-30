@@ -1,6 +1,5 @@
 package eDoe.controllers;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,6 +10,7 @@ import eDoe.models.Item;
 import eDoe.models.Usuario;
 import eDoe.utils.DescricaoComparator;
 import eDoe.utils.Ferramentas;
+import eDoe.utils.IdComparator;
 import eDoe.utils.QuantidadeComparator;
 import eDoe.utils.Validador;
 
@@ -19,14 +19,15 @@ public class GestorItem {
 	private Map<String, Integer> descritores = new LinkedHashMap<>();
 	private QuantidadeComparator quantComp = new QuantidadeComparator();
 	private DescricaoComparator descrComp = new DescricaoComparator();
-	
+	private IdComparator idComp = new IdComparator();
+
 	public void adicionarDescritor(String descricao) {
 		Validador.validadorAdicionaDescritor(descricao, this.descritores);
 		this.descritores.put(descricao.toLowerCase().trim(), 0);
 	}
 
 	public int adicionaItemParaDoacao(Usuario doador, String descricao, int quantidade, String tags) {
-		Validador.validadorAdicionaItemDoacao(descricao, quantidade);
+		Validador.validadorAdicionaItem(descricao, quantidade);
 		String descrMin = descricao.toLowerCase().trim();
 		this.descritores.put(descrMin, quantidade);
 		return doador.adicionaItemParaDoacao(descricao, quantidade, tags, false);
@@ -45,7 +46,7 @@ public class GestorItem {
 	}
 
 	public void removeItemParaDoacao(Usuario user, int idItem) {
-		Validador.verificadorRemoveItemParaDoacao(user, idItem);
+		Validador.verificadorRemoveItem(user, idItem);
 		atualizaDescritores(user, idItem, "removeItem");
 		user.removeItemParaDoacao(idItem);
 	}
@@ -63,8 +64,8 @@ public class GestorItem {
 
 	public String pesquisaItemParaDoacaoPorDescricao(String descricao, Map<String, Usuario> todosUsuarios) {
 		Map<Item, String> itensComDescricao = new HashMap<>();
-		for (Item i: getAllItens(todosUsuarios).keySet()) {
-			if(i.toString().contains(descricao))
+		for (Item i : getAllItens(todosUsuarios).keySet()) {
+			if (i.toString().contains(descricao))
 				itensComDescricao.put(i, i.toString());
 		}
 		ArrayList<Item> arrayItensRequeridos = makeArrayItens(itensComDescricao);
@@ -72,29 +73,65 @@ public class GestorItem {
 		return listaItens(itensComDescricao, arrayItensRequeridos);
 	}
 
+	public int adicionaItemNecessario(Usuario receptor, String descricao, int quantidade, String tags) {
+		Validador.validadorAdicionaItem(descricao, quantidade);
+		String descrMin = descricao.toLowerCase().trim();
+		// this.descritores.put(descrMin, quantidade);
+		return receptor.adicionaItemNecessario(descrMin, quantidade, tags, true);
+	}
+
+	public String atualizaNecessario(Usuario user, int idItem, int novaQuantidade, String novasTags) {
+		Validador.verificadorAtualizaItemNecessario(user, idItem);
+		String saida = user.atualizaItemNecessario(idItem, novaQuantidade, novasTags);
+		atualizaDescritores(user, idItem, "atualizaItem");
+		return saida;
+	}
+
+	public String listaItensNecessarios(Map<String, Usuario> todosUsuarios) {
+		Map<Item, String> todosOsItens = getAllItens(todosUsuarios);
+		ArrayList<Item> arrayItensRequeridos = makeArrayItensNecessario(todosOsItens);
+		Collections.sort(arrayItensRequeridos, idComp);
+		return listaItens(todosOsItens, arrayItensRequeridos);
+	}
+
+	public void removeItemNecessario(Usuario user, int idItem) {
+		Validador.verificadorRemoveItem(user, idItem);
+		// atualizaDescritores(user, idItem, "removeItem");
+		user.removeItemNecessario(idItem);
+	}
+
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	private String listaItens(Map<?, String> listaItens, ArrayList<?> arrayItensRequeridos) {
+	private String listaItens(Map<?, String> listaItens, ArrayList<Item> arrayItensRequeridos) {
 		String saida = listaItens.get(arrayItensRequeridos.get(0));
-		for (int i = 1; i < listaItens.size(); i++) {
+		for (int i = 1; i < arrayItensRequeridos.size(); i++) {
 			saida += " | " + listaItens.get(arrayItensRequeridos.get(i));
 		}
 		return saida;
 	}
-	
-	private Map<Item, String> getAllItens(Map<String, Usuario> todosUsuarios){
+
+	private Map<Item, String> getAllItens(Map<String, Usuario> todosUsuarios) {
 		Map<Item, String> listaAllItens = new HashMap<>();
 		for (Usuario u : todosUsuarios.values()) {
 			if (!u.listaItens().isEmpty() && u != null)
 				listaAllItens.putAll(u.listaItens());
 		}
 		return listaAllItens;
-	}		
-	
+	}
+
 	private ArrayList<Item> makeArrayItens(Map<Item, String> listaItens) {
 		ArrayList<Item> arrayItens = new ArrayList<>();
 		for (Item i : listaItens.keySet()) {
 			arrayItens.add(i);
+		}
+		return arrayItens;
+	}
+
+	private ArrayList<Item> makeArrayItensNecessario(Map<Item, String> listaItens) {
+		ArrayList<Item> arrayItens = new ArrayList<>();
+		for (Item i : listaItens.keySet()) {
+			if (i.ehNecessario())
+				arrayItens.add(i);
 		}
 		return arrayItens;
 	}
@@ -129,6 +166,5 @@ public class GestorItem {
 		}
 		return arrayDeInfos;
 	}
-
 
 }

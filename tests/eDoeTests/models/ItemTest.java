@@ -7,12 +7,11 @@ import org.junit.jupiter.api.Test;
 class ItemTest {
 
 	@Test
-	void testHashCode() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	void testItem() {
+	}
+	
+	@Test
+	void testHashCode() {
 		fail("Not yet implemented");
 	}
 
@@ -48,11 +47,6 @@ class ItemTest {
 
 	@Test
 	void testToString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testCompareTo() {
 		fail("Not yet implemented");
 	}
 

@@ -69,10 +69,26 @@ public class Facade {
 		return this.cd.pesquisaItemParaDoacaoPorDescricao(descricao);
 	}
 
+	public int adicionaItemNecessario (String idReceptor, String descricao, int quantidade, String tags) {
+		return this.cd.adicionaItemNecessario(idReceptor, descricao, quantidade, tags);
+	}
+	
+	public String atualizaItemNecessario(String idReceptor, int idItem, int novaQuantidade, String novasTags) {
+		return this.cd.atualizaItemNecessario(idReceptor, idItem, novaQuantidade, novasTags);
+	}
+	
+	public String listaItensNecessarios() {
+		return this.cd.listaItensNecessarios();
+	}
+
+	public void removeItemNecessario (String idReceptor, int idItem) {
+		this.cd.removeItemNecessario(idReceptor, idItem);
+	}
+	
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EASYACCEPT
 	public static void main(String[] args) {
 		args = new String[] { "eDoe.Facade", "arquivos_sistema/use_case_1.txt", "arquivos_sistema/use_case_2.txt",
-				"arquivos_sistema/use_case_3.txt" };
+				"arquivos_sistema/use_case_3.txt", "arquivos_sistema/use_case_4.txt"};
 		EasyAccept.main(args);
 	}
 

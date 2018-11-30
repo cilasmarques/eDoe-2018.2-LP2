@@ -10,6 +10,7 @@ import java.util.Scanner;
 import eDoe.models.Doador;
 import eDoe.models.Receptor;
 import eDoe.models.Usuario;
+import eDoe.utils.Ferramentas;
 import eDoe.utils.Validador;
 
 public class CrudUsuario {
@@ -24,13 +25,12 @@ public class CrudUsuario {
 		while (sc.hasNextLine()) {
 			String[] dados = sc.nextLine().split(",");
 			if (!this.usuarios.containsKey(dados[0])) {
-				Usuario u = new Receptor(dados[0], dados[1], dados[2], dados[3], dados[4], "receptor");
+				Usuario u = new Receptor(dados[0], dados[1], dados[2], dados[3], dados[4], "Receptor");
 				this.usuarios.put(dados[0], u);
 			} else {
 				this.usuarios.get(dados[0]).setNome(dados[1]);
 				this.usuarios.get(dados[0]).setEmail(dados[2]);
 				this.usuarios.get(dados[0]).setCelular(dados[3]);
-				this.usuarios.get(dados[0]).setClasse(dados[4]);
 			}
 		}
 		sc.close();
@@ -51,23 +51,15 @@ public class CrudUsuario {
 	public String pesquisaUsuarioPorNome(String nome) {
 		Validador.validadorPesquisaUsuarioPorNome(nome, this.usuarios);
 		ArrayList<String> suporte = new ArrayList<>();
-		String saida = "";
 		for (Usuario u : this.usuarios.values()) {
 			if (u.getNome().equals(nome))
 				suporte.add(u.toString());
 		}
-		for (int i = 0; i < suporte.size() - 1; i++) {
-			saida += suporte.get(i) + " | ";
-		}
-		saida += suporte.get(suporte.size() - 1);
-
-		return saida;
+		return Ferramentas.arrayToString(suporte);
 	}
 
-	public String atualizaUsuario(String id, String nome, String email, String celular) {
-		Validador.validadorParametro(id, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
-		Validador.validadorAtualizaUsuario(id, this.usuarios);
-		Usuario u = this.usuarios.get(id);
+	public String atualizaUsuario(String idUsuario, String nome, String email, String celular) {
+		Usuario u = getUsuarioValido(idUsuario, "doador");
 		if (nome != null && !nome.trim().equals("")) {
 			u.setNome(nome);
 		}
@@ -86,7 +78,6 @@ public class CrudUsuario {
 		this.usuarios.remove(id);
 	}
 
-
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Item ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	public void adicionarDescritor(String descricao) {
@@ -103,9 +94,9 @@ public class CrudUsuario {
 		return g.exibeItem(u, idItem);
 	}
 
-	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
+	public String atualizaItemParaDoacao(int idItem, String idDoador, int novaQuantidade, String novasTags) {
 		Usuario u = getUsuarioValido(idDoador, "doador");
-		return g.atualizaItemParaDoacao(u, idItem, quantidade, tags);
+		return g.atualizaItemParaDoacao(u, idItem, novaQuantidade, novasTags);
 	}
 
 	public void removeItemParaDoacao(int idItem, String idDoador) {
@@ -124,6 +115,25 @@ public class CrudUsuario {
 	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
 		Validador.validadorParametro(descricao, "Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
 		return g.pesquisaItemParaDoacaoPorDescricao(descricao, this.usuarios);
+	}
+
+	public int adicionaItemNecessario(String idReceptor, String descricao, int quantidade, String tags) {
+		Usuario u = getUsuarioValido(idReceptor, "Receptor");
+		return g.adicionaItemNecessario(u, descricao, quantidade, tags);
+	}
+
+	public String atualizaItemNecessario(String idReceptor, int idItem, int novaQuantidade, String novasTags) {
+		Usuario u = getUsuarioValido(idReceptor, "Receptor");
+		return g.atualizaNecessario(u, idItem, novaQuantidade, novasTags);
+	}
+
+	public String listaItensNecessarios() {
+		return g.listaItensNecessarios(this.usuarios);
+	}
+
+	public void removeItemNecessario(String idReceptor, int idItem) {
+		Usuario u = getUsuarioValido(idReceptor, "Receptor");
+		g.removeItemNecessario(u, idItem);
 	}
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
