@@ -4,32 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class CrudUsuarioTest {
-
-	@Test
-	void testAdicionarDoador() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testPesquisaUsuarioPorId() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testPesquisaUsuarioPorNome() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testAtualizaUsuario() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testRemoveUsuario() {
-		fail("Not yet implemented");
-	}
+class GestorItemTest {
 
 	@Test
 	void testAdicionarDescritor() {
@@ -62,7 +37,7 @@ class CrudUsuarioTest {
 	}
 
 	@Test
-	void testListaItensParaDoacao() {
+	void testListaTodosOsItensExistentes() {
 		fail("Not yet implemented");
 	}
 
@@ -77,7 +52,7 @@ class CrudUsuarioTest {
 	}
 
 	@Test
-	void testAtualizaItemNecessario() {
+	void testAtualizaNecessario() {
 		fail("Not yet implemented");
 	}
 

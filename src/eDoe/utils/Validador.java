@@ -35,15 +35,6 @@ public class Validador {
 		throw new IllegalArgumentException("Usuario nao encontrado: " + nome + ".");
 	}
 
-	public static void validadorAtualizaUsuario(String idUser, Map<String, Usuario> usuarios) {
-		validadorParametro(idUser, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
-		//validadorParametro(nome, "Entrada invalida: nome nao pode ser vazio ou nulo.");
-		//validadorParametro(email, "Entrada invalida: email nao pode ser vazio ou nulo.");
-		//validadorParametro(celular, "Entrada invalida: celular nao pode ser vazio ou nulo.");
-		if (!usuarios.containsKey(idUser))
-			throw new IllegalArgumentException("Usuario nao encontrado: " + idUser + ".");
-	}
-
 	public static void validadorRemoveUsuario(String idUser, Map<String, Usuario> usuarios) {
 		if (usuarios.containsKey(idUser)) {
 			usuarios.remove(idUser);
@@ -81,7 +72,7 @@ public class Validador {
 		if (quantidade < 0)
 			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior ou igual a zero.");
 	}
-	
+
 	public static void verificadorAtualizaItemNecessario(Usuario user, int idItem) {
 		if (idItem < 0)
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");

@@ -71,4 +71,34 @@ class UsuarioTest {
 		fail("Not yet implemented");
 	}
 
+	@Test
+	void testAdicionaItemNecessario() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testAtualizaItemNecessario() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testRemoveItemNecessario() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testListaItensNecessarios() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetItemPorId() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetItemPorDescricao() {
+		fail("Not yet implemented");
+	}
+
 }

@@ -14,6 +14,7 @@ public class Receptor extends Usuario {
 	}
 
 	public String toString() {
-		return this.nome + "/" + this.documento + ", " + this.email + ", " + this.celular + ", status: " + this.status;
+		return this.nome + "/" + this.documento + ", " + this.email + ", " + this.celular + ", status: " + this.status.toLowerCase();
 	}
 }
+
