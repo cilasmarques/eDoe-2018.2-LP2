@@ -17,10 +17,7 @@ import eDoe.utils.Validador;
 public class GestorItem {
 
 	private Map<String, Integer> descritores = new LinkedHashMap<>();
-	private QuantidadeComparator quantComp = new QuantidadeComparator();
-	private DescricaoComparator descrComp = new DescricaoComparator();
-	private IdComparator idComp = new IdComparator();
-
+	
 	public void adicionarDescritor(String descricao) {
 		Validador.validadorAdicionaDescritor(descricao, this.descritores);
 		this.descritores.put(descricao.toLowerCase().trim(), 0);
@@ -57,9 +54,9 @@ public class GestorItem {
 
 	public String listaTodosOsItensExistentes(Map<String, Usuario> todosUsuarios) {
 		Map<Item, String> todosOsItens = getAllItens(todosUsuarios);
-		ArrayList<Item> arrayItensRequeridos = makeArrayItens(todosOsItens);
-		Collections.sort(arrayItensRequeridos, quantComp);
-		return listaItens(todosOsItens, arrayItensRequeridos);
+		ArrayList<Item> arrayItensRequeridos = makeArrayItens(todosOsItens, "todos");
+		Collections.sort(arrayItensRequeridos, new QuantidadeComparator());
+		return makeListaItens(todosOsItens, arrayItensRequeridos);
 	}
 
 	public String pesquisaItemParaDoacaoPorDescricao(String descricao, Map<String, Usuario> todosUsuarios) {
@@ -68,15 +65,14 @@ public class GestorItem {
 			if (i.toString().contains(descricao))
 				itensComDescricao.put(i, i.toString());
 		}
-		ArrayList<Item> arrayItensRequeridos = makeArrayItens(itensComDescricao);
-		Collections.sort(arrayItensRequeridos, descrComp);
-		return listaItens(itensComDescricao, arrayItensRequeridos);
+		ArrayList<Item> arrayItensRequeridos = makeArrayItens(itensComDescricao, "todos");
+		Collections.sort(arrayItensRequeridos, new DescricaoComparator());
+		return makeListaItens(itensComDescricao, arrayItensRequeridos);
 	}
 
 	public int adicionaItemNecessario(Usuario receptor, String descricao, int quantidade, String tags) {
 		Validador.validadorAdicionaItem(descricao, quantidade);
 		String descrMin = descricao.toLowerCase().trim();
-		// this.descritores.put(descrMin, quantidade);
 		return receptor.adicionaItemNecessario(descrMin, quantidade, tags, true);
 	}
 
@@ -89,20 +85,28 @@ public class GestorItem {
 
 	public String listaItensNecessarios(Map<String, Usuario> todosUsuarios) {
 		Map<Item, String> todosOsItens = getAllItens(todosUsuarios);
-		ArrayList<Item> arrayItensRequeridos = makeArrayItensNecessario(todosOsItens);
-		Collections.sort(arrayItensRequeridos, idComp);
-		return listaItens(todosOsItens, arrayItensRequeridos);
+		ArrayList<Item> arrayItensRequeridos = makeArrayItens(todosOsItens, "necessarios");
+		Collections.sort(arrayItensRequeridos, new IdComparator());
+		return makeListaItens(todosOsItens, arrayItensRequeridos);
 	}
 
 	public void removeItemNecessario(Usuario user, int idItem) {
 		Validador.verificadorRemoveItem(user, idItem);
-		// atualizaDescritores(user, idItem, "removeItem");
 		user.removeItemNecessario(idItem);
+	}
+
+	public String match(Usuario user, int idItemNecessario, Map<String, Usuario> todosUsuarios) {
+		Validador.verificadorRemoveItem(user, idItemNecessario);
+		Map<Item, String> todosOsItens = getAllItens(todosUsuarios);
+		String requisitoDeMatch = user.getItemPorId(idItemNecessario).getDescricao();
+		ArrayList<Item> arrayItensRequeridos = makeArrayItens(todosOsItens, requisitoDeMatch);
+		Collections.sort(arrayItensRequeridos, new IdComparator());
+		return makeListaItens(todosOsItens, arrayItensRequeridos);
 	}
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	private String listaItens(Map<?, String> listaItens, ArrayList<Item> arrayItensRequeridos) {
+	private String makeListaItens(Map<?, String> listaItens, ArrayList<Item> arrayItensRequeridos) {
 		String saida = listaItens.get(arrayItensRequeridos.get(0));
 		for (int i = 1; i < arrayItensRequeridos.size(); i++) {
 			saida += " | " + listaItens.get(arrayItensRequeridos.get(i));
@@ -119,19 +123,18 @@ public class GestorItem {
 		return listaAllItens;
 	}
 
-	private ArrayList<Item> makeArrayItens(Map<Item, String> listaItens) {
+	private ArrayList<Item> makeArrayItens(Map<Item, String> listaItens, String filtroDeItensRequeridos) {
 		ArrayList<Item> arrayItens = new ArrayList<>();
 		for (Item i : listaItens.keySet()) {
-			arrayItens.add(i);
-		}
-		return arrayItens;
-	}
-
-	private ArrayList<Item> makeArrayItensNecessario(Map<Item, String> listaItens) {
-		ArrayList<Item> arrayItens = new ArrayList<>();
-		for (Item i : listaItens.keySet()) {
-			if (i.ehNecessario())
+			if (filtroDeItensRequeridos.equals("necessarios")) {
+				if (i.ehNecessario())
+					arrayItens.add(i);
+			} else if (filtroDeItensRequeridos.equals("todos")) {
 				arrayItens.add(i);
+			} else if (this.descritores.containsKey(filtroDeItensRequeridos)) {
+				if (i.getDescricao().equals(filtroDeItensRequeridos))
+					arrayItens.add(i);
+			}
 		}
 		return arrayItens;
 	}
@@ -150,21 +153,16 @@ public class GestorItem {
 	}
 
 	private ArrayList<String> makeListaDescritores() {
-		ArrayList<String> array = new ArrayList<>();
+		ArrayList<String> listaDescritores = new ArrayList<>();
 		for (String key : this.descritores.keySet()) {
-			array.add(key);
+			listaDescritores.add(key);
 		}
-		Collections.sort(array);
-		return arrayPutInfosDescritor(array);
-	}
-
-	private ArrayList<String> arrayPutInfosDescritor(ArrayList<String> arrayDescritores) {
-		ArrayList<String> arrayDeInfos = new ArrayList<>();
-		for (String key : arrayDescritores) {
-			int quantidade = this.descritores.get(key);
-			arrayDeInfos.add(quantidade + " - " + key);
+		Collections.sort(listaDescritores);
+		for (int i= 0; i < listaDescritores.size(); i ++) {
+			int quantidade = this.descritores.get(listaDescritores.get(i));
+			listaDescritores.set(i, quantidade + " - " + listaDescritores.get(i));
 		}
-		return arrayDeInfos;
+		return listaDescritores;
 	}
 
 }

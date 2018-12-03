@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Ferramentas {
 
+	public static int idUnico = 10000000;
+	
 	public static final String ln = System.lineSeparator();
 
 	public static String arrayToString(ArrayList<?> array) {
@@ -15,7 +17,5 @@ public class Ferramentas {
 		}
 		return saida;
 	}
-
-	
 
 }
