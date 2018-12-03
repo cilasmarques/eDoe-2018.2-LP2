@@ -3,7 +3,8 @@ package eDoe.models;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Random;
+
+import eDoe.utils.Ferramentas;
 
 public abstract class Usuario implements Usuario_eDoe {
 
@@ -81,13 +82,12 @@ public abstract class Usuario implements Usuario_eDoe {
 	private Map<Integer, Item> itens = new LinkedHashMap<Integer, Item>();
 
 	public int adicionaItemParaDoacao(String descricao, int quantidade, String tags, boolean ehNecessario) {
-		Item i = new Item(descricao, quantidade, tags, ehNecessario);
+		Item i = new Item(descricao, quantidade, tags, ehNecessario, Ferramentas.idUnico += 1);
 		if (this.itens.values().contains(i)) {
 			Item iExistente = getItemPorDescricao(descricao);
 			iExistente.setQuantidade(quantidade);
 			return iExistente.getId();
 		}
-		geradorIdUnico(i);
 		this.itens.put(i.getId(), i);
 		return i.getId();
 	}
@@ -114,13 +114,12 @@ public abstract class Usuario implements Usuario_eDoe {
 	}
 
 	public int adicionaItemNecessario(String descricao, int quantidade, String tags, boolean ehNecessario) {
-		Item i = new Item(descricao, quantidade, tags, ehNecessario);
+		Item i = new Item(descricao, quantidade, tags, ehNecessario, Ferramentas.idUnico += 1);
 		if (this.itens.values().contains(i)) {
 			Item iExistente = getItemPorDescricao(descricao);
 			iExistente.setQuantidade(quantidade);
 			return iExistente.getId();
 		}
-		geradorIdUnico(i);
 		this.itens.put(i.getId(), i);
 		return i.getId();
 	}
@@ -156,12 +155,6 @@ public abstract class Usuario implements Usuario_eDoe {
 				return item;
 		}
 		return null;
-	}
-
-	private void geradorIdUnico(Item i) {
-		int id = new Random().nextInt(89999999) + 10000000;
-		if (!this.itens.containsKey(id))
-			i.setId(id);
 	}
 
 	private Map<Item, String> makeListaItens() {

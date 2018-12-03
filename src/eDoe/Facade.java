@@ -84,11 +84,16 @@ public class Facade {
 	public void removeItemNecessario(String idReceptor, int idItem) {
 		this.cd.removeItemNecessario(idReceptor, idItem);
 	}
+	
+	public String match (String idReceptor, int idItemNecessario) {
+		return this.cd.match(idReceptor, idItemNecessario);
+	}
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EASYACCEPT
 	public static void main(String[] args) {
 		args = new String[] { "eDoe.Facade", "arquivos_sistema/use_case_1.txt", "arquivos_sistema/use_case_2.txt",
-				"arquivos_sistema/use_case_3.txt", "arquivos_sistema/use_case_4.txt" };
+				"arquivos_sistema/use_case_3.txt", "arquivos_sistema/use_case_4.txt",
+				"arquivos_sistema/use_case_5.txt" };
 		EasyAccept.main(args);
 	}
 

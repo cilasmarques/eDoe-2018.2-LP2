@@ -10,70 +10,62 @@ class ItemTest {
 
 	@Test
 	void testItem() {
-		Item i = new Item("item de teste", 1, "teste, JUnit", false);
+		Item i = new Item("item de teste", 1, "teste, JUnit", false, 0);
 		assertEquals(i.toString(), "0 - item de teste, tags: [teste,  JUnit], quantidade: 1");
 	}
 
 	@Test
-	void testSetId() {
-		Item i = new Item("item de teste", 1, "teste, JUnit", false);
-		i.setId(12345678);
-		assertEquals(i.getId(), 12345678);
-	}
-
-	@Test
 	void testGetId() {
-		Item i = new Item("item de teste", 1, "teste, JUnit", false);
-		i.setId(12345678);
-		assertEquals(i.getId(), 12345678);
+		Item i = new Item("item de teste", 1, "teste, JUnit", false, 0);
+		assertEquals(i.getId(), 0);
 	}
 
 	@Test
 	void testGetDescricao() {
-		Item i = new Item("item de teste", 1, "teste, JUnit", false);
+		Item i = new Item("item de teste", 1, "teste, JUnit", false, 0);
 		assertEquals(i.getDescricao(), "item de teste");
 	}
 
 	@Test
 	void testGetQuantidade() {
-		Item i = new Item("item de teste", 1, "teste, JUnit", false);
+		Item i = new Item("item de teste", 1, "teste, JUnit", false, 0);
 		assertEquals(i.getQuantidade(), 1);
 	}
 
 	@Test
 	void testSetQuantidade() {
-		Item i = new Item("item de teste", 1, "teste, JUnit", false);
+		Item i = new Item("item de teste", 1, "teste, JUnit", false, 0);
 		i.setQuantidade(20);
 		assertEquals(i.getQuantidade(), 20);
 	}
 
 	@Test
 	void testSetTags() {
-		Item i = new Item("item de teste", 1, "teste, JUnit", false);
+		Item i = new Item("item de teste", 1, "teste, JUnit", false, 0);
 		i.setTags("JUnit, teste2");
 		assertEquals(i.toString(), "0 - item de teste, tags: [JUnit,  teste2], quantidade: 1");
 	}
 
 	@Test
 	void testToString() {
-		Item i = new Item("item de teste", 1, "teste, JUnit", false);
+		Item i = new Item("item de teste", 1, "teste, JUnit", false, 0);
 		assertEquals(i.toString(), "0 - item de teste, tags: [teste,  JUnit], quantidade: 1");
 	}
 
 	@Test
 	void testEhNecessario() {
-		Item i1 = new Item("item de teste", 1, "teste, JUnit", false);
-		Item i2 = new Item("item de teste", 1, "teste, JUnit", true);
+		Item i1 = new Item("item de teste", 1, "teste, JUnit", false, 0);
+		Item i2 = new Item("item de teste", 1, "teste, JUnit", true, 1);
 		assertEquals(i1.ehNecessario(), false);
 		assertEquals(i2.ehNecessario(), true);
 	}
 
 	@Test
 	void testEqualsObject() {
-		Item i1 = new Item("item de teste", 1, "teste, JUnit", false);
-		Item i2 = new Item("item de teste", 1, "teste, JUnit", true);
-		Item i3 = new Item("item de erro", 1, "teste, JUnit", true);
-		Item i4 = new Item("item de erro", 1, "erro, JUnit", true);
+		Item i1 = new Item("item de teste", 1, "teste, JUnit", false, 0);
+		Item i2 = new Item("item de teste", 1, "teste, JUnit", true, 1);
+		Item i3 = new Item("item de erro", 1, "teste, JUnit", true, 2);
+		Item i4 = new Item("item de erro", 1, "erro, JUnit", true, 3);
 		assertEquals(i1.equals(i2), true);
 		assertEquals(i1.equals(i3), false);
 		assertEquals(i1.equals(i4), false);
@@ -83,9 +75,9 @@ class ItemTest {
 
 	@Test
 	void testHashCode() {
-		Item i1 = new Item("item de teste", 1, "teste, JUnit", false);
-		Item i2 = new Item("item de teste", 1, "teste, JUnit", true);
-		Item i3 = new Item("item de erro", 1, "teste, JUnit", true);
+		Item i1 = new Item("item de teste", 1, "teste, JUnit", false, 0);
+		Item i2 = new Item("item de teste", 1, "teste, JUnit", true, 1);
+		Item i3 = new Item("item de erro", 1, "teste, JUnit", true, 2);
 		int item1 = i1.hashCode();
 		int item2 = i2.hashCode();
 		int item3 = i3.hashCode();

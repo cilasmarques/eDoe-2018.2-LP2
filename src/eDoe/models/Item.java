@@ -10,15 +10,12 @@ public class Item implements Item_eDoe { //, Comparable<Item> {
 	private boolean necessidade;
 	private int id = 0;
 
-	public Item(String descricao, int quantidade, String tags, boolean necessidade) {
+	public Item(String descricao, int quantidade, String tags, boolean ehNecessario, int id) {
+		this.id = id;
 		this.descricao = descricao;
 		this.quantidade = quantidade;
-		this.necessidade = necessidade;
+		this.necessidade = ehNecessario;
 		this.tags = stringToArray(tags);
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 	
 	public int getId() {

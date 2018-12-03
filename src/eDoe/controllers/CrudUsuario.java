@@ -136,6 +136,11 @@ public class CrudUsuario {
 		g.removeItemNecessario(u, idItem);
 	}
 
+	public String match(String idReceptor, int idItemNecessario) {
+		Usuario u = getUsuarioValido(idReceptor, "Receptor");
+		return g.match(u, idItemNecessario, this.usuarios);
+	}
+	
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	private Usuario getUsuarioValido(String idUsuario, String status) {
@@ -146,5 +151,6 @@ public class CrudUsuario {
 			throw new IllegalArgumentException("Usuario nao eh um " + status + ": " + idUsuario + ".");
 		return this.usuarios.get(idUsuario);
 	}
+
 
 }
