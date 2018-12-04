@@ -17,6 +17,7 @@ import eDoe.utils.Validador;
 public class GestorItem {
 
 	private Map<String, Integer> descritores = new LinkedHashMap<>();
+	private MatchMaker mm = new MatchMaker();
 	
 	public void adicionarDescritor(String descricao) {
 		Validador.validadorAdicionaDescritor(descricao, this.descritores);
@@ -98,10 +99,8 @@ public class GestorItem {
 	public String match(Usuario user, int idItemNecessario, Map<String, Usuario> todosUsuarios) {
 		Validador.verificadorRemoveItem(user, idItemNecessario);
 		Map<Item, String> todosOsItens = getAllItens(todosUsuarios);
-		String requisitoDeMatch = user.getItemPorId(idItemNecessario).getDescricao();
-		ArrayList<Item> arrayItensRequeridos = makeArrayItens(todosOsItens, requisitoDeMatch);
-		Collections.sort(arrayItensRequeridos, new IdComparator());
-		return makeListaItens(todosOsItens, arrayItensRequeridos);
+		Item itemDeMatch = user.getItemPorId(idItemNecessario);
+		return mm.matchMaker(todosOsItens, itemDeMatch);
 	}
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -129,12 +128,8 @@ public class GestorItem {
 			if (filtroDeItensRequeridos.equals("necessarios")) {
 				if (i.ehNecessario())
 					arrayItens.add(i);
-			} else if (filtroDeItensRequeridos.equals("todos")) {
+			} else if (filtroDeItensRequeridos.equals("todos"))
 				arrayItens.add(i);
-			} else if (this.descritores.containsKey(filtroDeItensRequeridos)) {
-				if (i.getDescricao().equals(filtroDeItensRequeridos))
-					arrayItens.add(i);
-			}
 		}
 		return arrayItens;
 	}

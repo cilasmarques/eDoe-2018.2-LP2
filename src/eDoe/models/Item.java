@@ -29,6 +29,10 @@ public class Item implements Item_eDoe { //, Comparable<Item> {
 	public int getQuantidade() {
 		return this.quantidade;
 	}
+	
+	public ArrayList<String> getTags() {
+		return this.tags;
+	}
 
 	public void setQuantidade(int quantidade) {
 		if (quantidade > 0)
