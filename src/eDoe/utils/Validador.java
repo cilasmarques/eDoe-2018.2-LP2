@@ -36,11 +36,8 @@ public class Validador {
 	}
 
 	public static void validadorRemoveUsuario(String idUser, Map<String, Usuario> usuarios) {
-		if (usuarios.containsKey(idUser)) {
-			usuarios.remove(idUser);
-			return;
-		}
-		throw new IllegalArgumentException("Usuario nao encontrado: " + idUser + ".");
+		if (!usuarios.containsKey(idUser))
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idUser + ".");
 	}
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Item ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

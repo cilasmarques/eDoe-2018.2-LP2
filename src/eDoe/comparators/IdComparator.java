@@ -1,4 +1,4 @@
-package eDoe.utils;
+package eDoe.comparators;
 
 import java.util.Comparator;
 

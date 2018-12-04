@@ -141,8 +141,6 @@ public abstract class Usuario implements Usuario_eDoe {
 		return makeListaItens();
 	}
 
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis Itens ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 	public Item getItemPorId(int idItem) {
 		if (itens.containsKey(idItem))
 			return this.itens.get(idItem);
@@ -156,6 +154,8 @@ public abstract class Usuario implements Usuario_eDoe {
 		}
 		return null;
 	}
+	
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis Itens ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	private Map<Item, String> makeListaItens() {
 		Map<Item, String> listaItens = new HashMap<>();

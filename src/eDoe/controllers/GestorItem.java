@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import eDoe.comparators.DescricaoComparator;
+import eDoe.comparators.IdComparator;
+import eDoe.comparators.QuantidadeComparator;
 import eDoe.models.Item;
 import eDoe.models.Usuario;
-import eDoe.utils.DescricaoComparator;
 import eDoe.utils.Ferramentas;
-import eDoe.utils.IdComparator;
-import eDoe.utils.QuantidadeComparator;
 import eDoe.utils.Validador;
 
 public class GestorItem {
@@ -163,6 +163,10 @@ public class GestorItem {
 			listaDescritores.set(i, quantidade + " - " + listaDescritores.get(i));
 		}
 		return listaDescritores;
+	}
+
+	public Map<String, Integer> getDescritores() {
+		return this.descritores;
 	}
 
 }

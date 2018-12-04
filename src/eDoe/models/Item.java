@@ -49,13 +49,13 @@ public class Item implements Item_eDoe { //, Comparable<Item> {
 	}
 
 	@Override
-	public String toString() {
-		return this.id + " - " + this.descricao + ", tags: " + this.tags + ", quantidade: " + this.quantidade;
+	public boolean ehNecessario() {
+		return this.necessidade;
 	}
 	
 	@Override
-	public boolean ehNecessario() {
-		return this.necessidade;
+	public String toString() {
+		return this.id + " - " + this.descricao + ", tags: " + this.tags + ", quantidade: " + this.quantidade;
 	}
 	
 	@Override

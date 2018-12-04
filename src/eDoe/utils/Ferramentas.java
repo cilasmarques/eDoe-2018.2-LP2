@@ -6,7 +6,7 @@ public class Ferramentas {
 
 	public static int idUnico = 10000000;
 	
-	public static final String ln = System.lineSeparator();
+	//public static final String ln = System.lineSeparator();
 
 	public static String arrayToString(ArrayList<?> array) {
 		if (array.isEmpty())

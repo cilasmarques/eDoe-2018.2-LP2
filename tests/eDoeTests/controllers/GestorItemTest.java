@@ -4,22 +4,122 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import eDoe.controllers.CrudUsuario;
+import eDoe.controllers.GestorItem;
+import eDoe.models.Item;
+
 class GestorItemTest {
 
 	@Test
 	void testAdicionarDescritor() {
-		fail("Not yet implemented");
+		GestorItem gi = new GestorItem();
+		gi.adicionarDescritor("descricao teste");
+		assertEquals(gi.getDescritores().containsKey("descricao teste"), true);
 	}
 
 	@Test
-	void testAdicionaItemParaDoacao() {
-		fail("Not yet implemented");
+	void testAdicionarDescritorNulo() {
+		GestorItem gi = new GestorItem();
+		try {
+			gi.adicionarDescritor(null);
+		} catch (IllegalArgumentException npe) {
+		}
 	}
+
+	@Test
+	void testAdicionarDescritorVazio() {
+		GestorItem gi = new GestorItem();
+		try {
+			gi.adicionarDescritor("");
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+	
+	@Test
+	void testAdicionaItemParaDoacao() {
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario ();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		gi.adicionaItemParaDoacao(cd.getUsuarioValido("12345678910", "doador"), "descricao", 1, "tags, teste");
+		assertEquals(gi.getDescritores().containsKey("descricao"), true);
+	}
+
+	@Test
+	void testAdicionaItemParaDoacaoDescritorNulo() {
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario ();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		try {
+			gi.adicionaItemParaDoacao(cd.getUsuarioValido("12345678910", "doador"), null, 1, "tags, teste");
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+	
+	@Test
+	void testAdicionaItemParaDoacaoDescritorVazio() {
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario ();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		try {
+			gi.adicionaItemParaDoacao(cd.getUsuarioValido("12345678910", "doador"), "", 1, "tags, teste");
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+	
+	@Test
+	void testAdicionaItemParaDoacaoQuantidadeZero() {
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario ();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		try {
+			gi.adicionaItemParaDoacao(cd.getUsuarioValido("12345678910", "doador"), "descricao", 0, "tags, teste");
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+	
+	@Test
+	void testAdicionaItemParaDoacaoQuantidadeNegativa() {
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario ();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		try {
+			gi.adicionaItemParaDoacao(cd.getUsuarioValido("12345678910", "doador"), "descricao", -1, "tags, teste");
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+	
+	@Test
+	void testAdicionaItemParaDoacaoTagsNula() {
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario ();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		try {
+			gi.adicionaItemParaDoacao(cd.getUsuarioValido("12345678910", "doador"), "descricao", 1, null);
+		} catch (NullPointerException npe) {
+		}
+	}
+	
+	@Test
+	void testAdicionaItemParaDoacaoTagsVazia() {
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario ();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		try {
+			gi.adicionaItemParaDoacao(cd.getUsuarioValido("12345678910", "doador"), "descricao", 1, "");
+		} catch (NullPointerException npe) {
+		}
+	}
+	
 
 	@Test
 	void testExibeItem() {
-		fail("Not yet implemented");
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario ();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste");
+		assertEquals(gi.exibeItem(cd.getUsuarioValido("12345678910", "doador"), 12),"12345678910 - descricao, tags: tags, teste, quantidade: 1");
 	}
+
 
 	@Test
 	void testAtualizaItemParaDoacao() {

@@ -11,22 +11,59 @@ public class Facade {
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Usuario ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+	/**
+	 * Método responsável por ler receptores
+	 * 
+	 * @param caminho Caminho que indica a localização do arquivo dos receptores
+	 * @throws IOException Excessão lançada caso haja falha na leitura
+	 */
 	public void lerReceptores(String caminho) throws IOException {
 		this.cd.lerReceptores(caminho);
 	}
 
+	/**
+	 * Método responsável por adicionar o doador
+	 * 
+	 * @param id      Documento de identificação do doador
+	 * @param nome    Nome do doador
+	 * @param email   Email do doador
+	 * @param celular Celular do doador
+	 * @param classe  Classe do doador
+	 * @return Retorna o ID do usuário adicionado
+	 */
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
 		return this.cd.adicionarDoador(id, nome, email, celular, classe);
 	}
 
+	/**
+	 * Método que pesquisa e identifica o usuário pelo o seu ID
+	 * 
+	 * @param id Documento de identificação do doador
+	 * @return String com o usuário correspondente ao ID
+	 */
 	public String pesquisaUsuarioPorId(String id) {
 		return this.cd.pesquisaUsuarioPorId(id);
 	}
 
+	/**
+	 * Método que pesquisa e identifica o usuário pelo o seu nome
+	 * 
+	 * @param nome Nome do doador
+	 * @return String com a sequência de usuários que possuem o nome pesquisado
+	 */
 	public String pesquisaUsuarioPorNome(String nome) {
 		return this.cd.pesquisaUsuarioPorNome(nome);
 	}
 
+	/**
+	 * Método responsável por editar informações do usuário
+	 * 
+	 * @param id      Documento de identificação do doador atualizado
+	 * @param nome    Nome do doador atualizado
+	 * @param email   Email do doador atualizado
+	 * @param celular Celular do doador atualizado
+	 * @return String do usuário com as informações atualizadas
+	 */
 	public String atualizaUsuario(String id, String nome, String email, String celular) {
 		return this.cd.atualizaUsuario(id, nome, email, celular);
 	}
@@ -84,8 +121,8 @@ public class Facade {
 	public void removeItemNecessario(String idReceptor, int idItem) {
 		this.cd.removeItemNecessario(idReceptor, idItem);
 	}
-	
-	public String match (String idReceptor, int idItemNecessario) {
+
+	public String match(String idReceptor, int idItemNecessario) {
 		return this.cd.match(idReceptor, idItemNecessario);
 	}
 
