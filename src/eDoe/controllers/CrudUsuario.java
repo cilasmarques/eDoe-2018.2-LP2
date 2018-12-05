@@ -84,9 +84,9 @@ public class CrudUsuario {
 		this.g.adicionarDescritor(descricao);
 	}
 
-	public int adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags) {
+	public int adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags, int idItem) {
 		Usuario u = getUsuarioValido(idDoador, "doador");
-		return this.g.adicionaItemParaDoacao(u, descricao, quantidade, tags);
+		return this.g.adicionaItemParaDoacao(u, descricao, quantidade, tags, idItem);
 	}
 
 	public String exibeItem(int idItem, String idDoador) {

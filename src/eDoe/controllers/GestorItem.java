@@ -24,11 +24,11 @@ public class GestorItem {
 		this.descritores.put(descricao.toLowerCase().trim(), 0);
 	}
 
-	public int adicionaItemParaDoacao(Usuario doador, String descricao, int quantidade, String tags) {
+	public int adicionaItemParaDoacao(Usuario doador, String descricao, int quantidade, String tags, int idItem) {
 		Validador.validadorAdicionaItem(descricao, quantidade);
 		String descrMin = descricao.toLowerCase().trim();
 		this.descritores.put(descrMin, quantidade);
-		return doador.adicionaItemParaDoacao(descricao, quantidade, tags, false);
+		return doador.adicionaItemParaDoacao(descricao, quantidade, tags, false, idItem);
 	}
 
 	public String exibeItem(Usuario user, int idItem) {

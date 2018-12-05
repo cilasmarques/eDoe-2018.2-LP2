@@ -3,6 +3,7 @@ package eDoe;
 import java.io.IOException;
 
 import eDoe.controllers.CrudUsuario;
+import eDoe.utils.Ferramentas;
 import easyaccept.EasyAccept;
 
 public class Facade {
@@ -79,7 +80,7 @@ public class Facade {
 	}
 
 	public int adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags) {
-		return this.cd.adicionaItemParaDoacao(idDoador, descricao, quantidade, tags);
+		return this.cd.adicionaItemParaDoacao(idDoador, descricao, quantidade, tags, Ferramentas.idUnico += 1);
 	}
 
 	public String exibeItem(int idItem, String idDoador) {

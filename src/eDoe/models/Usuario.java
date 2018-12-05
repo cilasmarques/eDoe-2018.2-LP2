@@ -81,8 +81,8 @@ public abstract class Usuario implements Usuario_eDoe {
 
 	private Map<Integer, Item> itens = new LinkedHashMap<Integer, Item>();
 
-	public int adicionaItemParaDoacao(String descricao, int quantidade, String tags, boolean ehNecessario) {
-		Item i = new Item(descricao, quantidade, tags, ehNecessario, Ferramentas.idUnico += 1);
+	public int adicionaItemParaDoacao(String descricao, int quantidade, String tags, boolean ehNecessario, int idItem) {
+		Item i = new Item(descricao, quantidade, tags, ehNecessario, idItem);
 		if (this.itens.values().contains(i)) {
 			Item iExistente = getItemPorDescricao(descricao);
 			iExistente.setQuantidade(quantidade);

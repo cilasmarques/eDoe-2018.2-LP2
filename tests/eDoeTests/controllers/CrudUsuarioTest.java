@@ -180,7 +180,7 @@ class CrudUsuarioTest {
 	@Test
 	void testAdicionaItemParaDoacao() {
 		CrudUsuario cd = new CrudUsuario();
-		cd.adicionaItemParaDoacao("12345678910", "item de teste", 1, "teste, JUnit");
+		cd.adicionaItemParaDoacao("12345678910", "item de teste", 1, "teste, JUnit", 12);
 	}
 
 	@Test
