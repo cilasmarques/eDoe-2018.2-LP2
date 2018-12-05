@@ -2,11 +2,22 @@ package eDoeTests.controllers;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 
 import eDoe.controllers.CrudUsuario;
+import eDoe.controllers.GestorItem;
 
 class CrudUsuarioTest {
+	
+	@Test
+	void testLerReceptores() throws IOException {
+		CrudUsuario cd = new CrudUsuario();
+		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		assertEquals(cd.pesquisaUsuarioPorId("84473712044"),
+				"Murilo Luiz Brito/84473712044, muriloluizbrito-81@ipmmi.org.br, (31) 99776-7434, status: receptor");
+	}
 
 	@Test
 	void testAdicionarDoador() {
@@ -14,6 +25,78 @@ class CrudUsuarioTest {
 		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
 		assertEquals(cd.pesquisaUsuarioPorId("12345678910"),
 				"Cilas/12345678910, meuemail@gmail.com, (83) 9.9999-0000, status: doador");
+	}
+
+	@Test
+	void testAdicionarDoadorNomeNulo() {
+		CrudUsuario cd = new CrudUsuario();
+		try {
+			cd.adicionarDoador("12345678910", null, "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+
+	@Test
+	void testAdicionarDoadorNomeVazio() {
+		CrudUsuario cd = new CrudUsuario();
+		try {
+			cd.adicionarDoador("12345678910", "", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+
+	@Test
+	void testAdicionarDoadorEmailNulo() {
+		CrudUsuario cd = new CrudUsuario();
+		try {
+			cd.adicionarDoador("12345678910", "Cilas", null, "(83) 9.9999-0000", "IGREJA");
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+
+	@Test
+	void testAdicionarDoadorEmailVazio() {
+		CrudUsuario cd = new CrudUsuario();
+		try {
+			cd.adicionarDoador("12345678910", "Cilas", "", "(83) 9.9999-0000", "IGREJA");
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+
+	@Test
+	void testAdicionarDoadorCelularNulo() {
+		CrudUsuario cd = new CrudUsuario();
+		try {
+			cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", null, "IGREJA");
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+
+	@Test
+	void testAdicionarDoadorCelularVazio() {
+		CrudUsuario cd = new CrudUsuario();
+		try {
+			cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "", "IGREJA");
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+
+	@Test
+	void testAdicionarDoadorClasseNulo() {
+		CrudUsuario cd = new CrudUsuario();
+		try {
+			cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", null);
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+
+	@Test
+	void testAdicionarDoadorClasseVazia() {
+		CrudUsuario cd = new CrudUsuario();
+		try {
+			cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "");
+		} catch (IllegalArgumentException npe) {
+		}
 	}
 
 	@Test
@@ -69,6 +152,14 @@ class CrudUsuarioTest {
 	}
 
 	@Test
+	void testAdicionarDescritor() {
+		CrudUsuario cd = new CrudUsuario();
+		GestorItem gi = new GestorItem();
+		cd.adicionarDescritor("descircao teste");
+		assertEquals(gi.getDescritores().containsKey("descricao teste"), true);
+	}
+
+	@Test
 	void testAdicionarDescritorVazio() {
 		CrudUsuario cd = new CrudUsuario();
 		try {
@@ -90,6 +181,66 @@ class CrudUsuarioTest {
 	void testAdicionaItemParaDoacao() {
 		CrudUsuario cd = new CrudUsuario();
 		cd.adicionaItemParaDoacao("12345678910", "item de teste", 1, "teste, JUnit");
+	}
+
+	@Test
+	void testExibeItem() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testAtualizaItemParaDoacao() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testRemoveItemParaDoacao() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testListaDescritorDeItensParaDoacao() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testListaItensParaDoacao() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testPesquisaItemParaDoacaoPorDescricao() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testAdicionaItemNecessario() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testAtualizaItemNecessario() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testListaItensNecessarios() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testRemoveItemNecessario() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testMatch() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetUsuarioValido() {
+		fail("Not yet implemented");
 	}
 
 }

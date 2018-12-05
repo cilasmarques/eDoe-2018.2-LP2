@@ -123,7 +123,8 @@ class GestorItemTest {
 
 	@Test
 	void testAtualizaItemParaDoacao() {
-		fail("Not yet implemented");
+		GestorItem gi = new GestorItem();
+		
 	}
 
 	@Test
