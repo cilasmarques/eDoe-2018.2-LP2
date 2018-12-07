@@ -43,7 +43,7 @@ public class Item implements Item_eDoe { //, Comparable<Item> {
 	private ArrayList<String> stringToArray(String str) {
 		ArrayList<String> array = new ArrayList<String>();
 		for (String s : str.split(",")) {
-			array.add(s);
+			array.add(s.trim());
 		}
 		return array;
 	}

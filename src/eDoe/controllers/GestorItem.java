@@ -16,18 +16,22 @@ import eDoe.utils.Validador;
 
 public class GestorItem {
 
-	private Map<String, Integer> descritores = new LinkedHashMap<>();
+	private Map<String, Integer> descritores; 
+	
+	public GestorItem() {
+		this.descritores = new LinkedHashMap<>();
+	} 
 	
 	public void adicionarDescritor(String descricao) {
 		Validador.validadorAdicionaDescritor(descricao, this.descritores);
 		this.descritores.put(descricao.toLowerCase().trim(), 0);
 	}
 
-	public int adicionaItemParaDoacao(Usuario doador, String descricao, int quantidade, String tags) {
+	public int adicionaItemParaDoacao(Usuario doador, String descricao, int quantidade, String tags, int idItem) {
 		Validador.validadorAdicionaItem(descricao, quantidade);
 		String descrMin = descricao.toLowerCase().trim();
 		this.descritores.put(descrMin, quantidade);
-		return doador.adicionaItemParaDoacao(descricao, quantidade, tags, false);
+		return doador.adicionaItemParaDoacao(descricao, quantidade, tags, false, idItem);
 	}
 
 	public String exibeItem(Usuario user, int idItem) {
@@ -70,10 +74,10 @@ public class GestorItem {
 		return makeListaItens(itensComDescricao, arrayItensRequeridos);
 	}
 
-	public int adicionaItemNecessario(Usuario receptor, String descricao, int quantidade, String tags) {
+	public int adicionaItemNecessario(Usuario receptor, String descricao, int quantidade, String tags, int idItem) {
 		Validador.validadorAdicionaItem(descricao, quantidade);
 		String descrMin = descricao.toLowerCase().trim();
-		return receptor.adicionaItemNecessario(descrMin, quantidade, tags, true);
+		return receptor.adicionaItemNecessario(descrMin, quantidade, tags, true, idItem);
 	}
 
 	public String atualizaNecessario(Usuario user, int idItem, int novaQuantidade, String novasTags) {
@@ -103,7 +107,7 @@ public class GestorItem {
 		Collections.sort(arrayItensRequeridos, new IdComparator());
 		return makeListaItens(todosOsItens, arrayItensRequeridos);
 	}
-
+	
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	private String makeListaItens(Map<?, String> listaItens, ArrayList<Item> arrayItensRequeridos) {

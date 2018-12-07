@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import eDoe.utils.Ferramentas;
-
 public abstract class Usuario implements Usuario_eDoe {
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Usuario ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -81,8 +79,8 @@ public abstract class Usuario implements Usuario_eDoe {
 
 	private Map<Integer, Item> itens = new LinkedHashMap<Integer, Item>();
 
-	public int adicionaItemParaDoacao(String descricao, int quantidade, String tags, boolean ehNecessario) {
-		Item i = new Item(descricao, quantidade, tags, ehNecessario, Ferramentas.idUnico += 1);
+	public int adicionaItemParaDoacao(String descricao, int quantidade, String tags, boolean ehNecessario, int idItem) {
+		Item i = new Item(descricao, quantidade, tags, ehNecessario, idItem);
 		if (this.itens.values().contains(i)) {
 			Item iExistente = getItemPorDescricao(descricao);
 			iExistente.setQuantidade(quantidade);
@@ -113,8 +111,8 @@ public abstract class Usuario implements Usuario_eDoe {
 		return makeListaItens();
 	}
 
-	public int adicionaItemNecessario(String descricao, int quantidade, String tags, boolean ehNecessario) {
-		Item i = new Item(descricao, quantidade, tags, ehNecessario, Ferramentas.idUnico += 1);
+	public int adicionaItemNecessario(String descricao, int quantidade, String tags, boolean ehNecessario, int idItem) {
+		Item i = new Item(descricao, quantidade, tags, ehNecessario, idItem);
 		if (this.itens.values().contains(i)) {
 			Item iExistente = getItemPorDescricao(descricao);
 			iExistente.setQuantidade(quantidade);

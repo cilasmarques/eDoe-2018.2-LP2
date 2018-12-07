@@ -15,9 +15,14 @@ import eDoe.utils.Validador;
 
 public class CrudUsuario {
 
-	private Map<String, Usuario> usuarios = new LinkedHashMap<String, Usuario>();
-	private GestorItem g = new GestorItem();
+	private Map<String, Usuario> usuarios;
+	private GestorItem g;
 
+	public CrudUsuario () {
+		this.usuarios = new LinkedHashMap<String, Usuario>();
+		this.g = new GestorItem();
+	}	
+	
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Usuario ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	public void lerReceptores(String caminho) throws IOException {
@@ -84,9 +89,9 @@ public class CrudUsuario {
 		g.adicionarDescritor(descricao);
 	}
 
-	public int adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags) {
+	public int adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags, int idItem) {
 		Usuario u = getUsuarioValido(idDoador, "doador");
-		return g.adicionaItemParaDoacao(u, descricao, quantidade, tags);
+		return g.adicionaItemParaDoacao(u, descricao, quantidade, tags, idItem);
 	}
 
 	public String exibeItem(int idItem, String idDoador) {
@@ -117,9 +122,9 @@ public class CrudUsuario {
 		return g.pesquisaItemParaDoacaoPorDescricao(descricao, this.usuarios);
 	}
 
-	public int adicionaItemNecessario(String idReceptor, String descricao, int quantidade, String tags) {
+	public int adicionaItemNecessario(String idReceptor, String descricao, int quantidade, String tags, int idItem) {
 		Usuario u = getUsuarioValido(idReceptor, "Receptor");
-		return g.adicionaItemNecessario(u, descricao, quantidade, tags);
+		return g.adicionaItemNecessario(u, descricao, quantidade, tags, idItem);
 	}
 
 	public String atualizaItemNecessario(String idReceptor, int idItem, int novaQuantidade, String novasTags) {
