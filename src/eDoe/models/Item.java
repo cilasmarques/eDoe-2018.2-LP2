@@ -9,7 +9,9 @@ public class Item implements Item_eDoe { //, Comparable<Item> {
 	private int quantidade;
 	private boolean necessidade;
 	private int id = 0;
-
+	private int pontuacaoMatch = 0;
+	private String fichaTecnica;
+	
 	public Item(String descricao, int quantidade, String tags, boolean ehNecessario, int id) {
 		this.id = id;
 		this.descricao = descricao;
@@ -47,11 +49,27 @@ public class Item implements Item_eDoe { //, Comparable<Item> {
 	private ArrayList<String> stringToArray(String str) {
 		ArrayList<String> array = new ArrayList<String>();
 		for (String s : str.split(",")) {
-			array.add(s);
+			array.add(s.trim());
 		}
 		return array;
 	}
 
+	public int getPontuacao() {
+		return this.pontuacaoMatch;
+	}
+
+	public void setPontuacao(int pontuacao) {
+		this.pontuacaoMatch = pontuacao;
+	}
+
+	public void putFichaTecnica(String fichaTecnica) {
+		this.fichaTecnica = fichaTecnica;
+	}
+	
+	public String getFichaTecnica() {
+		return this.fichaTecnica;
+	}
+	
 	@Override
 	public boolean ehNecessario() {
 		return this.necessidade;

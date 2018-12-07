@@ -15,8 +15,13 @@ import eDoe.utils.Validador;
 
 public class CrudUsuario {
 
-	private Map<String, Usuario> usuarios = new LinkedHashMap<String, Usuario>();
-	private GestorItem g = new GestorItem();
+	private Map<String, Usuario> usuarios;
+	private GestorItem g;
+
+	public CrudUsuario() {
+		this.usuarios = new LinkedHashMap<String, Usuario>();
+		this.g = new GestorItem();
+	}
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Usuario ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -81,76 +86,75 @@ public class CrudUsuario {
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Item ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	public void adicionarDescritor(String descricao) {
-		this.g.adicionarDescritor(descricao);
+		g.adicionarDescritor(descricao);
 	}
 
-	public int adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags) {
+	public int adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags, int idItem) {
 		Usuario u = getUsuarioValido(idDoador, "doador");
-		return this.g.adicionaItemParaDoacao(u, descricao, quantidade, tags);
+		return g.adicionaItemParaDoacao(u, descricao, quantidade, tags, idItem);
 	}
 
 	public String exibeItem(int idItem, String idDoador) {
 		Usuario u = getUsuarioValido(idDoador, "doador");
-		return this.g.exibeItem(u, idItem);
+		return g.exibeItem(u, idItem);
 	}
 
 	public String atualizaItemParaDoacao(int idItem, String idDoador, int novaQuantidade, String novasTags) {
 		Usuario u = getUsuarioValido(idDoador, "doador");
-		return this.g.atualizaItemParaDoacao(u, idItem, novaQuantidade, novasTags);
+		return g.atualizaItemParaDoacao(u, idItem, novaQuantidade, novasTags);
 	}
 
 	public void removeItemParaDoacao(int idItem, String idDoador) {
 		Usuario u = getUsuarioValido(idDoador, "doador");
-		this.g.removeItemParaDoacao(u, idItem);
+		g.removeItemParaDoacao(u, idItem);
 	}
 
 	public String listaDescritorDeItensParaDoacao() {
-		return this.g.listaDescritorDeItensParaDoacao();
+		return g.listaDescritorDeItensParaDoacao();
 	}
 
 	public String listaItensParaDoacao() {
-		return this.g.listaTodosOsItensExistentes(this.usuarios);
+		return g.listaTodosOsItensExistentes(this.usuarios);
 	}
 
 	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
 		Validador.validadorParametro(descricao, "Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
-		return this.g.pesquisaItemParaDoacaoPorDescricao(descricao, this.usuarios);
+		return g.pesquisaItemParaDoacaoPorDescricao(descricao, this.usuarios);
 	}
 
-	public int adicionaItemNecessario(String idReceptor, String descricao, int quantidade, String tags) {
+	public int adicionaItemNecessario(String idReceptor, String descricao, int quantidade, String tags, int idItem) {
 		Usuario u = getUsuarioValido(idReceptor, "Receptor");
-		return this.g.adicionaItemNecessario(u, descricao, quantidade, tags);
+		return g.adicionaItemNecessario(u, descricao, quantidade, tags, idItem);
 	}
 
 	public String atualizaItemNecessario(String idReceptor, int idItem, int novaQuantidade, String novasTags) {
 		Usuario u = getUsuarioValido(idReceptor, "Receptor");
-		return this.g.atualizaNecessario(u, idItem, novaQuantidade, novasTags);
+		return g.atualizaNecessario(u, idItem, novaQuantidade, novasTags);
 	}
 
 	public String listaItensNecessarios() {
-		return this.g.listaItensNecessarios(this.usuarios);
+		return g.listaItensNecessarios(this.usuarios);
 	}
 
 	public void removeItemNecessario(String idReceptor, int idItem) {
 		Usuario u = getUsuarioValido(idReceptor, "Receptor");
-		this.g.removeItemNecessario(u, idItem);
+		g.removeItemNecessario(u, idItem);
 	}
 
 	public String match(String idReceptor, int idItemNecessario) {
 		Usuario u = getUsuarioValido(idReceptor, "Receptor");
-		return this.g.match(u, idItemNecessario, this.usuarios);
+		return g.match(u, idItemNecessario, this.usuarios);
 	}
-	
+
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	public Usuario getUsuarioValido(String idUsuario, String status) {
+	private Usuario getUsuarioValido(String idUsuario, String status) {
 		Validador.validadorParametro(idUsuario, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		if (!this.usuarios.containsKey(idUsuario))
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idUsuario + ".");
 		if (!usuarios.get(idUsuario).getStatus().equals(status))
-			throw new IllegalArgumentException("Usuario nao eh um " + status + ": " + idUsuario + ".");
+			throw new IllegalArgumentException("O Usuario deve ser um " + status.toLowerCase() + ": " + idUsuario + ".");
 		return this.usuarios.get(idUsuario);
 	}
-
 
 }
