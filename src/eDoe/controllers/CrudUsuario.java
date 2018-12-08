@@ -91,7 +91,7 @@ public class CrudUsuario {
 
 	public int adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags, int idItem) {
 		Usuario u = getUsuarioValido(idDoador, "doador");
-		return g.adicionaItemParaDoacao(u, descricao, quantidade, tags, idItem);
+		return this.g.adicionaItemParaDoacao(u, descricao, quantidade, tags, idItem);
 	}
 
 	public String exibeItem(int idItem, String idDoador) {
@@ -148,7 +148,7 @@ public class CrudUsuario {
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	private Usuario getUsuarioValido(String idUsuario, String status) {
+	public Usuario getUsuarioValido(String idUsuario, String status) {
 		Validador.validadorParametro(idUsuario, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		if (!this.usuarios.containsKey(idUsuario))
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idUsuario + ".");

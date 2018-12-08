@@ -33,7 +33,7 @@ public class GestorItem {
 		Validador.validadorAdicionaItem(descricao, quantidade);
 		String descrMin = descricao.toLowerCase().trim();
 		this.descritores.put(descrMin, quantidade);
-		return doador.adicionaItemParaDoacao(descrMin, quantidade, tags, false, idItem);
+		return doador.adicionaItemParaDoacao(descricao, quantidade, tags, false, idItem);
 	}
 
 	public String exibeItem(Usuario user, int idItem) {
@@ -171,6 +171,10 @@ public class GestorItem {
 			listaDescritores.set(i, quantidade + " - " + listaDescritores.get(i));
 		}
 		return listaDescritores;
+	}
+
+	public Map<String, Integer> getDescritores() {
+		return this.descritores;
 	}
 
 }

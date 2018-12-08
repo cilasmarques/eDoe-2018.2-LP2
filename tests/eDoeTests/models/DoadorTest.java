@@ -10,12 +10,12 @@ import eDoe.models.Doador;
 class DoadorTest {
 
 	public Doador d;
-	
+
 	@BeforeEach
 	void testItem() {
 		this.d = new Doador("10020030040", "cilas", "email123@email.com", "(83) 9.9999-0000", "IGREJA", "doador");
 	}
-	
+
 	@Test
 	void testDoador() {
 		assertEquals(this.d.toString(), "cilas/10020030040, email123@email.com, (83) 9.9999-0000, status: doador");

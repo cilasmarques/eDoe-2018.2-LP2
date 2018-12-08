@@ -10,12 +10,12 @@ import eDoe.models.Item;
 class ItemTest {
 
 	public Item i;
-	
+
 	@BeforeEach
 	void testItem() {
 		this.i = new Item("item de teste", 1, "teste, JUnit", false, 0);
 	}
-		
+
 	@Test
 	void testGetId() {
 		assertEquals(this.i.getId(), 0);
@@ -47,7 +47,7 @@ class ItemTest {
 	void testToString() {
 		assertEquals(this.i.toString(), "0 - item de teste, tags: [teste, JUnit], quantidade: 1");
 	}
-	
+
 	@Test
 	void testEhNecessario() {
 		Item i1 = new Item("item de teste", 1, "teste, JUnit", false, 0);
