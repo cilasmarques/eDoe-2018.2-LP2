@@ -2,12 +2,12 @@ package eDoe.controllers;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import eDoe.comparators.DescricaoComparator;
 import eDoe.comparators.IdComparator;
+import eDoe.comparators.MatchComparator;
 import eDoe.comparators.QuantidadeComparator;
 import eDoe.models.Item;
 import eDoe.models.Usuario;
@@ -16,9 +16,14 @@ import eDoe.utils.Validador;
 
 public class GestorItem {
 
-	private Map<String, Integer> descritores = new LinkedHashMap<>();
-	private MatchMaker mm = new MatchMaker();
-	
+	private Map<String, Integer> descritores;
+	private MatchMaker mm;
+
+	public GestorItem() {
+		this.descritores = new LinkedHashMap<>();
+		this.mm = new MatchMaker();
+	}
+
 	public void adicionarDescritor(String descricao) {
 		Validador.validadorAdicionaDescritor(descricao, this.descritores);
 		this.descritores.put(descricao.toLowerCase().trim(), 0);
@@ -54,27 +59,25 @@ public class GestorItem {
 	}
 
 	public String listaTodosOsItensExistentes(Map<String, Usuario> todosUsuarios) {
-		Map<Item, String> todosOsItens = getAllItens(todosUsuarios);
-		ArrayList<Item> arrayItensRequeridos = makeArrayItens(todosOsItens, "todos");
+		ArrayList<Item> arrayItensRequeridos = filtraItens(getAllItens(todosUsuarios), "todos");
 		Collections.sort(arrayItensRequeridos, new QuantidadeComparator());
-		return makeListaItens(todosOsItens, arrayItensRequeridos);
+		return makeListaItens(arrayItensRequeridos, "fichaTecnica");
 	}
 
 	public String pesquisaItemParaDoacaoPorDescricao(String descricao, Map<String, Usuario> todosUsuarios) {
-		Map<Item, String> itensComDescricao = new HashMap<>();
-		for (Item i : getAllItens(todosUsuarios).keySet()) {
+		ArrayList<Item> arrayItensRequeridos = new ArrayList<>();
+		for (Item i : getAllItens(todosUsuarios)) {
 			if (i.toString().contains(descricao))
-				itensComDescricao.put(i, i.toString());
+				arrayItensRequeridos.add(i);
 		}
-		ArrayList<Item> arrayItensRequeridos = makeArrayItens(itensComDescricao, "todos");
 		Collections.sort(arrayItensRequeridos, new DescricaoComparator());
-		return makeListaItens(itensComDescricao, arrayItensRequeridos);
+		return makeListaItens(arrayItensRequeridos, "toString");
 	}
 
-	public int adicionaItemNecessario(Usuario receptor, String descricao, int quantidade, String tags) {
+	public int adicionaItemNecessario(Usuario receptor, String descricao, int quantidade, String tags, int idItem) {
 		Validador.validadorAdicionaItem(descricao, quantidade);
 		String descrMin = descricao.toLowerCase().trim();
-		return receptor.adicionaItemNecessario(descrMin, quantidade, tags, true);
+		return receptor.adicionaItemNecessario(descrMin, quantidade, tags, true, idItem);
 	}
 
 	public String atualizaNecessario(Usuario user, int idItem, int novaQuantidade, String novasTags) {
@@ -85,10 +88,9 @@ public class GestorItem {
 	}
 
 	public String listaItensNecessarios(Map<String, Usuario> todosUsuarios) {
-		Map<Item, String> todosOsItens = getAllItens(todosUsuarios);
-		ArrayList<Item> arrayItensRequeridos = makeArrayItens(todosOsItens, "necessarios");
+		ArrayList<Item> arrayItensRequeridos = filtraItens(getAllItens(todosUsuarios), "necessarios");
 		Collections.sort(arrayItensRequeridos, new IdComparator());
-		return makeListaItens(todosOsItens, arrayItensRequeridos);
+		return makeListaItens(arrayItensRequeridos, "fichaTecnica");
 	}
 
 	public void removeItemNecessario(Usuario user, int idItem) {
@@ -98,37 +100,48 @@ public class GestorItem {
 
 	public String match(Usuario user, int idItemNecessario, Map<String, Usuario> todosUsuarios) {
 		Validador.verificadorRemoveItem(user, idItemNecessario);
-		Map<Item, String> todosOsItens = getAllItens(todosUsuarios);
 		Item itemDeMatch = user.getItemPorId(idItemNecessario);
-		return mm.matchMaker(todosOsItens, itemDeMatch);
+		ArrayList<Item> todasAsDoacoes = filtraItens(getAllItens(todosUsuarios), "doacoes");
+		ArrayList<Item> arrayItensRequeridos = mm.getItensMatchMaker(todasAsDoacoes, itemDeMatch);
+		Collections.sort(arrayItensRequeridos, new MatchComparator());
+		return makeListaItens(arrayItensRequeridos, "fichaTecnica");
 	}
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	private String makeListaItens(Map<?, String> listaItens, ArrayList<Item> arrayItensRequeridos) {
-		String saida = listaItens.get(arrayItensRequeridos.get(0));
-		for (int i = 1; i < arrayItensRequeridos.size(); i++) {
-			saida += " | " + listaItens.get(arrayItensRequeridos.get(i));
+	private String makeListaItens(ArrayList<Item> arrayItensRequeridos, String tipoDeSaida) {
+		String saida = "";
+		if (arrayItensRequeridos.isEmpty())
+			return saida;
+		else if (tipoDeSaida.equals("toString"))
+			saida = Ferramentas.arrayToString(arrayItensRequeridos);
+		else if (tipoDeSaida.equals("fichaTecnica")) {
+			saida = arrayItensRequeridos.get(0).getFichaTecnica();
+			for (int i = 1; i < arrayItensRequeridos.size(); i++) {
+				saida += " | " + arrayItensRequeridos.get(i).getFichaTecnica();
+			}
 		}
 		return saida;
 	}
 
-	private Map<Item, String> getAllItens(Map<String, Usuario> todosUsuarios) {
-		Map<Item, String> listaAllItens = new HashMap<>();
+	private ArrayList<Item> getAllItens(Map<String, Usuario> todosUsuarios) {
+		ArrayList<Item> listaAllItens = new ArrayList<>();
 		for (Usuario u : todosUsuarios.values()) {
-			if (!u.listaItens().isEmpty() && u != null)
-				listaAllItens.putAll(u.listaItens());
+			if (!u.listaItens().isEmpty() && u != null) {
+				listaAllItens.addAll(u.listaItens());
+			}
 		}
 		return listaAllItens;
 	}
 
-	private ArrayList<Item> makeArrayItens(Map<Item, String> listaItens, String filtroDeItensRequeridos) {
+	private ArrayList<Item> filtraItens(ArrayList<Item> listaItens, String filtroDeItensRequeridos) {
 		ArrayList<Item> arrayItens = new ArrayList<>();
-		for (Item i : listaItens.keySet()) {
-			if (filtroDeItensRequeridos.equals("necessarios")) {
-				if (i.ehNecessario())
-					arrayItens.add(i);
-			} else if (filtroDeItensRequeridos.equals("todos"))
+		for (Item i : listaItens) {
+			if (i.ehNecessario() && filtroDeItensRequeridos.equals("necessarios"))
+				arrayItens.add(i);
+			else if (!i.ehNecessario() && filtroDeItensRequeridos.equals("doacoes"))
+				arrayItens.add(i);
+			else if (filtroDeItensRequeridos.equals("todos"))
 				arrayItens.add(i);
 		}
 		return arrayItens;
@@ -153,7 +166,7 @@ public class GestorItem {
 			listaDescritores.add(key);
 		}
 		Collections.sort(listaDescritores);
-		for (int i= 0; i < listaDescritores.size(); i ++) {
+		for (int i = 0; i < listaDescritores.size(); i++) {
 			int quantidade = this.descritores.get(listaDescritores.get(i));
 			listaDescritores.set(i, quantidade + " - " + listaDescritores.get(i));
 		}

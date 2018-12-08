@@ -108,7 +108,7 @@ public class Facade {
 	}
 
 	public int adicionaItemNecessario(String idReceptor, String descricao, int quantidade, String tags) {
-		return this.cd.adicionaItemNecessario(idReceptor, descricao, quantidade, tags);
+		return this.cd.adicionaItemNecessario(idReceptor, descricao, quantidade, tags, Ferramentas.idUnico += 1);
 	}
 
 	public String atualizaItemNecessario(String idReceptor, int idItem, int novaQuantidade, String novasTags) {

@@ -180,7 +180,8 @@ class CrudUsuarioTest {
 	@Test
 	void testAdicionaItemParaDoacao() {
 		CrudUsuario cd = new CrudUsuario();
-		cd.adicionaItemParaDoacao("12345678910", "item de teste", 1, "teste, JUnit", 12);
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "teste", 2, "teste, JUnit", 12345678);
 	}
 
 	@Test

@@ -2,54 +2,50 @@ package eDoeTests.models;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import eDoe.models.Item;
 
 class ItemTest {
 
-	@Test
+	public Item i;
+
+	@BeforeEach
 	void testItem() {
-		Item i = new Item("item de teste", 1, "teste, JUnit", false, 0);
-		assertEquals(i.toString(), "0 - item de teste, tags: [teste,  JUnit], quantidade: 1");
+		this.i = new Item("item de teste", 1, "teste, JUnit", false, 0);
 	}
 
 	@Test
 	void testGetId() {
-		Item i = new Item("item de teste", 1, "teste, JUnit", false, 0);
-		assertEquals(i.getId(), 0);
+		assertEquals(this.i.getId(), 0);
 	}
 
 	@Test
 	void testGetDescricao() {
-		Item i = new Item("item de teste", 1, "teste, JUnit", false, 0);
-		assertEquals(i.getDescricao(), "item de teste");
+		assertEquals(this.i.getDescricao(), "item de teste");
 	}
 
 	@Test
 	void testGetQuantidade() {
-		Item i = new Item("item de teste", 1, "teste, JUnit", false, 0);
-		assertEquals(i.getQuantidade(), 1);
+		assertEquals(this.i.getQuantidade(), 1);
 	}
 
 	@Test
 	void testSetQuantidade() {
-		Item i = new Item("item de teste", 1, "teste, JUnit", false, 0);
-		i.setQuantidade(20);
-		assertEquals(i.getQuantidade(), 20);
+		this.i.setQuantidade(20);
+		assertEquals(this.i.getQuantidade(), 20);
 	}
 
 	@Test
 	void testSetTags() {
-		Item i = new Item("item de teste", 1, "teste, JUnit", false, 0);
-		i.setTags("JUnit, teste2");
-		assertEquals(i.toString(), "0 - item de teste, tags: [JUnit,  teste2], quantidade: 1");
+		this.i.setTags("JUnit, teste2");
+		assertEquals(this.i.toString(), "0 - item de teste, tags: [JUnit, teste2], quantidade: 1");
 	}
 
 	@Test
 	void testToString() {
-		Item i = new Item("item de teste", 1, "teste, JUnit", false, 0);
-		assertEquals(i.toString(), "0 - item de teste, tags: [teste,  JUnit], quantidade: 1");
+		assertEquals(this.i.toString(), "0 - item de teste, tags: [teste, JUnit], quantidade: 1");
 	}
 
 	@Test
@@ -83,6 +79,5 @@ class ItemTest {
 		int item3 = i3.hashCode();
 		assertEquals(item1 != item2, false);
 		assertEquals(item3 != item2, true);
-		assertEquals(item1 == item1, true);
 	}
 }

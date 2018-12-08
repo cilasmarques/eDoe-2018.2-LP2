@@ -116,7 +116,6 @@ class GestorItemTest {
 		CrudUsuario cd = new CrudUsuario ();
 		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
 		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 12345678);
-		System.out.println(gi.exibeItem(cd.getUsuarioValido("12345678910", "doador"), 12345678));
 		assertEquals(gi.exibeItem(cd.getUsuarioValido("12345678910", "doador"), 12345678),"12345678 - descricao, tags: [tags, teste], quantidade: 1");
 	}
 

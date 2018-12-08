@@ -1,10 +1,8 @@
 package eDoe.models;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import eDoe.utils.Ferramentas;
 
 public abstract class Usuario implements Usuario_eDoe {
 
@@ -109,12 +107,12 @@ public abstract class Usuario implements Usuario_eDoe {
 		this.itens.remove(idItem);
 	}
 
-	public Map<Item, String> listaItens() {
+	public ArrayList<Item> listaItens() {
 		return makeListaItens();
 	}
 
-	public int adicionaItemNecessario(String descricao, int quantidade, String tags, boolean ehNecessario) {
-		Item i = new Item(descricao, quantidade, tags, ehNecessario, Ferramentas.idUnico += 1);
+	public int adicionaItemNecessario(String descricao, int quantidade, String tags, boolean ehNecessario, int idItem) {
+		Item i = new Item(descricao, quantidade, tags, ehNecessario, idItem);
 		if (this.itens.values().contains(i)) {
 			Item iExistente = getItemPorDescricao(descricao);
 			iExistente.setQuantidade(quantidade);
@@ -137,10 +135,6 @@ public abstract class Usuario implements Usuario_eDoe {
 		this.itens.remove(idItem);
 	}
 
-	public Map<Item, String> listaItensNecessarios() {
-		return makeListaItens();
-	}
-
 	public Item getItemPorId(int idItem) {
 		if (itens.containsKey(idItem))
 			return this.itens.get(idItem);
@@ -154,14 +148,14 @@ public abstract class Usuario implements Usuario_eDoe {
 		}
 		return null;
 	}
-	
+
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis Itens ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	private Map<Item, String> makeListaItens() {
-		Map<Item, String> listaItens = new HashMap<>();
+	private ArrayList<Item> makeListaItens() {
+		ArrayList<Item> listaItens = new ArrayList<>();
 		for (Item i : this.itens.values()) {
-			String infosItem = (i.toString() + ", " + this.getStatus() + ": " + this.nome + "/" + this.documento);
-			listaItens.put(i, infosItem);
+			i.putFichaTecnica(i.toString() + ", " + this.getStatus() + ": " + this.nome + "/" + this.documento);
+			listaItens.add(i);
 		}
 		return listaItens;
 	}
