@@ -2,7 +2,7 @@ package eDoe.models;
 
 import java.util.ArrayList;
 
-public class Item implements Item_eDoe { //, Comparable<Item> {
+public class Item implements Item_eDoe {
 
 	private ArrayList<String> tags;
 	private String descricao;
@@ -11,7 +11,7 @@ public class Item implements Item_eDoe { //, Comparable<Item> {
 	private int id = 0;
 	private int pontuacaoMatch = 0;
 	private String fichaTecnica;
-	
+
 	public Item(String descricao, int quantidade, String tags, boolean ehNecessario, int id) {
 		this.id = id;
 		this.descricao = descricao;
@@ -19,7 +19,7 @@ public class Item implements Item_eDoe { //, Comparable<Item> {
 		this.necessidade = ehNecessario;
 		this.tags = stringToArray(tags);
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -31,7 +31,7 @@ public class Item implements Item_eDoe { //, Comparable<Item> {
 	public int getQuantidade() {
 		return this.quantidade;
 	}
-	
+
 	public ArrayList<String> getTags() {
 		return this.tags;
 	}
@@ -65,21 +65,21 @@ public class Item implements Item_eDoe { //, Comparable<Item> {
 	public void putFichaTecnica(String fichaTecnica) {
 		this.fichaTecnica = fichaTecnica;
 	}
-	
+
 	public String getFichaTecnica() {
 		return this.fichaTecnica;
 	}
-	
+
 	@Override
 	public boolean ehNecessario() {
 		return this.necessidade;
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.id + " - " + this.descricao + ", tags: " + this.tags + ", quantidade: " + this.quantidade;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

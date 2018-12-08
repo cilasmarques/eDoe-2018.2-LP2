@@ -9,7 +9,7 @@ public interface Usuario_eDoe {
 	public void setCelular(String celular);
 
 	public String getStatus();
-	
+
 	public String toString();
 
 }

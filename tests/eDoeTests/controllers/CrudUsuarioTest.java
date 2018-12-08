@@ -10,7 +10,7 @@ import eDoe.controllers.CrudUsuario;
 import eDoe.controllers.GestorItem;
 
 class CrudUsuarioTest {
-	
+
 	@Test
 	void testLerReceptores() throws IOException {
 		CrudUsuario cd = new CrudUsuario();
