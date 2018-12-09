@@ -80,8 +80,8 @@ public abstract class Usuario implements Usuario_eDoe {
 	private Map<Integer, Item> itens = new LinkedHashMap<Integer, Item>();
 
 	public int adicionaItemParaDoacao(String descricao, int quantidade, String tags, boolean ehNecessario, int idItem) {
-		Item i = new Item(descricao, quantidade, tags, ehNecessario, idItem);
-		if (this.itens.values().contains(i)) {
+		Item i = new Item(descricao, quantidade, tags, ehNecessario, idItem, "doador: " + this.nome + "/" + this.documento);
+		if (this.itens.values().contains(i) && !i.ehNecessario()) {
 			Item iExistente = getItemPorDescricao(descricao);
 			iExistente.setQuantidade(quantidade);
 			return iExistente.getId();
@@ -112,8 +112,8 @@ public abstract class Usuario implements Usuario_eDoe {
 	}
 
 	public int adicionaItemNecessario(String descricao, int quantidade, String tags, boolean ehNecessario, int idItem) {
-		Item i = new Item(descricao, quantidade, tags, ehNecessario, idItem);
-		if (this.itens.values().contains(i)) {
+		Item i = new Item(descricao, quantidade, tags, ehNecessario, idItem, "Receptor: " + this.nome + "/" + this.documento);
+		if (this.itens.values().contains(i) && i.ehNecessario()) {
 			Item iExistente = getItemPorDescricao(descricao);
 			iExistente.setQuantidade(quantidade);
 			return iExistente.getId();
@@ -154,7 +154,6 @@ public abstract class Usuario implements Usuario_eDoe {
 	private ArrayList<Item> makeListaItens() {
 		ArrayList<Item> listaItens = new ArrayList<>();
 		for (Item i : this.itens.values()) {
-			i.putFichaTecnica(i.toString() + ", " + this.getStatus() + ": " + this.nome + "/" + this.documento);
 			listaItens.add(i);
 		}
 		return listaItens;

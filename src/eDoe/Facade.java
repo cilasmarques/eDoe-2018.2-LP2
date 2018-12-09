@@ -126,12 +126,20 @@ public class Facade {
 	public String match(String idReceptor, int idItemNecessario) {
 		return this.cd.match(idReceptor, idItemNecessario);
 	}
+	
+	public String realizaDoacao(int idItemNecessario, int idItemDoado, String data) {
+		return this.cd.realizaDoacao(idItemNecessario, idItemDoado, data);
+	}
+	
+	public String listaDoacoes() {
+		return this.cd.listaDoacoes();
+	}	
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EASYACCEPT
 	public static void main(String[] args) {
 		args = new String[] { "eDoe.Facade", "arquivos_sistema/use_case_1.txt", "arquivos_sistema/use_case_2.txt",
 				"arquivos_sistema/use_case_3.txt", "arquivos_sistema/use_case_4.txt",
-				"arquivos_sistema/use_case_5.txt" };
+				"arquivos_sistema/use_case_5.txt", "arquivos_sistema/use_case_6.txt"};
 		EasyAccept.main(args);
 	}
 

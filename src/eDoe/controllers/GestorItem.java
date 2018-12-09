@@ -99,7 +99,7 @@ public class GestorItem {
 	}
 
 	public String match(Usuario user, int idItemNecessario, Map<String, Usuario> todosUsuarios) {
-		Validador.verificadorRemoveItem(user, idItemNecessario);
+		Validador.verificadorMatchItem(user, idItemNecessario);
 		Item itemDeMatch = user.getItemPorId(idItemNecessario);
 		ArrayList<Item> todasAsDoacoes = filtraItens(getAllItens(todosUsuarios), "doacoes");
 		ArrayList<Item> arrayItensRequeridos = mm.getItensMatchMaker(todasAsDoacoes, itemDeMatch);
@@ -107,18 +107,61 @@ public class GestorItem {
 		return makeListaItens(arrayItensRequeridos, "fichaTecnica");
 	}
 
+	public ArrayList<Item> getItensParaRealizarDoacao(int idItemNecessario, int idItemDoado, String data,
+			Map<String, Usuario> todosUsuarios) {
+		ArrayList<Item> todosOsItens = filtraItens(getAllItens(todosUsuarios), "todos");
+		ArrayList<Item> itensRequeridos = new ArrayList<>();
+		for (Item i : todosOsItens) {
+			if (i.getId() == idItemNecessario)
+				itensRequeridos.add(i);
+			if (i.getId() == idItemDoado)
+				itensRequeridos.add(i);
+		}
+		Collections.sort(itensRequeridos);
+		return itensRequeridos;
+	}
+
+	public int getNumItensDoados(Item itemNecessario, Item itemDoado) {
+		int quantidadeItensRetirados = 0;
+		if (itemNecessario.getQuantidade() >= itemDoado.getQuantidade()) {
+			quantidadeItensRetirados = itemDoado.getQuantidade();
+		} else {
+			quantidadeItensRetirados = itemNecessario.getQuantidade();
+		}
+		atualizaEstoque(itemNecessario, itemDoado);
+		return quantidadeItensRetirados;
+
+	}
+
+	private void atualizaEstoque(Item itemNecessario, Item itemDoado) {
+		if (itemNecessario.getQuantidade() >= itemDoado.getQuantidade()) {
+			itemNecessario.setQuantidade(itemNecessario.getQuantidade() - itemDoado.getQuantidade());
+			itemDoado.setQuantidade(0);
+		} else {
+			itemDoado.setQuantidade(itemDoado.getQuantidade() - itemNecessario.getQuantidade());
+			itemNecessario.setQuantidade(0);
+		}
+	}
+
+	
+	
+	
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	private String makeListaItens(ArrayList<Item> arrayItensRequeridos, String tipoDeSaida) {
 		String saida = "";
 		if (arrayItensRequeridos.isEmpty())
 			return saida;
+
 		else if (tipoDeSaida.equals("toString"))
 			saida = Ferramentas.arrayToString(arrayItensRequeridos);
+
 		else if (tipoDeSaida.equals("fichaTecnica")) {
-			saida = arrayItensRequeridos.get(0).getFichaTecnica();
-			for (int i = 1; i < arrayItensRequeridos.size(); i++) {
-				saida += " | " + arrayItensRequeridos.get(i).getFichaTecnica();
+			Item i = arrayItensRequeridos.get(0);
+			saida = i.toString() + ", " + i.getDadosDoEmissor();
+			for (int j = 1; j < arrayItensRequeridos.size(); j++) {
+				i = arrayItensRequeridos.get(j);
+				saida += " | " + i.toString() + ", " + i.getDadosDoEmissor();
 			}
 		}
 		return saida;
@@ -176,5 +219,4 @@ public class GestorItem {
 	public Map<String, Integer> getDescritores() {
 		return this.descritores;
 	}
-
 }

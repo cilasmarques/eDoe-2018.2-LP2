@@ -12,7 +12,11 @@ public class MatchMaker {
 			return arrayItensMatch;
 		else {
 			for (Item i : selecionaItensParaMatch(todosAsDoacoes, itemDeMatch)) {
-				putPontuacaoMatchDoItem(i, itemDeMatch);
+				if (itemDeMatch.getTags().size() >= i.getTags().size())
+					pontuacaoMatchDoItem(i, itemDeMatch, itemDeMatch);
+				else if (itemDeMatch.getTags().size() < i.getTags().size()) {
+					pontuacaoMatchDoItem(i, itemDeMatch, i);
+				}
 				if (i.getPontuacao() > 0)
 					arrayItensMatch.add(i);
 			}
@@ -39,17 +43,33 @@ public class MatchMaker {
 		return arrayItensMatch;
 	}
 
-	private void putPontuacaoMatchDoItem(Item itemAnalisado, Item itemDeMatch) {
+//jaqueta de couro" quantidade=3 tags="outfit,couro de bode"
+
+	private void pontuacaoMatchDoItem(Item itemAnalisado, Item itemDeMatch, Item itemComMaisTags) {
 		int pontos = 20;
-		for (int i = 0; i < itemDeMatch.getTags().size(); i++) {
-			if (itemAnalisado.getTags().size() > i) {
-				if (itemDeMatch.getTags().get(i).equals(itemAnalisado.getTags().get(i)))
-					pontos += 10;
-				else if (itemDeMatch.getTags().contains(itemAnalisado.getTags().get(i)))
-					pontos += 5;
-			}
+		if (itemComMaisTags.equals(itemDeMatch)) {
+			pontos += calculaPontuacao(itemAnalisado, itemDeMatch);
+		} else if (itemComMaisTags.equals(itemAnalisado)) {
+			pontos += calculaPontuacao(itemDeMatch, itemAnalisado);
 		}
 		itemAnalisado.setPontuacao(pontos);
 	}
 
+	private int calculaPontuacao(Item itemComMenosTags, Item itemComMaisTags) {
+		int pontos = 0;
+		int i = 0;
+		while (itemComMaisTags.getTags().size() > i) {
+			if (itemComMenosTags.getTags().size() > i) {
+				if (itemComMaisTags.getTags().get(i).equals(itemComMenosTags.getTags().get(i)))
+					pontos += 10;
+				else if (itemComMaisTags.getTags().contains(itemComMenosTags.getTags().get(i)))
+					pontos += 5;
+			} else if (itemComMenosTags.getTags().size() < i){
+				pontos += 5;
+			}
+			i++;
+		}
+		return pontos;
+	}
+	
 }

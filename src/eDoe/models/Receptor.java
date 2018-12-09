@@ -2,7 +2,7 @@ package eDoe.models;
 
 public class Receptor extends Usuario {
 
-	private String status;
+	protected String status;
 
 	public Receptor(String documento, String nome, String email, String celular, String classe, String status) {
 		super(documento, nome, email, celular, classe);

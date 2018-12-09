@@ -3,11 +3,14 @@ package eDoe.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import eDoe.comparators.DoacaoComparator;
 import eDoe.models.Doador;
+import eDoe.models.Item;
 import eDoe.models.Receptor;
 import eDoe.models.Usuario;
 import eDoe.utils.Ferramentas;
@@ -16,11 +19,13 @@ import eDoe.utils.Validador;
 public class CrudUsuario {
 
 	private Map<String, Usuario> usuarios;
+	private ArrayList<String> doacoesRealizadas;
 	private GestorItem g;
 
 	public CrudUsuario() {
 		this.usuarios = new LinkedHashMap<String, Usuario>();
 		this.g = new GestorItem();
+		this.doacoesRealizadas = new ArrayList<>();
 	}
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Usuario ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -86,7 +91,7 @@ public class CrudUsuario {
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Item ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	public void adicionarDescritor(String descricao) {
-		g.adicionarDescritor(descricao);
+		this.g.adicionarDescritor(descricao);
 	}
 
 	public int adicionaItemParaDoacao(String idDoador, String descricao, int quantidade, String tags, int idItem) {
@@ -96,57 +101,94 @@ public class CrudUsuario {
 
 	public String exibeItem(int idItem, String idDoador) {
 		Usuario u = getUsuarioValido(idDoador, "doador");
-		return g.exibeItem(u, idItem);
+		return this.g.exibeItem(u, idItem);
 	}
 
 	public String atualizaItemParaDoacao(int idItem, String idDoador, int novaQuantidade, String novasTags) {
 		Usuario u = getUsuarioValido(idDoador, "doador");
-		return g.atualizaItemParaDoacao(u, idItem, novaQuantidade, novasTags);
+		return this.g.atualizaItemParaDoacao(u, idItem, novaQuantidade, novasTags);
 	}
 
 	public void removeItemParaDoacao(int idItem, String idDoador) {
 		Usuario u = getUsuarioValido(idDoador, "doador");
-		g.removeItemParaDoacao(u, idItem);
+		this.g.removeItemParaDoacao(u, idItem);
 	}
 
 	public String listaDescritorDeItensParaDoacao() {
-		return g.listaDescritorDeItensParaDoacao();
+		return this.g.listaDescritorDeItensParaDoacao();
 	}
 
 	public String listaItensParaDoacao() {
-		return g.listaTodosOsItensExistentes(this.usuarios);
+		return this.g.listaTodosOsItensExistentes(this.usuarios);
 	}
 
 	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
 		Validador.validadorParametro(descricao, "Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
-		return g.pesquisaItemParaDoacaoPorDescricao(descricao, this.usuarios);
+		return this.g.pesquisaItemParaDoacaoPorDescricao(descricao, this.usuarios);
 	}
 
 	public int adicionaItemNecessario(String idReceptor, String descricao, int quantidade, String tags, int idItem) {
 		Usuario u = getUsuarioValido(idReceptor, "Receptor");
-		return g.adicionaItemNecessario(u, descricao, quantidade, tags, idItem);
+		return this.g.adicionaItemNecessario(u, descricao, quantidade, tags, idItem);
 	}
 
 	public String atualizaItemNecessario(String idReceptor, int idItem, int novaQuantidade, String novasTags) {
 		Usuario u = getUsuarioValido(idReceptor, "Receptor");
-		return g.atualizaNecessario(u, idItem, novaQuantidade, novasTags);
+		return this.g.atualizaNecessario(u, idItem, novaQuantidade, novasTags);
 	}
 
 	public String listaItensNecessarios() {
-		return g.listaItensNecessarios(this.usuarios);
+		return this.g.listaItensNecessarios(this.usuarios);
 	}
 
 	public void removeItemNecessario(String idReceptor, int idItem) {
 		Usuario u = getUsuarioValido(idReceptor, "Receptor");
-		g.removeItemNecessario(u, idItem);
+		this.g.removeItemNecessario(u, idItem);
 	}
 
 	public String match(String idReceptor, int idItemNecessario) {
 		Usuario u = getUsuarioValido(idReceptor, "Receptor");
-		return g.match(u, idItemNecessario, this.usuarios);
+		return this.g.match(u, idItemNecessario, this.usuarios);
+	}
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Doacao ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	public String realizaDoacao(int idItemNecessario, int idItemDoado, String data) {
+		ArrayList<Item> itens = this.g.getItensParaRealizarDoacao(idItemNecessario, idItemDoado, data, this.usuarios);
+
+		Validador.verificadorRealizaDoacao(itens, idItemNecessario, idItemDoado, data);
+		String saida = makeComprovanteDoacao(itens.get(0), itens.get(1), data);
+
+		this.doacoesRealizadas.add(saida);
+		atualizaItensAposDoacao(itens.get(0), itens.get(1));
+		
+		return saida;
+	}
+
+	public String listaDoacoes() {
+		Collections.sort(this.doacoesRealizadas, new DoacaoComparator());
+		return Ferramentas.arrayToString(this.doacoesRealizadas);
 	}
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	private void atualizaItensAposDoacao(Item itemNecessario, Item itemDoado) {
+		String idReceptor = itemNecessario.getDadosDoEmissor().split("/")[1];
+		String idDoador = itemDoado.getDadosDoEmissor().split("/")[1];
+
+		if (itemNecessario.getQuantidade() == 0) {
+			removeItemNecessario(idReceptor, itemNecessario.getId());
+		}
+		if (itemDoado.getQuantidade() == 0) {
+			removeItemParaDoacao(itemDoado.getId(), idDoador);
+		}
+	}
+
+	private String makeComprovanteDoacao(Item itemNecessario, Item itemDoado, String data) {
+		return data + " - " + itemDoado.getDadosDoEmissor() + ", item: " + itemNecessario.getDescricao()
+				+ ", quantidade: " + this.g.getNumItensDoados(itemNecessario, itemDoado) + ", "
+				+ itemNecessario.getDadosDoEmissor().replaceFirst("R", "r");
+	}
 
 	public Usuario getUsuarioValido(String idUsuario, String status) {
 		Validador.validadorParametro(idUsuario, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");

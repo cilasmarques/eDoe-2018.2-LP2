@@ -18,3 +18,4 @@ public class Doador extends Usuario {
 	}
 
 }
+

@@ -13,7 +13,7 @@ class ItemTest {
 
 	@BeforeEach
 	void testItem() {
-		this.i = new Item("item de teste", 1, "teste, JUnit", false, 0);
+		this.i = new Item("item de teste", 1, "teste, JUnit", false, 0, "doador: dono Do mundo/00000000000");
 	}
 
 	@Test
@@ -50,18 +50,18 @@ class ItemTest {
 
 	@Test
 	void testEhNecessario() {
-		Item i1 = new Item("item de teste", 1, "teste, JUnit", false, 0);
-		Item i2 = new Item("item de teste", 1, "teste, JUnit", true, 1);
+		Item i1 = new Item("item de teste", 1, "teste, JUnit", false, 0, "doador: dono Do mundo/00000000000");
+		Item i2 = new Item("item de teste", 1, "teste, JUnit", true, 1, "doador: dono Do mundo/00000000000");
 		assertEquals(i1.ehNecessario(), false);
 		assertEquals(i2.ehNecessario(), true);
 	}
 
 	@Test
 	void testEqualsObject() {
-		Item i1 = new Item("item de teste", 1, "teste, JUnit", false, 0);
-		Item i2 = new Item("item de teste", 1, "teste, JUnit", true, 1);
-		Item i3 = new Item("item de erro", 1, "teste, JUnit", true, 2);
-		Item i4 = new Item("item de erro", 1, "erro, JUnit", true, 3);
+		Item i1 = new Item("item de teste", 1, "teste, JUnit", false, 0, "doador: dono Do mundo/00000000000");
+		Item i2 = new Item("item de teste", 1, "teste, JUnit", true, 1, "doador: dono Do mundo/00000000000");
+		Item i3 = new Item("item de erro", 1, "teste, JUnit", true, 2, "doador: dono Do mundo/00000000000");
+		Item i4 = new Item("item de erro", 1, "erro, JUnit", true, 3, "doador: dono Do mundo/00000000000");
 		assertEquals(i1.equals(i2), true);
 		assertEquals(i1.equals(i3), false);
 		assertEquals(i1.equals(i4), false);
@@ -71,9 +71,9 @@ class ItemTest {
 
 	@Test
 	void testHashCode() {
-		Item i1 = new Item("item de teste", 1, "teste, JUnit", false, 0);
-		Item i2 = new Item("item de teste", 1, "teste, JUnit", true, 1);
-		Item i3 = new Item("item de erro", 1, "teste, JUnit", true, 2);
+		Item i1 = new Item("item de teste", 1, "teste, JUnit", false, 0, "doador: dono Do mundo/00000000000");
+		Item i2 = new Item("item de teste", 1, "teste, JUnit", true, 1, "doador: dono Do mundo/00000000000");
+		Item i3 = new Item("item de erro", 1, "teste, JUnit", true, 2, "doador: dono Do mundo/00000000000");
 		int item1 = i1.hashCode();
 		int item2 = i2.hashCode();
 		int item3 = i3.hashCode();

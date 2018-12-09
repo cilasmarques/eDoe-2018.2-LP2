@@ -2,42 +2,27 @@ package eDoe.models;
 
 import java.util.ArrayList;
 
-public class Item implements Item_eDoe {
+public class Item implements Item_eDoe, Comparable<Item> {
 
 	private ArrayList<String> tags;
 	private String descricao;
-	private int quantidade;
+	private String dadosEmissor;
 	private boolean necessidade;
+	private int quantidade;
 	private int id = 0;
 	private int pontuacaoMatch = 0;
-	private String fichaTecnica;
 
-	public Item(String descricao, int quantidade, String tags, boolean ehNecessario, int id) {
+	public Item(String descricao, int quantidade, String tags, boolean ehNecessario, int id, String dadosEmissor) {
 		this.id = id;
+		this.dadosEmissor = dadosEmissor;
 		this.descricao = descricao;
 		this.quantidade = quantidade;
 		this.necessidade = ehNecessario;
 		this.tags = stringToArray(tags);
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public String getDescricao() {
-		return this.descricao;
-	}
-
-	public int getQuantidade() {
-		return this.quantidade;
-	}
-
-	public ArrayList<String> getTags() {
-		return this.tags;
-	}
-
 	public void setQuantidade(int quantidade) {
-		if (quantidade > 0)
+		if (quantidade >= 0)
 			this.quantidade = quantidade;
 	}
 
@@ -46,28 +31,53 @@ public class Item implements Item_eDoe {
 			this.tags = stringToArray(tag);
 	}
 
-	private ArrayList<String> stringToArray(String str) {
-		ArrayList<String> array = new ArrayList<String>();
-		for (String s : str.split(",")) {
-			array.add(s.trim());
-		}
-		return array;
-	}
-
-	public int getPontuacao() {
-		return this.pontuacaoMatch;
-	}
-
 	public void setPontuacao(int pontuacao) {
 		this.pontuacaoMatch = pontuacao;
 	}
 
-	public void putFichaTecnica(String fichaTecnica) {
-		this.fichaTecnica = fichaTecnica;
+	public String getDescricao() {
+		return this.descricao;
 	}
 
-	public String getFichaTecnica() {
-		return this.fichaTecnica;
+	/**
+	 * Metodo que permite pegar os dados de quem emitiu o pedido produto ou o
+	 * produto
+	 * 
+	 * @return String com os dados do emissor
+	 */
+	public String getDadosDoEmissor() {
+		return this.dadosEmissor;
+	}
+
+	/**
+	 * Método que permite pegar a identificação do item (id)
+	 * 
+	 * @return int com a identificação do item (id)
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * Método que permite pegar a quantidade de unidades do item
+	 * 
+	 * @return int com a quantidade de unidades do item
+	 */
+	public int getQuantidade() {
+		return this.quantidade;
+	}
+
+	/**
+	 * Metodo que permite pegar a pontuação de match que um produto atingiu
+	 * 
+	 * @return int com a pontuação de match atingida
+	 */
+	public int getPontuacao() {
+		return this.pontuacaoMatch;
+	}
+
+	public ArrayList<String> getTags() {
+		return this.tags;
 	}
 
 	@Override
@@ -111,4 +121,18 @@ public class Item implements Item_eDoe {
 		return true;
 	}
 
+	@Override
+	public int compareTo(Item o) {
+		if (o.ehNecessario())
+			return 1;
+		return -1;
+	}
+
+	private ArrayList<String> stringToArray(String str) {
+		ArrayList<String> array = new ArrayList<String>();
+		for (String s : str.split(",")) {
+			array.add(s.trim());
+		}
+		return array;
+	}
 }

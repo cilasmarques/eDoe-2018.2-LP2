@@ -1,7 +1,9 @@
 package eDoe.utils;
 
+import java.util.ArrayList;
 import java.util.Map;
 
+import eDoe.models.Item;
 import eDoe.models.Usuario;
 
 public class Validador {
@@ -86,6 +88,15 @@ public class Validador {
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 	}
 
+	public static void verificadorMatchItem(Usuario user, int idItem) {
+		if (idItem < 0)
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		if (user.getItens().size() == 0)
+			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
+		if (!user.getItens().containsKey(idItem))
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
+	}
+
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Uteis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	public static void validadorParametro(String parametro, String saida) {
@@ -114,6 +125,19 @@ public class Validador {
 		default:
 			throw new IllegalArgumentException("Entrada invalida: opcao de classe invalida.");
 		}
+	}
+
+	public static void verificadorRealizaDoacao(ArrayList<Item> itens, int idItemNecessario, int idItemDoado,
+			String data) {
+		validadorParametro(data, "Entrada invalida: data nao pode ser vazia ou nula.");
+		if (idItemNecessario < 0 || idItemDoado < 0)
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		if (!itens.get(0).ehNecessario())
+			throw new IllegalArgumentException("Item nao encontrado: " + idItemNecessario + ".");
+		if (itens.size() != 2)
+			throw new IllegalArgumentException("Item nao encontrado: " + idItemDoado + ".");
+		if (!itens.get(0).getDescricao().equals(itens.get(1).getDescricao()))
+		 throw new IllegalArgumentException("Os itens nao tem descricoes iguais.");
 	}
 
 }
