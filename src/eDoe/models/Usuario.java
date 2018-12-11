@@ -94,7 +94,7 @@ public abstract class Usuario implements Usuario_eDoe {
 		return this.itens.get(idItem).toString();
 	}
 
-	public String atualizaItemParaDoacao(int idItem, int novaQuantidade, String novasTags) {
+	public String atualizaItem(int idItem, int novaQuantidade, String novasTags) {
 		Item i = this.itens.get(idItem);
 		if (novaQuantidade > 0)
 			i.setQuantidade(novaQuantidade);
@@ -103,7 +103,7 @@ public abstract class Usuario implements Usuario_eDoe {
 		return i.toString();
 	}
 
-	public void removeItemParaDoacao(int idItem) {
+	public void removeItem(int idItem) {
 		this.itens.remove(idItem);
 	}
 
@@ -120,19 +120,6 @@ public abstract class Usuario implements Usuario_eDoe {
 		}
 		this.itens.put(i.getId(), i);
 		return i.getId();
-	}
-
-	public String atualizaItemNecessario(int idItem, int novaQuantidade, String novasTags) {
-		Item i = this.itens.get(idItem);
-		if (novaQuantidade > 0)
-			i.setQuantidade(novaQuantidade);
-		if (novasTags != null && !novasTags.trim().equals(""))
-			i.setTags(novasTags);
-		return i.toString();
-	}
-
-	public void removeItemNecessario(int idItem) {
-		this.itens.remove(idItem);
 	}
 
 	public Item getItemPorId(int idItem) {

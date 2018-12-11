@@ -84,7 +84,7 @@ class DoadorTest {
 	@Test
 	void testAtualizaItemParaDoacao() {
 		this.d.adicionaItemParaDoacao("item de teste", 1, "teste, JUnit", false, 12345678);
-		this.d.atualizaItemParaDoacao(12345678, 20, "JUnit, teste2");
+		this.d.atualizaItem(12345678, 20, "JUnit, teste2");
 		assertEquals(this.d.exibeItem(12345678), "12345678 - item de teste, tags: [JUnit, teste2], quantidade: 20");
 	}
 
@@ -92,7 +92,7 @@ class DoadorTest {
 	void testRemoveItemParaDoacao() {
 		this.d.adicionaItemParaDoacao("item de teste", 1, "teste, JUnit", false, 12345678);
 		assertEquals(this.d.getItens().size(), 1);
-		this.d.removeItemParaDoacao(12345678);
+		this.d.removeItem(12345678);
 		assertEquals(this.d.getItens().size(), 0);
 	}
 

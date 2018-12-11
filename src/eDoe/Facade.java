@@ -114,7 +114,7 @@ public class Facade {
 	 * 
 	 * @param idItem   Código de identificação (ID) do item
 	 * @param idDoador Documento de identificação do doador
-	 * @return
+	 * @return String com o item correspondente aos parametros passados
 	 */
 	public String exibeItem(int idItem, String idDoador) {
 		return this.cd.exibeItem(idItem, idDoador);
@@ -170,7 +170,7 @@ public class Facade {
 	 * 
 	 * @param descricao Descrição requerida dos itens
 	 * @return String com todos os itens que contém a descrição requerida, em ordem
-	 *         alabética
+	 *         alabética da descrição
 	 */
 	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
 		return this.cd.pesquisaItemParaDoacaoPorDescricao(descricao);

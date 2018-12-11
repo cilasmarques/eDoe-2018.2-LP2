@@ -85,7 +85,7 @@ class ReceptorTest {
 	@Test
 	void testAtualizaItemNecessario() {
 		this.r.adicionaItemParaDoacao("item de teste", 1, "teste, JUnit", false, 87654321);
-		this.r.atualizaItemNecessario(87654321, 20, "JUnit, teste2");
+		this.r.atualizaItem(87654321, 20, "JUnit, teste2");
 		assertEquals(this.r.exibeItem(87654321), "87654321 - item de teste, tags: [JUnit, teste2], quantidade: 20");
 	}
 
@@ -93,7 +93,7 @@ class ReceptorTest {
 	void testRemoveItemNecessario() {
 		this.r.adicionaItemParaDoacao("item de teste", 1, "teste, JUnit", false, 87654321);
 		assertEquals(this.r.getItens().size(), 1);
-		this.r.removeItemNecessario(87654321);
+		this.r.removeItem(87654321);
 		assertEquals(this.r.getItens().size(), 0);
 	}
 

@@ -17,7 +17,7 @@ import eDoe.utils.Ferramentas;
 import eDoe.utils.Validador;
 
 /**
- * Classe responsável por comparar dois itens do sistema eDoe pela sua descrição
+ * Classe responsável por controlar o sistema eDoe
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
  *
@@ -29,7 +29,7 @@ public class CrudUsuario {
 	private GestorItem g;
 
 	/**
-	 * Contrutor da classe CrudUsuario
+	 * Construtor da classe CrudUsuario
 	 */
 	public CrudUsuario() {
 		this.usuarios = new LinkedHashMap<String, Usuario>();
@@ -40,8 +40,8 @@ public class CrudUsuario {
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Usuario ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	/**
-	 * Método responsável por ler o arquivo que contém os receptores e cadastra-los
-	 * ou atualiza-los no sistema
+	 * Método responsável por ler o arquivo que contém os receptores e atualiza-los
+	 * ou cadastra-los no sistema (colocando no mapa de usuarios)
 	 * 
 	 * @param caminho Caminho para o arquivo que contém os dados dos receptores
 	 * @throws IOException Exeção lançada caso dê algum erro durante a leitura do
@@ -64,8 +64,8 @@ public class CrudUsuario {
 	}
 
 	/**
-	 * Método responsável por adicionar um doador no sistema, verificando se os
-	 * dados passados são válidos
+	 * Método responsável por adicionar um doador no sistema (colocando no mapa de
+	 * usuarios), verificando se os dados passados são válidos
 	 * 
 	 * @param idDoador Documento de identificação do doador
 	 * @param nome     Nome do doador
@@ -176,7 +176,7 @@ public class CrudUsuario {
 	 * 
 	 * @param idItem   Código de identificação (ID) do item
 	 * @param idDoador Documento de identificação do doador
-	 * @return
+	 * @return String com o item correspondente aos parametros passados
 	 */
 	public String exibeItem(int idItem, String idDoador) {
 		Usuario u = getUsuarioValido(idDoador, "doador");
@@ -235,7 +235,7 @@ public class CrudUsuario {
 	 * 
 	 * @param descricao Descrição requerida dos itens
 	 * @return String com todos os itens que contém a descrição requerida, em ordem
-	 *         alabética
+	 *         alabética da descrição
 	 */
 	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
 		Validador.validadorParametro(descricao, "Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
@@ -327,7 +327,7 @@ public class CrudUsuario {
 	 *         transação
 	 */
 	public String realizaDoacao(int idItemNecessario, int idItemDoado, String data) {
-		ArrayList<Item> itens = this.g.getItensParaRealizarDoacao(idItemNecessario, idItemDoado, data, this.usuarios);
+		ArrayList<Item> itens = this.g.getItensParaRealizarDoacao(idItemNecessario, idItemDoado, this.usuarios);
 
 		Validador.verificadorRealizaDoacao(itens, idItemNecessario, idItemDoado, data);
 		String saida = makeComprovanteDoacao(itens.get(0), itens.get(1), data);
@@ -392,10 +392,11 @@ public class CrudUsuario {
 	 * @param idUsuario Documento de identificação do usuário
 	 * @param status    Status ao qual o usuário pertence (doador ou receptor)
 	 * @return Usuário correspondente ao documento de identificação
-	 * @throws IllegalArgumentException 
-	 * 			Exeção lançada caso o ID do usuário nao seja válido. Ou seja,
-	 * 			caso o usuário não exista, não pertença ao status descrito, ou
-	 * 			o documento de identificação seja negativo ou inexistente.
+	 * @throws IllegalArgumentException Exeção lançada caso o ID do usuário nao seja
+	 *                                  válido. Ou seja, caso o usuário não exista,
+	 *                                  não pertença ao status descrito, ou o
+	 *                                  documento de identificação seja negativo ou
+	 *                                  inexistente.
 	 */
 	public Usuario getUsuarioValido(String idUsuario, String status) {
 		Validador.validadorParametro(idUsuario, "Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
