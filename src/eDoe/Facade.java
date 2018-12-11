@@ -35,16 +35,17 @@ public class Facade {
 	 * @param email   Email do doador
 	 * @param celular Celular do doador
 	 * @param classe  Classe do doador
-	 * @return Retorna o ID do usuário adicionado
+	 * @return Retorna o documento de identificação (ID) do usuário adicionado
 	 */
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
 		return this.cd.adicionarDoador(id, nome, email, celular, classe);
 	}
 
 	/**
-	 * Método que pesquisa e identifica o usuário pelo o seu ID
+	 * Método que pesquisa e identifica o usuário que contém seu documento de
+	 * identificação (ID) requerido
 	 * 
-	 * @param id Documento de identificação do doador
+	 * @param id Documento de identificação do usuário
 	 * @return String com o usuário correspondente ao ID
 	 */
 	public String pesquisaUsuarioPorId(String id) {
@@ -52,9 +53,9 @@ public class Facade {
 	}
 
 	/**
-	 * Método que pesquisa e identifica o usuário pelo o seu nome
+	 * Método que pesquisa e identifica usuários que contem o nome requerido
 	 * 
-	 * @param nome Nome do doador
+	 * @param nome Nome do usuário
 	 * @return String com a sequência de usuários que possuem o nome pesquisado
 	 */
 	public String pesquisaUsuarioPorNome(String nome) {
@@ -64,7 +65,7 @@ public class Facade {
 	/**
 	 * Método responsável por atualizar informações do usuário
 	 * 
-	 * @param id      Documento de identificação do doador
+	 * @param id      Documento de identificação do usuário
 	 * @param nome    Nome do doador
 	 * @param email   Email do doador
 	 * @param celular Celular do doador
@@ -77,7 +78,7 @@ public class Facade {
 	/**
 	 * Método que remove um usuário do sistema
 	 * 
-	 * @param id Documento de identificação do doador
+	 * @param id Documento de identificação (ID) do usuário
 	 */
 	public void removeUsuario(String id) {
 		this.cd.removeUsuario(id);
@@ -95,7 +96,8 @@ public class Facade {
 	}
 
 	/**
-	 * Método que adiciona um item para doação
+	 * Método que adiciona um item para doação, fornecendo um ID único para o item
+	 * adicionado
 	 * 
 	 * @param idDoador   Documento de identificação do doador
 	 * @param descricao  Descricao do item
@@ -175,7 +177,8 @@ public class Facade {
 	}
 
 	/**
-	 * Método que adiciona um item necessário
+	 * Método que adiciona um item necessário, fornecendo um ID único para o item
+	 * adicionado
 	 * 
 	 * @param idReceptor Documento de identificação do receptor
 	 * @param descricao  Descricao do item
@@ -237,7 +240,7 @@ public class Facade {
 
 	/**
 	 * 
-	 * Método que validar o pedido de doação, e realiza a doação no sistema.
+	 * Método que valida o pedido de doação, e realiza a doação no sistema.
 	 * 
 	 * @param idItemNecessario Código de identificação (ID) do item necessário
 	 * @param idItemDoado      Código de identificação (ID) do item doado
