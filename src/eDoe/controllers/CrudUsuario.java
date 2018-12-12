@@ -2,6 +2,7 @@ package eDoe.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -22,8 +23,12 @@ import eDoe.utils.Validador;
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
  *
  */
-public class CrudUsuario {
+public class CrudUsuario implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Map<String, Usuario> usuarios;
 	private ArrayList<String> doacoesRealizadas;
 	private GestorItem g;
@@ -227,7 +232,7 @@ public class CrudUsuario {
 	 *         ordenado pela quantidade
 	 */
 	public String listaItensParaDoacao() {
-		return this.g.listaTodosOsItensExistentes(this.usuarios);
+		return this.g.listaTodosOsItensParaDoacao(this.usuarios);
 	}
 
 	/**
@@ -407,5 +412,43 @@ public class CrudUsuario {
 					"O Usuario deve ser um " + status.toLowerCase() + ": " + idUsuario + ".");
 		return this.usuarios.get(idUsuario);
 	}
+
+	/**
+	 * Método que retorna o mapa de usuarios
+	 * 
+	 * @return Mapa de usuarios
+	 */
+	public Map<String, Usuario> getUsuarios() {
+		return usuarios;
+	}
+	
+	/**
+	 * Método que retorna a lista de doacoes
+	 * 
+	 * @return ArrayList de doações realizadas
+	 */
+	public ArrayList<String> getDoacoesRealizadas() {
+		return doacoesRealizadas;
+	}
+	
+	/**
+	 * Metodo que altera a base de dados de usuarios cadastrados no sistema.
+	 *  
+	 * @param usuarios o Novo mapa de usuarios. 
+	 */
+	public void carregaUsuarios(Map<String, Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	/**
+	 * Metodo que altera a base de dados das doações cadastradas no sistema. 
+	 * 
+	 * @param doacoes o Novo ArrayList de doacoes. 
+	 */
+	public void carregaDoacoes(ArrayList<String> doacoes) {
+		this.doacoesRealizadas = doacoes;
+	}
+
+	
 
 }

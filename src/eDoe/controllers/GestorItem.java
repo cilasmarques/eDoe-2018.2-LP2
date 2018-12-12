@@ -1,5 +1,6 @@
 package eDoe.controllers;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -20,8 +21,12 @@ import eDoe.utils.Validador;
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
  *
  */
-public class GestorItem {
+public class GestorItem implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Map<String, Integer> descritores;
 	private MatchMaker mm;
 
@@ -115,14 +120,14 @@ public class GestorItem {
 
 	/**
 	 * Método que lista todos os itens para doação cadastrados no sistema, juntando
-	 * todos os itens de todos os usuarios
+	 * todos os itens de todos os doadores
 	 * 
 	 * @param todosUsuarios Todos os usuários cadastrados no sistema
 	 * @return String com todos os itens para doação cadastrados no sistema,
 	 *         ordenado pela quantidade
 	 */
-	public String listaTodosOsItensExistentes(Map<String, Usuario> todosUsuarios) {
-		ArrayList<Item> arrayItensRequeridos = filtraItens(getAllItens(todosUsuarios), "todos");
+	public String listaTodosOsItensParaDoacao(Map<String, Usuario> todosUsuarios) {
+		ArrayList<Item> arrayItensRequeridos = filtraItens(getAllItens(todosUsuarios), "doacao");
 		Collections.sort(arrayItensRequeridos, new QuantidadeComparator());
 		return makeListaItens(arrayItensRequeridos, "fichaTecnica");
 	}
@@ -402,9 +407,18 @@ public class GestorItem {
 	 * Método que retorna o mapa de descritores 
 	 * (Usado nos testes)
 	 * 
-	 * @return Map de descritores
+	 * @return Mapa de descritores
 	 */
 	public Map<String, Integer> getDescritores() {
 		return this.descritores;
+	}
+
+	/**
+	 * Metodo que altera a base de dados dos descritores cadastradas no sistema.
+	 *  
+	 * @param descritores Novo mapa de descritores. 
+	 */
+	public void carregaDescritores(Map<String, Integer> descritores) {
+		this.descritores = descritores;
 	}
 }

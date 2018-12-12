@@ -1,9 +1,14 @@
 package eDoe.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Item implements Item_eDoe, Comparable<Item> {
+public class Item implements Item_eDoe, Comparable<Item>, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<String> tags;
 	private String descricao;
 	private String dadosEmissor;

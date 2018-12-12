@@ -1,11 +1,17 @@
 package eDoe.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public abstract class Usuario implements Usuario_eDoe {
+public abstract class Usuario implements Usuario_eDoe, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Usuario ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	protected String documento;
@@ -144,6 +150,11 @@ public abstract class Usuario implements Usuario_eDoe {
 			listaItens.add(i);
 		}
 		return listaItens;
+	}
+	
+	public void carregaItens(Map<String, Item> readObject) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -3,6 +3,7 @@ package eDoe;
 import java.io.IOException;
 
 import eDoe.controllers.CrudUsuario;
+import eDoe.controllers.GestorItem;
 import eDoe.utils.Ferramentas;
 import easyaccept.EasyAccept;
 
@@ -14,9 +15,27 @@ import easyaccept.EasyAccept;
 public class Facade {
 
 	private CrudUsuario cd = new CrudUsuario();
-
+	private GestorItem gi = new GestorItem();
+	
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Usuario ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+	/**
+	 * Inicializa o sistema carregando dados de execucoes passadas.
+	 * 
+	 */
+	public void iniciaSistema()  {
+		Persistencia persistencia = new Persistencia();
+		persistencia.carregar(cd, gi);
+	}
+
+	/**
+	 * Fecha o sistema salvando dados para execucoes futuras.
+	 */
+	public void finalizaSistema() {
+		Persistencia persistencia = new Persistencia();
+		persistencia.salvar(cd.getUsuarios(), cd.getDoacoesRealizadas(), gi.getDescritores());
+	}
+	
 	/**
 	 * Método responsável por ler receptores
 	 * 
