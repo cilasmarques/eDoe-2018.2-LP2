@@ -179,12 +179,11 @@ class CrudUsuarioTest {
 
 	@Test
 	void testAdicionaItemParaDoacao() {
-		GestorItem gi = new GestorItem();
 		CrudUsuario cd = new CrudUsuario();
 		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
-		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste",
-				12345678);
-		assertEquals(gi.getDescritores().containsKey("descricao"), true);
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 12345678);
+		assertEquals(cd.getUsuarioValido("12345678910", "doador").exibeItem(12345678),
+				"12345678 - descricao, tags: [tags, teste], quantidade: 1");
 	}
 
 	@Test
@@ -212,8 +211,7 @@ class CrudUsuarioTest {
 		CrudUsuario cd = new CrudUsuario();
 		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
 		try {
-			cd.adicionaItemParaDoacao("12345678910", "descricao", 0, "tags, teste",
-					12345678);
+			cd.adicionaItemParaDoacao("12345678910", "descricao", 0, "tags, teste", 12345678);
 		} catch (IllegalArgumentException npe) {
 		}
 	}
@@ -223,8 +221,7 @@ class CrudUsuarioTest {
 		CrudUsuario cd = new CrudUsuario();
 		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
 		try {
-			cd.adicionaItemParaDoacao("12345678910", "descricao", -1, "tags, teste",
-					12345678);
+			cd.adicionaItemParaDoacao("12345678910", "descricao", -1, "tags, teste", 12345678);
 		} catch (IllegalArgumentException npe) {
 		}
 	}
@@ -254,29 +251,29 @@ class CrudUsuarioTest {
 		CrudUsuario cd = new CrudUsuario();
 		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
 		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 12345678);
-		assertEquals(cd.exibeItem(12345678, "12345678910"),
-				"12345678 - descricao, tags: [tags, teste], quantidade: 1");
-		}
-	
+		assertEquals(cd.exibeItem(12345678, "12345678910"), "12345678 - descricao, tags: [tags, teste], quantidade: 1");
+	}
+
 	@Test
 	void testAtualizaItemParaDoacao() {
-		GestorItem gi = new GestorItem();
 		CrudUsuario cd = new CrudUsuario();
 		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
 		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 12345678);
-		cd.atualizaItemParaDoacao(12345678, "12345678910", 2, "tags, teste");
-		System.out.println(gi.getDescritores().get("descricao").toString());
-		assertEquals(gi.getDescritores().get("descricao").toString(), "2");
+		cd.atualizaItemParaDoacao(12345678, "12345678910", 1000, "tags, teste, tags123");
+		assertEquals(cd.getUsuarioValido("12345678910", "doador").exibeItem(12345678),
+				"12345678 - descricao, tags: [tags, teste, tags123], quantidade: 1000");
 	}
 
 	@Test
 	void testRemoveItemParaDoacao() {
-		GestorItem gi = new GestorItem();
 		CrudUsuario cd = new CrudUsuario();
 		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
 		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 12345678);
 		cd.removeItemParaDoacao(12345678, "12345678910");
-		assertEquals(gi.getDescritores().containsKey("descricao"), false);
+		try {
+			cd.getUsuarioValido("12345678910", "doador").exibeItem(12345678);
+		} catch (NullPointerException e) {
+		}
 	}
 
 	@Test
@@ -294,28 +291,37 @@ class CrudUsuarioTest {
 		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
 		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
 		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 12345678);
-		System.out.println(cd.listaItensParaDoacao());
-		assertEquals(cd.listaItensParaDoacao(),"10345678 - descricao, tags: [tags, teste], quantidade: 1, doador: Cilas/12345678910\n" + 
-				"1 - descricao");
+		assertEquals(cd.listaItensParaDoacao(),
+				"10345678 - descricao, tags: [tags, teste], quantidade: 1, doador: Cilas/12345678910\n"
+						+ "1 - descricao");
 	}
 
 	@Test
 	void testPesquisaItemParaDoacaoPorDescricao() {
-		GestorItem gi = new GestorItem();
 		CrudUsuario cd = new CrudUsuario();
 		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
 		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
-		assertEquals(cd.pesquisaItemParaDoacaoPorDescricao("descricao"), "10345678 - descricao, tags: [tags, teste], quantidade: 1");
+		assertEquals(cd.pesquisaItemParaDoacaoPorDescricao("descricao"),
+				"10345678 - descricao, tags: [tags, teste], quantidade: 1");
 	}
 
 	@Test
-	void testAdicionaItemNecessario() {
-		fail("Not yet implemented");
+	void testAdicionaItemNecessario() throws IOException {
+		CrudUsuario cd = new CrudUsuario();
+		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		cd.adicionaItemNecessario("84473712044", "descricao", 1, "tags2, teste2", 12345690);
+		assertEquals(cd.getUsuarioValido("84473712044", "Receptor").exibeItem(12345690),
+				"12345690 - descricao, tags: [tags2, teste2], quantidade: 1");
 	}
 
 	@Test
-	void testAtualizaItemNecessario() {
-		fail("Not yet implemented");
+	void testAtualizaItemNecessario() throws IOException {
+		CrudUsuario cd = new CrudUsuario();
+		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		cd.adicionaItemNecessario("84473712044", "descricao", 1, "tags2, teste2", 12345690);
+		cd.atualizaItemNecessario("84473712044", 12345690, 1000, "tags3");
+		assertEquals(cd.getUsuarioValido("84473712044", "Receptor").exibeItem(12345690),
+				"12345690 - descricao, tags: [tags3], quantidade: 1000");
 	}
 
 	@Test
@@ -332,4 +338,30 @@ class CrudUsuarioTest {
 	void testMatch() {
 		fail("Not yet implemented");
 	}
+
+	@Test
+	void testRealizaDoacao() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testListaDoacoes() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetUsuarioValido() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetUsuarios() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetDoacoesRealizadas() {
+		fail("Not yet implemented");
+	}
+
 }
