@@ -349,9 +349,9 @@ class CrudUsuarioTest {
 		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
 		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
 		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
-		cd.adicionaItemNecessario("12345678910", "descricao", 1, "tags", 12345690);
-		System.out.println(cd.match("12345678910", 12345690));
-		assertEquals(cd.match("12345678910", 12345690), "10345678 - descricao, tags: [tags, teste], quantidade: 1, doador: Cilas/12345678910");
+		cd.adicionaItemNecessario("84473712044", "descricao", 1, "tags2, teste2", 12345690);
+		System.out.println(cd.match("84473712044", 12345690));
+		assertEquals(cd.match("84473712044", 12345690), "10345678 - descricao, tags: [tags, teste], quantidade: 1, doador: Cilas/12345678910");
 	}
 
 	@Test
@@ -360,8 +360,8 @@ class CrudUsuarioTest {
 		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
 		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
 		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
-		cd.adicionaItemNecessario("12345678910", "descricao", 1, "tags", 12345690);
-		System.out.println(cd.realizaDoacao(12345690, 10345678, "11/11/11"));
+		cd.adicionaItemNecessario("84473712044", "descricao", 1, "tags2, teste2", 12345690);
+		assertEquals(cd.realizaDoacao(12345690, 10345678, "11/11/11"), "11/11/11 - doador: Cilas/12345678910, item: descricao, quantidade: 1, receptor: Murilo Luiz Brito/84473712044");
 	}
 
 	@Test
