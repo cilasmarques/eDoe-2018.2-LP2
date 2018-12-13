@@ -178,6 +178,9 @@ public class Item implements Item_eDoe, Comparable<Item>, Serializable {
 		return true;
 	}
 
+	/**
+	 * Método de comparação natural dos itens, que os compara por sua necessidade
+	 */
 	@Override
 	public int compareTo(Item o) {
 		if (o.ehNecessario())

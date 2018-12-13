@@ -2,6 +2,8 @@ package eDoeTests.models;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -80,4 +82,33 @@ class ItemTest {
 		assertEquals(item1 != item2, false);
 		assertEquals(item3 != item2, true);
 	}
+
+	@Test
+	void testSetPontuacao() {
+		assertEquals(this.i.getPontuacao(), 0);
+		this.i.setPontuacao(20);
+		assertEquals(this.i.getPontuacao(), 20);
+	}
+
+	@Test
+	void testGetDadosDoEmissor() {
+		assertEquals(this.i.getDadosDoEmissor(), "doador: dono Do mundo/00000000000");
+	}
+
+	@Test
+	void testGetPontuacao() {
+		this.i.setPontuacao(20);
+		assertEquals(this.i.getPontuacao(), 20);
+	}
+
+	@Test
+	void testGetTags() {
+		ArrayList<String> tags = new ArrayList<>();
+		tags.add("novaTag");
+		tags.add("novoTeste");
+		this.i.setTags("novaTag, novoTeste");
+		assertEquals(this.i.getTags(), tags);
+
+	}
+
 }
