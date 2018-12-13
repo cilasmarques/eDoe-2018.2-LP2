@@ -195,33 +195,65 @@ class GestorItemTest {
 	}
 
 	@Test
-	void testListaItensNecessarios() {
-		fail("Not yet implemented");
+	void testListaItensNecessarios() throws IOException {
+		CrudUsuario cd = new CrudUsuario();
+		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		Usuario user = cd.getUsuarioValido("84473712044", "Receptor");
+		gi.adicionaItemNecessario(user, "descricao", 1, "tags", 12345690);
+		gi.adicionaItemNecessario(user, "teste", 1, "tags", 12345695);
+		assertEquals(gi.listaItensNecessarios(cd.getUsuarios()), "12345690 - descricao, tags: [tags], quantidade: 1, Receptor: Murilo Luiz Brito/84473712044 | 12345695 - teste, tags: [tags], quantidade: 1, Receptor: Murilo Luiz Brito/84473712044");
 	}
 
 	@Test
-	void testRemoveItemNecessario() {
-		fail("Not yet implemented");
+	void testRemoveItemNecessario() throws IOException {
+		CrudUsuario cd = new CrudUsuario();
+		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		Usuario user = cd.getUsuarioValido("84473712044", "Receptor");
+		gi.adicionaItemNecessario(user, "descricao", 1, "tags", 12345690);
+		gi.removeItemNecessario(user, 12345690);
+		assertEquals(gi.listaItensNecessarios(cd.getUsuarios()),"");
 	}
 
 	@Test
-	void testMatch() {
-		fail("Not yet implemented");
+	void testMatch() throws IOException {
+		CrudUsuario cd = new CrudUsuario();
+		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
+		Usuario user = cd.getUsuarioValido("84473712044", "Receptor");
+		gi.adicionaItemNecessario(user, "descricao", 1, "tags", 12345690);
+		assertEquals(gi.match(user, 12345690, cd.getUsuarios()), "10345678 - descricao, tags: [tags, teste], quantidade: 1, doador: Cilas/12345678910");
 	}
 
 	@Test
-	void testGetItensParaRealizarDoacao() {
-		fail("Not yet implemented");
+	void testGetItensParaRealizarDoacao() throws IOException {
+		CrudUsuario cd = new CrudUsuario();
+		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
+		Usuario user = cd.getUsuarioValido("84473712044", "Receptor");
+		gi.adicionaItemNecessario(user, "descricao", 1, "tags", 12345690);
+		assertEquals(gi.getItensParaRealizarDoacao(12345690, 10345678, cd.getUsuarios()), "[12345690 - descricao, tags: [tags], quantidade: 1, 10345678 - descricao, tags: [tags, teste], quantidade: 1]");
 	}
 
 	@Test
-	void testGetNumItensDoados() {
-		fail("Not yet implemented");
+	void testGetNumItensDoados() throws IOException {
+		CrudUsuario cd = new CrudUsuario();
+		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
+		Usuario user = cd.getUsuarioValido("84473712044", "Receptor");
+		Usuario doador = cd.getUsuarioValido("12345678910", "doador");
+		gi.adicionaItemNecessario(user, "descricao", 1, "tags", 12345690);
+		assertEquals(gi.getNumItensDoados(doador.getItemPorId(10345678), user.getItemPorId(12345690)), 1);
 	}
 
 	@Test
 	void testGetDescritores() {
-		fail("Not yet implemented");
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
+		System.out.println(gi.getDescritores().containsKey("descricao"));
 	}
 
 	@Test

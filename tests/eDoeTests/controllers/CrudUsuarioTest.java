@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import eDoe.controllers.CrudUsuario;
 import eDoe.controllers.GestorItem;
+import eDoe.models.Usuario;
 
 class CrudUsuarioTest {
 
@@ -325,23 +326,42 @@ class CrudUsuarioTest {
 	}
 
 	@Test
-	void testListaItensNecessarios() {
-		fail("Not yet implemented");
+	void testListaItensNecessarios() throws IOException {
+		CrudUsuario cd = new CrudUsuario();
+		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		cd.adicionaItemNecessario("84473712044", "descricao", 1, "tags2, teste2", 12345690);
+		cd.adicionaItemNecessario("84473712044", "teste", 1, "tags2, teste2", 12345692);
+		assertEquals(cd.listaItensNecessarios(), "12345690 - descricao, tags: [tags2, teste2], quantidade: 1, Receptor: Murilo Luiz Brito/84473712044 | 12345692 - teste, tags: [tags2, teste2], quantidade: 1, Receptor: Murilo Luiz Brito/84473712044");
 	}
 
 	@Test
-	void testRemoveItemNecessario() {
-		fail("Not yet implemented");
+	void testRemoveItemNecessario() throws IOException {
+		CrudUsuario cd = new CrudUsuario();
+		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		cd.adicionaItemNecessario("84473712044", "descricao", 1, "tags2, teste2", 12345690);
+		cd.removeItemNecessario("84473712044", 12345690);
+		assertEquals(cd.listaItensNecessarios(),"");
 	}
 
 	@Test
-	void testMatch() {
-		fail("Not yet implemented");
+	void testMatch() throws IOException {
+		CrudUsuario cd = new CrudUsuario();
+		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
+		cd.adicionaItemNecessario("12345678910", "descricao", 1, "tags", 12345690);
+		System.out.println(cd.match("12345678910", 12345690));
+		assertEquals(cd.match("12345678910", 12345690), "10345678 - descricao, tags: [tags, teste], quantidade: 1, doador: Cilas/12345678910");
 	}
 
 	@Test
-	void testRealizaDoacao() {
-		fail("Not yet implemented");
+	void testRealizaDoacao() throws IOException {
+		CrudUsuario cd = new CrudUsuario();
+		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
+		cd.adicionaItemNecessario("12345678910", "descricao", 1, "tags", 12345690);
+		System.out.println(cd.realizaDoacao(12345690, 10345678, "11/11/11"));
 	}
 
 	@Test
