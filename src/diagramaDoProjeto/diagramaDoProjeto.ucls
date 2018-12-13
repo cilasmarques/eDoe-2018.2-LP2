@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="eDoe.Facade" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/Facade.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="292" x="25" y="22"/>    
+    <position height="541" width="302" x="27" y="32"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="eDoe.comparators.DescricaoComparator" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/comparators/DescricaoComparator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="729" y="489"/>    
+    <position height="-1" width="-1" x="1619" y="443"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="eDoe.comparators.IdComparator" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/comparators/IdComparator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="199" x="425" y="441"/>    
+    <position height="99" width="199" x="1519" y="519"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="eDoe.comparators.MatchComparator" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/comparators/MatchComparator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="100" width="199" x="219" y="442"/>    
+    <position height="100" width="199" x="1749" y="516"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </class>  
   <class id="5" language="java" name="eDoe.comparators.QuantidadeComparator" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/comparators/QuantidadeComparator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="199" x="11" y="442"/>    
+    <position height="99" width="199" x="1745" y="394"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="eDoe.controllers.CrudUsuario" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/controllers/CrudUsuario.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="296" x="23" y="131"/>    
+    <position height="625" width="301" x="359" y="31"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -57,7 +57,7 @@
   </class>  
   <class id="7" language="java" name="eDoe.controllers.GestorItem" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/controllers/GestorItem.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="279" x="31" y="220"/>    
+    <position height="537" width="279" x="703" y="28"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -66,7 +66,7 @@
   </class>  
   <class id="8" language="java" name="eDoe.controllers.MatchMaker" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/controllers/MatchMaker.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="239" x="51" y="301"/>    
+    <position height="163" width="239" x="1059" y="219"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -75,7 +75,7 @@
   </class>  
   <class id="9" language="java" name="eDoe.models.Doador" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/models/Doador.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="163" x="553" y="247"/>    
+    <position height="159" width="173" x="1059" y="645"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -84,7 +84,7 @@
   </class>  
   <interface id="10" language="java" name="eDoe.models.Item_eDoe" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/models/Item_eDoe.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="157" x="765" y="22"/>    
+    <position height="195" width="162" x="1325" y="352"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -93,7 +93,7 @@
   </interface>  
   <class id="11" language="java" name="eDoe.models.Item" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/models/Item.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="214" x="738" y="125"/>    
+    <position height="501" width="224" x="1276" y="595"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -102,7 +102,7 @@
   </class>  
   <class id="12" language="java" name="eDoe.models.Receptor" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/models/Receptor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="162" x="371" y="248"/>    
+    <position height="171" width="167" x="1067" y="884"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -111,7 +111,7 @@
   </class>  
   <interface id="13" language="java" name="eDoe.models.Usuario_eDoe" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/models/Usuario_eDoe.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="132" x="478" y="25"/>    
+    <position height="169" width="137" x="1062" y="417"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -120,7 +120,7 @@
   </interface>  
   <class id="14" language="java" name="eDoe.models.Usuario" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/models/Usuario.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="296" x="397" y="132"/>    
+    <position height="513" width="296" x="703" y="584"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -129,7 +129,7 @@
   </class>  
   <class id="15" language="java" name="eDoe.utils.Validador" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/utils/Validador.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="198" x="630" y="379"/>    
+    <position height="347" width="439" x="1510" y="19"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -138,69 +138,98 @@
   </class>  
   <class id="16" language="java" name="eDoe.utils.Ferramentas" project="eDoe-2018.2-LP2" 
     file="/eDoe-2018.2-LP2/src/eDoe/utils/Ferramentas.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="51" width="198" x="424" y="379"/>    
+    <position height="129" width="204" x="1756" y="635"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <realization id="17">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="10"/>  
-  </realization>  
-  <realization id="18">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="13"/>  
-  </realization>  
-  <generalization id="19">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="14"/>  
-  </generalization>  
-  <association id="20">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="21" name="cd"/>      
-      <multiplicity id="22" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="23">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="24" name="usuarios"/>      
-      <multiplicity id="25" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="26">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="27" name="g"/>      
-      <multiplicity id="28" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="29">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="30" name="mm"/>      
-      <multiplicity id="31" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="32">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="14"/>  
-  </generalization>  
-  <association id="33">    
+  <class id="17" language="java" name="eDoe.comparators.DoacaoComparator" project="eDoe-2018.2-LP2" 
+    file="/eDoe-2018.2-LP2/src/eDoe/comparators/DoacaoComparator.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="97" width="200" x="1522" y="643"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="18">    
     <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="34" name="itens"/>      
-      <multiplicity id="35" minimum="0" maximum="2147483647"/>    
+      <attribute id="19" name="itens">        
+        <position height="0" width="0" x="538" y="470"/>      
+      </attribute>      
+      <multiplicity id="20" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="538" y="470"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <association id="21">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="22" name="usuarios">        
+        <position height="0" width="0" x="306" y="452"/>      
+      </attribute>      
+      <multiplicity id="23" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="306" y="452"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="24">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="25" name="mm">        
+        <position height="0" width="0" x="1008" y="-82"/>      
+      </attribute>      
+      <multiplicity id="26" minimum="0" maximum="1">        
+        <position height="0" width="0" x="1008" y="-82"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="27">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="28" name="g">        
+        <position height="0" width="0" x="576" y="-24"/>      
+      </attribute>      
+      <multiplicity id="29" minimum="0" maximum="1">        
+        <position height="0" width="0" x="576" y="-24"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="30">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="10"/>  
+  </realization>  
+  <realization id="31">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="13"/>  
+  </realization>  
+  <association id="32">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="33" name="cd">        
+        <position height="0" width="0" x="64" y="18"/>      
+      </attribute>      
+      <multiplicity id="34" minimum="0" maximum="1">        
+        <position height="0" width="0" x="64" y="18"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="35">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <generalization id="36">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

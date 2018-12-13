@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import eDoe.controllers.CrudUsuario;
 import eDoe.controllers.GestorItem;
-import eDoe.models.Usuario;
 
 class CrudUsuarioTest {
 
