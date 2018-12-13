@@ -405,7 +405,6 @@ public class GestorItem implements Serializable {
 
 	/**
 	 * Método que retorna o mapa de descritores 
-	 * (Usado nos testes)
 	 * 
 	 * @return Mapa de descritores
 	 */

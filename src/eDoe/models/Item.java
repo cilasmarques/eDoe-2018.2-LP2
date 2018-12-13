@@ -3,6 +3,12 @@ package eDoe.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Classe que contem os metodos e atributos dos itens
+ * 
+ * @author Cilas Medeiros, Brenno Harten, Raiff Maia
+ *
+ */
 public class Item implements Item_eDoe, Comparable<Item>, Serializable {
 
 	/**
@@ -17,6 +23,19 @@ public class Item implements Item_eDoe, Comparable<Item>, Serializable {
 	private int id = 0;
 	private int pontuacaoMatch = 0;
 
+	/**
+	 * 
+	 * Construtor do item
+	 * 
+	 * @param descricao    Descricao do item
+	 * @param quantidade   Quantidade de itens adicionados
+	 * @param tags         Tags que caracterizam o item
+	 * @param ehNecessario Boolean que diz se o item é necessário ou não
+	 * @param id           Código de identificação (ID) do item a ser adicionado
+	 * @param dadosEmissor Dados de quem esta responsável pelo item (quem doou ou
+	 *                     pediu o item)
+	 * 
+	 */
 	public Item(String descricao, int quantidade, String tags, boolean ehNecessario, int id, String dadosEmissor) {
 		this.id = id;
 		this.dadosEmissor = dadosEmissor;
@@ -26,20 +45,40 @@ public class Item implements Item_eDoe, Comparable<Item>, Serializable {
 		this.tags = stringToArray(tags);
 	}
 
+	/**
+	 * Método responsável por mudar a quantidade do item, caso ela seja >= 0
+	 * 
+	 * @param quantidade Nova quantidade do item
+	 */
 	public void setQuantidade(int quantidade) {
 		if (quantidade >= 0)
 			this.quantidade = quantidade;
 	}
 
+	/**
+	 * Método responsável por mudar as tags do item
+	 * 
+	 * @param tag Novas tags do item
+	 */
 	public void setTags(String tag) {
 		if (tag != null)
 			this.tags = stringToArray(tag);
 	}
 
+	/**
+	 * Método responsável por mudar a pontuação do item
+	 * 
+	 * @param pontuacao Nova pontuacao do item
+	 */
 	public void setPontuacao(int pontuacao) {
 		this.pontuacaoMatch = pontuacao;
 	}
 
+	/**
+	 * Método que retorna a descrição do item
+	 * 
+	 * @return String com a descrição do item
+	 */
 	public String getDescricao() {
 		return this.descricao;
 	}
@@ -81,15 +120,28 @@ public class Item implements Item_eDoe, Comparable<Item>, Serializable {
 		return this.pontuacaoMatch;
 	}
 
+	/**
+	 * Método que retona as tags do item
+	 * 
+	 * @return ArrayList com as tags do item
+	 */
 	public ArrayList<String> getTags() {
 		return this.tags;
 	}
 
+	/**
+	 * Método que mostra se o item é necessário ou não
+	 * 
+	 * @return Bollean dizendo se o item é necessario (true) ou não (false)
+	 */
 	@Override
 	public boolean ehNecessario() {
 		return this.necessidade;
 	}
 
+	/**
+	 * toString, formado pelo: id, descrição, tags e quantidade
+	 */
 	@Override
 	public String toString() {
 		return this.id + " - " + this.descricao + ", tags: " + this.tags + ", quantidade: " + this.quantidade;
@@ -133,9 +185,16 @@ public class Item implements Item_eDoe, Comparable<Item>, Serializable {
 		return -1;
 	}
 
-	private ArrayList<String> stringToArray(String str) {
+	/**
+	 * Método que colocam as tags recebidas em um ArrayList
+	 * 
+	 * @param tags String com as tags
+	 * 
+	 * @return ArrayList com as tags em sequencia
+	 */
+	private ArrayList<String> stringToArray(String tags) {
 		ArrayList<String> array = new ArrayList<String>();
-		for (String s : str.split(",")) {
+		for (String s : tags.split(",")) {
 			array.add(s.trim());
 		}
 		return array;

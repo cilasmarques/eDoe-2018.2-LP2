@@ -179,39 +179,133 @@ class CrudUsuarioTest {
 
 	@Test
 	void testAdicionaItemParaDoacao() {
+		GestorItem gi = new GestorItem();
 		CrudUsuario cd = new CrudUsuario();
 		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
-		cd.adicionaItemParaDoacao("12345678910", "teste", 2, "teste, JUnit", 12345678);
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste",
+				12345678);
+		assertEquals(gi.getDescritores().containsKey("descricao"), true);
+	}
+
+	@Test
+	void testAdicionaItemParaDoacaoDescritorNulo() {
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		try {
+			cd.adicionaItemParaDoacao("12345678910", null, 1, "tags, teste", 12345678);
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+
+	@Test
+	void testAdicionaItemParaDoacaoDescritorVazio() {
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		try {
+			cd.adicionaItemParaDoacao("12345678910", "", 1, "tags, teste", 12345678);
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+
+	@Test
+	void testAdicionaItemParaDoacaoQuantidadeZero() {
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		try {
+			cd.adicionaItemParaDoacao("12345678910", "descricao", 0, "tags, teste",
+					12345678);
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+
+	@Test
+	void testAdicionaItemParaDoacaoQuantidadeNegativa() {
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		try {
+			cd.adicionaItemParaDoacao("12345678910", "descricao", -1, "tags, teste",
+					12345678);
+		} catch (IllegalArgumentException npe) {
+		}
+	}
+
+	@Test
+	void testAdicionaItemParaDoacaoTagsNula() {
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		try {
+			cd.adicionaItemParaDoacao("12345678910", "descricao", 1, null, 12345678);
+		} catch (NullPointerException npe) {
+		}
+	}
+
+	@Test
+	void testAdicionaItemParaDoacaoTagsVazia() {
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		try {
+			cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "", 12345678);
+		} catch (NullPointerException npe) {
+		}
 	}
 
 	@Test
 	void testExibeItem() {
-		fail("Not yet implemented");
-	}
-
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 12345678);
+		assertEquals(cd.exibeItem(12345678, "12345678910"),
+				"12345678 - descricao, tags: [tags, teste], quantidade: 1");
+		}
+	
 	@Test
 	void testAtualizaItemParaDoacao() {
-		fail("Not yet implemented");
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 12345678);
+		cd.atualizaItemParaDoacao(12345678, "12345678910", 2, "tags, teste");
+		System.out.println(gi.getDescritores().get("descricao").toString());
+		assertEquals(gi.getDescritores().get("descricao").toString(), "2");
 	}
 
 	@Test
 	void testRemoveItemParaDoacao() {
-		fail("Not yet implemented");
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 12345678);
+		cd.removeItemParaDoacao(12345678, "12345678910");
+		assertEquals(gi.getDescritores().containsKey("descricao"), false);
 	}
 
 	@Test
 	void testListaDescritorDeItensParaDoacao() {
-		fail("Not yet implemented");
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 12345678);
+		assertEquals(cd.listaDescritorDeItensParaDoacao(), "");
 	}
 
 	@Test
 	void testListaItensParaDoacao() {
-		fail("Not yet implemented");
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 12345678);
+		System.out.println(cd.listaItensParaDoacao());
+		assertEquals(cd.listaItensParaDoacao(),"10345678 - descricao, tags: [tags, teste], quantidade: 1, doador: Cilas/12345678910\n" + 
+				"1 - descricao");
 	}
 
 	@Test
 	void testPesquisaItemParaDoacaoPorDescricao() {
-		fail("Not yet implemented");
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
+		assertEquals(cd.pesquisaItemParaDoacaoPorDescricao("descricao"), "10345678 - descricao, tags: [tags, teste], quantidade: 1");
 	}
 
 	@Test
@@ -238,10 +332,4 @@ class CrudUsuarioTest {
 	void testMatch() {
 		fail("Not yet implemented");
 	}
-
-	@Test
-	void testGetUsuarioValido() {
-		fail("Not yet implemented");
-	}
-
 }

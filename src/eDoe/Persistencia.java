@@ -13,6 +13,12 @@ import eDoe.controllers.CrudUsuario;
 import eDoe.controllers.GestorItem;
 import eDoe.models.Usuario;
 
+/**
+ * Classe responsavel pela persistencia do código
+ * 
+ * @author Cilas Medeiros, Brenno Harten, Raiff Maia
+ *
+ */
 public class Persistencia {
 
 	/**
@@ -26,7 +32,7 @@ public class Persistencia {
 	public void salvar(Map<String, Usuario> usuarios, ArrayList<String> doacoesRealizadas,
 			Map<String, Integer> descritores) {
 		try {
-			FileOutputStream fos = new FileOutputStream("dados.txt");
+			FileOutputStream fos = new FileOutputStream("dados.dat");
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 
 			oos.writeObject(usuarios);

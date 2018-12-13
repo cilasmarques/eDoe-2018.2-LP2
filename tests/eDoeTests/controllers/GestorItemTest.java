@@ -2,6 +2,8 @@ package eDoeTests.controllers;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 
 import eDoe.controllers.CrudUsuario;
@@ -125,32 +127,61 @@ class GestorItemTest {
 	@Test
 	void testAtualizaItemParaDoacao() {
 		GestorItem gi = new GestorItem();
-
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 12345678);
+		gi.atualizaItemParaDoacao(cd.getUsuarioValido("12345678910", "doador"), 12345678, 2, "tags, teste");
+		assertEquals(gi.getDescritores().get("descricao").toString(), "2");
 	}
 
 	@Test
 	void testRemoveItemParaDoacao() {
-		fail("Not yet implemented");
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 12345678);
+		gi.removeItemParaDoacao(cd.getUsuarioValido("12345678910", "doador"), 12345678);
+		assertEquals(gi.getDescritores().containsKey("descricao"), false);
 	}
 
 	@Test
 	void testListaDescritorDeItensParaDoacao() {
-		fail("Not yet implemented");
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 12345678);
+		System.out.println(gi.listaDescritorDeItensParaDoacao());
+		assertEquals(gi.listaDescritorDeItensParaDoacao(), "");
 	}
 
 	@Test
 	void testListaTodosOsItensExistentes() {
-		fail("Not yet implemented");
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionarDoador("12345678923", "Brenno", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
+		cd.adicionaItemParaDoacao("12345678923", "descricao", 1, "tags, teste", 12345678);
+		assertEquals(gi.listaTodosOsItensParaDoacao(cd.getUsuarios()), "10345678 - descricao, tags: [tags, teste], quantidade: 1, doador: Cilas/12345678910 | 12345678 - descricao, tags: [tags, teste], quantidade: 1, doador: Brenno/12345678923");
 	}
 
 	@Test
 	void testPesquisaItemParaDoacaoPorDescricao() {
-		fail("Not yet implemented");
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
+		assertEquals(gi.pesquisaItemParaDoacaoPorDescricao("descricao", cd.getUsuarios()), "10345678 - descricao, tags: [tags, teste], quantidade: 1");
 	}
 
 	@Test
-	void testAdicionaItemNecessario() {
-		fail("Not yet implemented");
+	void testAdicionaItemNecessario() throws IOException {
+		GestorItem gi = new GestorItem();
+		CrudUsuario cd = new CrudUsuario();
+		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		gi.adicionaItemNecessario(cd.getUsuarioValido("84473712044", "receptor"), "descricao", 1, "tags", 12345679);
+		assertEquals(cd.getUsuarios().get("84473712044"), true);
 	}
 
 	@Test
