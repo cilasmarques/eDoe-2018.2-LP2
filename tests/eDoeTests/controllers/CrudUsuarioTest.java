@@ -350,7 +350,6 @@ class CrudUsuarioTest {
 		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
 		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
 		cd.adicionaItemNecessario("84473712044", "descricao", 1, "tags2, teste2", 12345690);
-		System.out.println(cd.match("84473712044", 12345690));
 		assertEquals(cd.match("84473712044", 12345690), "10345678 - descricao, tags: [tags, teste], quantidade: 1, doador: Cilas/12345678910");
 	}
 
@@ -365,23 +364,39 @@ class CrudUsuarioTest {
 	}
 
 	@Test
-	void testListaDoacoes() {
-		fail("Not yet implemented");
+	void testListaDoacoes() throws IOException {
+		CrudUsuario cd = new CrudUsuario();
+		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
+		cd.adicionaItemNecessario("84473712044", "descricao", 1, "tags2, teste2", 12345690);
+		cd.realizaDoacao(12345690, 10345678, "11/11/11");
+		assertEquals(cd.listaDoacoes(), "11/11/11 - doador: Cilas/12345678910, item: descricao, quantidade: 1, receptor: Murilo Luiz Brito/84473712044");
 	}
 
 	@Test
 	void testGetUsuarioValido() {
-		fail("Not yet implemented");
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		assertEquals(cd.getUsuarios().containsValue(cd.getUsuarioValido("12345678910", "doador")), true);
 	}
 
 	@Test
 	void testGetUsuarios() {
-		fail("Not yet implemented");
+		CrudUsuario cd = new CrudUsuario();
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		assertEquals(cd.getUsuarios().containsValue(cd.getUsuarioValido("12345678910", "doador")), true);
 	}
-
+	
 	@Test
-	void testGetDoacoesRealizadas() {
-		fail("Not yet implemented");
+	void testGetDoacoesRealizadas() throws IOException {
+		CrudUsuario cd = new CrudUsuario();
+		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
+		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
+		cd.adicionaItemNecessario("84473712044", "descricao", 1, "tags2, teste2", 12345690);
+		cd.realizaDoacao(12345690, 10345678, "11/11/11");
+		assertEquals(cd.getDoacoesRealizadas(), "[11/11/11 - doador: Cilas/12345678910, item: descricao, quantidade: 1, receptor: Murilo Luiz Brito/84473712044]");
 	}
 
 }

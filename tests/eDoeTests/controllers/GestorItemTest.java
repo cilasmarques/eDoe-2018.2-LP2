@@ -3,12 +3,15 @@ package eDoeTests.controllers;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import eDoe.controllers.CrudUsuario;
 import eDoe.controllers.GestorItem;
+import eDoe.models.Item;
 import eDoe.models.Usuario;
 
 class GestorItemTest {
@@ -228,12 +231,19 @@ class GestorItemTest {
 	@Test
 	void testGetItensParaRealizarDoacao() throws IOException {
 		CrudUsuario cd = new CrudUsuario();
+		Item i1 = new Item("descricao", 1, "tags", true, 12345690, "Receptor: Murilo Luiz Brito/84473712044");
+		Item i2 = new Item("descricao", 1, "tags, teste", false, 10345678, "Doador: Cilas/12345678910");
+		
 		cd.lerReceptores("arquivos_sistema/novosReceptores.csv");
 		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
 		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
 		Usuario user = cd.getUsuarioValido("84473712044", "Receptor");
 		gi.adicionaItemNecessario(user, "descricao", 1, "tags", 12345690);
-		assertEquals(gi.getItensParaRealizarDoacao(12345690, 10345678, cd.getUsuarios()), "[12345690 - descricao, tags: [tags], quantidade: 1, 10345678 - descricao, tags: [tags, teste], quantidade: 1]");
+		 	
+		ArrayList<Item> teste = new ArrayList<>();
+		teste.add(i1);
+		teste.add(i2);
+		assertEquals(gi.getItensParaRealizarDoacao(12345690, 10345678, cd.getUsuarios()), teste);
 	}
 
 	@Test
@@ -250,15 +260,16 @@ class GestorItemTest {
 
 	@Test
 	void testGetDescritores() {
-		CrudUsuario cd = new CrudUsuario();
-		cd.adicionarDoador("12345678910", "Cilas", "meuemail@gmail.com", "(83) 9.9999-0000", "IGREJA");
-		cd.adicionaItemParaDoacao("12345678910", "descricao", 1, "tags, teste", 10345678);
-		System.out.println(gi.getDescritores().containsKey("descricao"));
+		gi.adicionarDescritor("descricao teste");
+		assertEquals(gi.getDescritores().containsKey("descricao teste"), true);
 	}
 
 	@Test
 	void testCarregaDescritores() {
-		fail("Not yet implemented");
+		HashMap<String, Integer> mapaTeste = new HashMap<>();
+		mapaTeste.put("teste", 1);
+		gi.carregaDescritores(mapaTeste);
+		assertEquals(gi.getDescritores().containsKey("teste"), true);
 	}
 
 }
