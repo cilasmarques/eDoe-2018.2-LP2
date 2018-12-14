@@ -6,7 +6,6 @@ import java.util.ArrayList;
  * Interface dos itens do sistema eDoe
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- * 
  */
 public interface Item_eDoe {
 

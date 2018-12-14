@@ -15,7 +15,7 @@ class CrudUsuarioTest {
 	public CrudUsuario cd;
 
 	@BeforeEach
-	void testItem() {
+	void testItem() {  
 		this.cd = new CrudUsuario();
 	}
 

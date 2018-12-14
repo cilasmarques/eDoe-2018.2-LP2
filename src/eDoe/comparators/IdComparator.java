@@ -9,7 +9,6 @@ import eDoe.models.Item_eDoe;
  * identidicação (ID)
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- *
  */
 public class IdComparator implements Comparator<Item_eDoe> {
 

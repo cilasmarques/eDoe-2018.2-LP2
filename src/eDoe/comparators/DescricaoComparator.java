@@ -8,7 +8,6 @@ import eDoe.models.Item_eDoe;
  * Classe responsável por comparar dois itens do sistema eDoe pela sua descrição
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- *
  */
 public class DescricaoComparator implements Comparator<Item_eDoe> {
 

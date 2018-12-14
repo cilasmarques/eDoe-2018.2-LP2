@@ -12,7 +12,7 @@ class DoadorTest {
 	public Doador d;
 
 	@BeforeEach
-	void testItem() {
+	void testItem() {  
 		this.d = new Doador("10020030040", "cilas", "email123@email.com", "(83) 9.9999-0000", "IGREJA", "doador");
 	}
 

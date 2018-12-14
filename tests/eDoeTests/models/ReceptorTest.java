@@ -12,7 +12,7 @@ class ReceptorTest {
 	public Receptor r;
 
 	@BeforeEach
-	void testItem() {
+	void testItem() {  
 		this.r = new Receptor("40030020010", "salic", "email321@email.com", "(38) 9.0000-9999", "IGREJA", "Receptor");
 	}
 

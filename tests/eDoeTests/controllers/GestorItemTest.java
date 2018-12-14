@@ -19,7 +19,7 @@ class GestorItemTest {
 	public GestorItem gi;
 
 	@BeforeEach
-	void testItem() {
+	void testItem() {  
 		gi = new GestorItem();
 	}
 

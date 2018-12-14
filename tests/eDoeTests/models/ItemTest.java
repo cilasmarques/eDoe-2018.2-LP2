@@ -14,7 +14,7 @@ class ItemTest {
 	public Item i;
 
 	@BeforeEach
-	void testItem() {
+	void testItem() {  
 		this.i = new Item("item de teste", 1, "teste, JUnit", false, 0, "doador: dono Do mundo/00000000000");
 	}
 

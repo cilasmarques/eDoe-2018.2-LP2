@@ -6,7 +6,6 @@ import java.util.Comparator;
  * Classe responsável por comparar duas doações registradas no sistema eDoe
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- *
  */
 public class DoacaoComparator implements Comparator<String> {
 

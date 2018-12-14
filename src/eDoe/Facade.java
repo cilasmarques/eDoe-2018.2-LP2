@@ -10,7 +10,6 @@ import easyaccept.EasyAccept;
 /**
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- *
  */
 public class Facade {
 

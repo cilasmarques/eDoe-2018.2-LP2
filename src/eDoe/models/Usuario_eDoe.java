@@ -4,7 +4,6 @@ package eDoe.models;
  * Interface dos usuarios do sistema eDoe
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- * 
  */
 public interface Usuario_eDoe {
 

@@ -4,7 +4,6 @@ package eDoe.models;
  * Classe que contem os metodos e atributos usuario doador
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- * 
  */
 public class Doador extends Usuario {
 

@@ -7,6 +7,7 @@ public class Ferramentas {
 	/**
 	 * Código de identificação usado para definir o código de cada item 
 	 * (é incrementado cada vez que um item novo é adicionado no sistema)
+	 * 
 	 */
 	public static int idUnico = 10000000;
 

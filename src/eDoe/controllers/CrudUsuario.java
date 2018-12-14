@@ -21,7 +21,6 @@ import eDoe.utils.Validador;
  * Classe responsável por controlar o sistema eDoe
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- *
  */
 public class CrudUsuario implements Serializable {
 

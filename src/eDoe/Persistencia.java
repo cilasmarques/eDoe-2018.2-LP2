@@ -17,7 +17,6 @@ import eDoe.models.Usuario;
  * Classe responsavel pela persistencia do código
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- *
  */
 public class Persistencia {
 
@@ -60,11 +59,11 @@ public class Persistencia {
 		ObjectInputStream ois = null;
 		try {
 			if (!new File("dados.txt").exists()) {
-				FileOutputStream fos = new FileOutputStream("dados.txt");
+				FileOutputStream fos = new FileOutputStream("dados.dat");
 				fos.close();
 			}
 
-			FileInputStream fis = new FileInputStream("dados.txt");
+			FileInputStream fis = new FileInputStream("dados.dat");
 
 			if (fis.available() > 0) {
 				ois = new ObjectInputStream(fis);

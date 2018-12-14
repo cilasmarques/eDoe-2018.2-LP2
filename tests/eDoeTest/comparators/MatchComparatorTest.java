@@ -15,6 +15,7 @@ class MatchComparatorTest {
 		Item i2 = new Item("descricao2", 2, "tags, teste", false, 10345678, "Doador: Cilas/12345678910");
 		MatchComparator mc = new MatchComparator();
 		assertEquals(mc.compare(i1, i2), 1);
+		assertEquals(mc.compare(i2, i1), -1);
 	}
 
 }

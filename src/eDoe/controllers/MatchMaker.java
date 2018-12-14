@@ -8,7 +8,6 @@ import eDoe.models.Item;
  * Classe responsavel por fazer os matches entre os itens
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- * 
  */
 public class MatchMaker {
 

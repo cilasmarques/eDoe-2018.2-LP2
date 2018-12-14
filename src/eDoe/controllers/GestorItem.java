@@ -19,7 +19,6 @@ import eDoe.utils.Validador;
  * Classe responsável por gerenciar os itens do sistema eDoe
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- *
  */
 public class GestorItem implements Serializable {
 

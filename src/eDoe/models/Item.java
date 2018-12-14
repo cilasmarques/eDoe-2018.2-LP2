@@ -7,7 +7,6 @@ import java.util.ArrayList;
  * Classe que contem os metodos e atributos dos itens
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- *
  */
 public class Item implements Item_eDoe, Comparable<Item>, Serializable {
 

@@ -9,7 +9,6 @@ import java.util.Map;
  * Classe que contem os metodos e atributos dos usuarios eDoe
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- * 
  */
 public abstract class Usuario implements Usuario_eDoe, Serializable {
 

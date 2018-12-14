@@ -4,7 +4,6 @@ package eDoe.models;
  * Classe que contem os metodos e atributos usuario receptor
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- * 
  */
 public class Receptor extends Usuario {
 

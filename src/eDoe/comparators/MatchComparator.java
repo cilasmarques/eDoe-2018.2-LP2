@@ -9,7 +9,6 @@ import eDoe.models.Item_eDoe;
  * de match
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- *
  */
 public class MatchComparator implements Comparator<Item_eDoe> {
 

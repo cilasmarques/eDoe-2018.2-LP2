@@ -198,7 +198,7 @@ public class Validador {
 	/**
 	 * Método que verifica se um parâmetro qualquer é nulo ou vazio
 	 * 
-	 * @param parametro Parâmetro a ser analisado
+	 * @param parametro Parâmetro a ser analisado 
 	 * @param saida     Mensagem caso o parametro seja vazio ou nulo
 	 */
 	public static void validadorParametro(String parametro, String saida) {

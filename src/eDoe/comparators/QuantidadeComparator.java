@@ -9,7 +9,6 @@ import eDoe.models.Item_eDoe;
  * quantidade
  * 
  * @author Cilas Medeiros, Brenno Harten, Raiff Maia
- *
  */
 public class QuantidadeComparator implements Comparator<Item_eDoe> {
 
